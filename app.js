@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", () => {
 
     // ==========================================
@@ -24,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const vistaPrevia = document.getElementById("vista-previa");
     const imagenVistaPrevia = document.getElementById("imagen-vista-previa");
     const btnCerrar = document.getElementById("btnCerrar");
-    const btnCrear = document.getElementById("btnCrear");
+   const btnDescargar = document.getElementById("btnDescargar");
 
     let disenoSeleccionado = null;
 
