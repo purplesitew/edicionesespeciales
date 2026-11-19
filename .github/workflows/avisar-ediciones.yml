@@ -1,16 +1,11 @@
 
-# ==========================================
-# EDICIONES ESPECIALES
-# PRUEBA DE SUSCRIPTORES FIREBASE
-# ==========================================
-
 name: Avisar ediciones especiales
 
 on:
   workflow_dispatch:
     inputs:
       edicion:
-        description: "Selecciona la edición terminada"
+        description: "Selecciona la edición"
         required: true
         type: choice
         options:
@@ -30,11 +25,29 @@ on:
           - Mndiainstaarmy.jpg
           - instaarmyswim.jpg
 
+      modo:
+        description: "¿Probar o enviar notificaciones?"
+        required: true
+        type: choice
+        default: SOLO_PROBAR
+        options:
+          - SOLO_PROBAR
+          - ENVIAR_NOTIFICACIONES
+
+      confirmacion:
+        description: "Para enviar, escribe CONFIRMO"
+        required: false
+        type: string
+
 permissions:
   contents: read
 
+concurrency:
+  group: avisos-ediciones-especiales
+  cancel-in-progress: false
+
 jobs:
-  probar-firebase:
+  avisar:
     runs-on: ubuntu-latest
 
     steps:
@@ -46,47 +59,50 @@ jobs:
       - name: Instalar Firebase Admin
         run: npm install firebase-admin@13 --no-save
 
-      - name: Comprobar suscriptores en Firestore
+      - name: Revisar suscriptores y enviar avisos
         env:
           FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
           EDICION: ${{ inputs.edicion }}
+          MODO: ${{ inputs.modo }}
+          CONFIRMACION: ${{ inputs.confirmacion }}
         run: |
           node <<'NODE'
           const { initializeApp, cert } = require("firebase-admin/app");
           const { getFirestore } = require("firebase-admin/firestore");
+          const { getMessaging } = require("firebase-admin/messaging");
 
-          async function probar() {
+          async function ejecutar() {
+            const edicion = process.env.EDICION;
+            const modo = process.env.MODO;
+
+            if (!["SOLO_PROBAR", "ENVIAR_NOTIFICACIONES"].includes(modo)) {
+              throw new Error("Modo no válido.");
+            }
+
+            if (modo === "ENVIAR_NOTIFICACIONES" &&
+                process.env.CONFIRMACION !== "CONFIRMO") {
+              throw new Error("Envío cancelado: falta CONFIRMO.");
+            }
 
             const secreto = process.env.FIREBASE_SERVICE_ACCOUNT;
-
-            if (!secreto) {
-              throw new Error("Falta FIREBASE_SERVICE_ACCOUNT");
-            }
+            if (!secreto) throw new Error("Falta el secreto de Firebase.");
 
             const cuenta = JSON.parse(secreto);
-
             if (cuenta.project_id !== "ediciones-especiales") {
-              throw new Error("La credencial pertenece a otro proyecto");
+              throw new Error("Proyecto Firebase incorrecto.");
             }
 
-            initializeApp({
-              credential: cert(cuenta)
-            });
+            initializeApp({ credential: cert(cuenta) });
 
             const db = getFirestore();
+            const usuarios = await db.collection("suscripciones").listDocuments();
 
-            const usuarios = await db
-              .collection("suscripciones")
-              .listDocuments();
-
-            const edicion = process.env.EDICION;
             const idEdicion = edicion.replace(/\.jpg$/i, "");
+            const tokens = new Set();
 
             let suscriptores = 0;
-            let dispositivos = 0;
 
             for (const usuario of usuarios) {
-
               const solicitud = await usuario
                 .collection("ediciones")
                 .doc(idEdicion)
@@ -104,29 +120,75 @@ jobs:
                 .get();
 
               registros.forEach((registro) => {
-
-                const datos = registro.data();
-
-                if (typeof datos.token === "string" &&
-                    datos.token.length > 0) {
-                  dispositivos++;
+                const token = registro.data().token;
+                if (typeof token === "string" && token.length > 0) {
+                  tokens.add(token);
                 }
-
               });
-
             }
 
-            console.log("Conexión con Firebase correcta.");
             console.log("Edición:", edicion);
             console.log("Usuarios registrados:", usuarios.length);
-            console.log("Suscriptores de esta edición:", suscriptores);
-            console.log("Dispositivos para avisar:", dispositivos);
-            console.log("MODO PRUEBA: no se enviaron notificaciones.");
+            console.log("Suscriptores:", suscriptores);
+            console.log("Dispositivos únicos:", tokens.size);
 
+            if (modo === "SOLO_PROBAR") {
+              console.log("MODO PRUEBA: no se enviaron notificaciones.");
+              return;
+            }
+
+            if (tokens.size === 0) {
+              console.log("No hay dispositivos para avisar.");
+              return;
+            }
+
+            const lista = [...tokens];
+            let exitos = 0;
+            let fallos = 0;
+
+            for (let i = 0; i < lista.length; i += 500) {
+              const grupo = lista.slice(i, i + 500);
+
+              const resultado = await getMessaging().sendEachForMulticast({
+                tokens: grupo,
+                notification: {
+                  title: "💜 Ediciones Especiales",
+                  body: "🎉 ¡Una edición que esperabas ya está disponible! Entra y personalízala."
+                },
+                data: {
+                  edicion: edicion
+                },
+                webpush: {
+                  fcmOptions: {
+                    link: "https://purplesitew.github.io/edicionesespeciales/"
+                  }
+                }
+              });
+
+              exitos += resultado.successCount;
+              fallos += resultado.failureCount;
+
+              resultado.responses.forEach((respuesta) => {
+                if (!respuesta.success) {
+                  console.log(
+                    "Fallo de entrega:",
+                    respuesta.error?.code || "desconocido"
+                  );
+                }
+              });
+            }
+
+            console.log("Envíos aceptados por Firebase:", exitos);
+            console.log("Envíos fallidos:", fallos);
+            console.log("Proceso de envío terminado.");
+
+            if (fallos > 0) {
+              process.exitCode = 1;
+            }
           }
 
-          probar().catch(error => {
-            console.error("Falló la conexión:", error.message);
+          ejecutar().catch((error) => {
+            console.error("Error:", error.message);
             process.exitCode = 1;
           });
           NODE
