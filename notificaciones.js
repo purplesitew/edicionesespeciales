@@ -53,8 +53,10 @@ const messaging = compatible
 // CLAVE PÚBLICA VAPID
 // ==========================================
 
+
 const VAPID_KEY =
-    "BGEG5oaFTkGJ3oDQUVBEv4u4_LWxB0RFb_o1x7RSI7OdcjaLqRrM8N8BKQniBjJeFtkbMn57hFFVnI";
+    "BGEG5oaFTkGJ3oDQUVBEv4u4_LWxB0RFb_o1x7RSI7OdcjaLqRrM8N8BKQniBjJeFtkbMn57hFFVbq5UAyfOVnI";
+
 
 
 // ==========================================
