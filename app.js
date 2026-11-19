@@ -71,19 +71,51 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
-    // ==========================================
-    // BOTÓN CREAR (SE CONFIGURARÁ DESPUÉS)
-    // ==========================================
+// ==========================================
+// DESCARGAR CREDENCIAL SELECCIONADA EN JPG
+// ==========================================
 
-    btnCrear.addEventListener("click", () => {
+btnDescargar.addEventListener("click", async () => {
 
-        if (!disenoSeleccionado) return;
+    if (!disenoSeleccionado) return;
 
-        alert(
-            "💜 La personalización de este diseño estará disponible próximamente."
+    try {
+
+        const respuesta = await fetch(
+            `./${disenoSeleccionado}`
         );
 
-    });
+        if (!respuesta.ok) {
+            throw new Error("No se pudo obtener la imagen.");
+        }
+
+        const imagen = await respuesta.blob();
+
+        const urlTemporal = URL.createObjectURL(imagen);
+
+        const enlace = document.createElement("a");
+
+        enlace.href = urlTemporal;
+        enlace.download = disenoSeleccionado;
+
+        document.body.appendChild(enlace);
+        enlace.click();
+        enlace.remove();
+
+        setTimeout(() => {
+            URL.revokeObjectURL(urlTemporal);
+        }, 10000);
+
+    } catch (error) {
+
+        console.error("Error al descargar:", error);
+
+        alert("No se pudo descargar la credencial.");
+
+    }
+
+});
+
 
 
     // ==========================================
