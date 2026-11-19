@@ -30,13 +30,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // CAMBIA ESTE NÚMERO SEGÚN LA CANTIDAD
     // DE DISEÑOS QUE SUBAS A GITHUB
-    const cantidadDisenos = 10;
+   const cantidadDisenos = 8;
 
     for (let i = 1; i <= cantidadDisenos; i++) {
 
         const imagen = document.createElement("img");
 
-        imagen.src = `./B${i}.jpeg`;
+        imagen.src = `./E${i}.jpg`;
         imagen.alt = `Diseño ${i}`;
         imagen.className = "plantilla-diseno";
 
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         imagen.addEventListener("click", () => {
 
-            disenoSeleccionado = `B${i}.jpeg`;
+            disenoSeleccionado = `E${i}.jpg`;
 
             imagenVistaPrevia.src = `./${disenoSeleccionado}`;
 
