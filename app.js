@@ -71,51 +71,179 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
+
 // ==========================================
-// DESCARGAR CREDENCIAL SELECCIONADA EN JPG
+// COMPARTIR Y DESCARGAR CALENDARIOS E1 - E8
+// ==========================================
+
+const modalTikTok = document.getElementById("modalCompartirTikTok");
+
+const btnCompartirTikTok = document.getElementById("btnCompartirTikTok");
+
+const btnDescargaAlternativa = document.getElementById("btnDescargaAlternativa");
+
+const btnCerrarCompartir = document.getElementById("btnCerrarCompartir");
+
+const mensajeTikTok = document.getElementById("mensajeCompartirTikTok");
+
+let calendarioArchivo = null;
+let calendarioURL = null;
+
+
+// ==========================================
+// ABRIR VENTANA AL PRESIONAR DESCARGAR
 // ==========================================
 
 btnDescargar.addEventListener("click", async () => {
 
     if (!disenoSeleccionado) return;
 
+    const nombreCalendario = disenoSeleccionado;
+
+    modalTikTok.classList.remove("oculta");
+
+    btnCompartirTikTok.disabled = true;
+    btnDescargaAlternativa.classList.add("oculta");
+
+    mensajeTikTok.textContent = "Preparando calendario...";
+
+    calendarioArchivo = null;
+
+    if (calendarioURL) {
+        URL.revokeObjectURL(calendarioURL);
+        calendarioURL = null;
+    }
+
     try {
 
-        const respuesta = await fetch(
-            `./${disenoSeleccionado}`
-        );
+        const respuesta = await fetch(`./${nombreCalendario}`);
 
         if (!respuesta.ok) {
-            throw new Error("No se pudo obtener la imagen.");
+            throw new Error("No se encontró el calendario.");
         }
 
         const imagen = await respuesta.blob();
 
-        const urlTemporal = URL.createObjectURL(imagen);
+        if (disenoSeleccionado !== nombreCalendario) return;
 
-        const enlace = document.createElement("a");
+        calendarioArchivo = new File(
+            [imagen],
+            nombreCalendario,
+            { type: "image/jpeg" }
+        );
 
-        enlace.href = urlTemporal;
-        enlace.download = disenoSeleccionado;
+        calendarioURL = URL.createObjectURL(imagen);
 
-        document.body.appendChild(enlace);
-        enlace.click();
-        enlace.remove();
+        btnCompartirTikTok.disabled = false;
 
-        setTimeout(() => {
-            URL.revokeObjectURL(urlTemporal);
-        }, 10000);
+        mensajeTikTok.textContent =
+            "Presiona COMPARTIR EN TIKTOK para " +
+            "descargar tu calendario y compartirlo.";
 
     } catch (error) {
 
-        console.error("Error al descargar:", error);
+        console.error("Error al preparar calendario:", error);
 
-        alert("No se pudo descargar la credencial.");
+        mensajeTikTok.textContent =
+            "No se pudo preparar el calendario.";
 
     }
 
 });
 
+
+// ==========================================
+// FUNCIÓN PARA INICIAR DESCARGA
+// ==========================================
+
+function descargarCalendarioSeleccionado() {
+
+    if (!calendarioArchivo || !calendarioURL) return;
+
+    const enlace = document.createElement("a");
+
+    enlace.href = calendarioURL;
+    enlace.download = calendarioArchivo.name;
+
+    document.body.appendChild(enlace);
+
+    enlace.click();
+    enlace.remove();
+}
+
+
+// ==========================================
+// COMPARTIR EN TIKTOK Y DESCARGAR
+// ==========================================
+
+btnCompartirTikTok.addEventListener("click", () => {
+
+    if (!calendarioArchivo) return;
+
+    const puedeCompartir =
+        typeof navigator.share === "function" &&
+        typeof navigator.canShare === "function" &&
+        navigator.canShare({
+            files: [calendarioArchivo]
+        });
+
+    // Intentar iniciar descarga al tocar el botón
+    descargarCalendarioSeleccionado();
+
+    if (!puedeCompartir) {
+
+        mensajeTikTok.textContent =
+            "Se intentó descargar tu calendario. " +
+            "Para publicarlo, abre TikTok y " +
+            "selecciona la imagen de tu galería.";
+
+        btnDescargaAlternativa.classList.remove("oculta");
+
+        return;
+    }
+
+    // Abrir menú nativo para compartir la imagen
+    navigator.share({
+        files: [calendarioArchivo]
+    }).catch((error) => {
+
+        if (error.name !== "AbortError") {
+
+            console.error("Error al compartir:", error);
+
+            mensajeTikTok.textContent =
+                "No se pudo abrir el menú para compartir. " +
+                "Puedes descargar el calendario y subirlo " +
+                "manualmente a TikTok.";
+
+            btnDescargaAlternativa.classList.remove("oculta");
+        }
+
+    });
+
+});
+
+
+// ==========================================
+// DESCARGA ALTERNATIVA
+// ==========================================
+
+btnDescargaAlternativa.addEventListener("click", () => {
+
+    descargarCalendarioSeleccionado();
+
+});
+
+
+// ==========================================
+// CERRAR VENTANA EMERGENTE
+// ==========================================
+
+btnCerrarCompartir.addEventListener("click", () => {
+
+    modalTikTok.classList.add("oculta");
+
+});
 
 
     // ==========================================
