@@ -1,17 +1,16 @@
 
 # ==========================================
 # EDICIONES ESPECIALES
-# AVISOS DE DISPONIBILIDAD
+# GITHUB ACTIONS + FIREBASE
 # ==========================================
 
 name: Avisar ediciones especiales
 
-# Ejecutar solamente cuando tú lo decidas
 on:
   workflow_dispatch:
     inputs:
       edicion:
-        description: "Selecciona la edición que terminaste"
+        description: "Selecciona la edición terminada"
         required: true
         type: choice
         options:
@@ -35,15 +34,58 @@ permissions:
   contents: read
 
 jobs:
-  preparar-aviso:
+  probar-firebase:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Confirmar edición seleccionada
+      - name: Preparar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Instalar Firebase Admin
+        run: npm install firebase-admin@13 --no-save
+
+      - name: Comprobar conexión con Firestore
         env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
           EDICION: ${{ inputs.edicion }}
         run: |
-          echo "Ediciones Especiales"
-          echo "Edición seleccionada: $EDICION"
-          echo "Selector configurado correctamente."
-          echo "MODO PRUEBA: no se enviaron notificaciones."
+          node <<'NODE'
+          const { initializeApp, cert } = require("firebase-admin/app");
+          const { getFirestore } = require("firebase-admin/firestore");
+
+          async function probar() {
+            const secreto = process.env.FIREBASE_SERVICE_ACCOUNT;
+
+            if (!secreto) {
+              throw new Error("Falta FIREBASE_SERVICE_ACCOUNT");
+            }
+
+            const cuenta = JSON.parse(secreto);
+
+            if (cuenta.project_id !== "ediciones-especiales") {
+              throw new Error("La credencial pertenece a otro proyecto");
+            }
+
+            initializeApp({
+              credential: cert(cuenta)
+            });
+
+            const db = getFirestore();
+
+            const usuarios = await db
+              .collection("suscripciones")
+              .listDocuments();
+
+            console.log("Conexión con Firebase correcta.");
+            console.log("Edición:", process.env.EDICION);
+            console.log("Registros encontrados:", usuarios.length);
+            console.log("MODO PRUEBA: no se enviaron notificaciones.");
+          }
+
+          probar().catch(error => {
+            console.error("Falló la conexión:", error.message);
+            process.exitCode = 1;
+          });
+          NODE
