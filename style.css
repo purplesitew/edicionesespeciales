@@ -168,3 +168,23 @@ body {
         font-size: 32px;
     }
 }
+
+/* ==========================================
+   BOTÓN DESCARGAR CREDENCIAL
+   ========================================== */
+
+#btnDescargar {
+    background: linear-gradient(
+        135deg,
+        #7b2cbf,
+        #b155e8
+    );
+
+    color: #ffffff;
+    border: 2px solid #e0b3ff;
+    border-radius: 12px;
+
+    padding: 12px 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
