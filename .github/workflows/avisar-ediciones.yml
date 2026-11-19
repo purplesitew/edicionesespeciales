@@ -1,7 +1,7 @@
 
 # ==========================================
 # EDICIONES ESPECIALES
-# GITHUB ACTIONS + FIREBASE
+# PRUEBA DE SUSCRIPTORES FIREBASE
 # ==========================================
 
 name: Avisar ediciones especiales
@@ -46,7 +46,7 @@ jobs:
       - name: Instalar Firebase Admin
         run: npm install firebase-admin@13 --no-save
 
-      - name: Comprobar conexión con Firestore
+      - name: Comprobar suscriptores en Firestore
         env:
           FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
           EDICION: ${{ inputs.edicion }}
@@ -56,6 +56,7 @@ jobs:
           const { getFirestore } = require("firebase-admin/firestore");
 
           async function probar() {
+
             const secreto = process.env.FIREBASE_SERVICE_ACCOUNT;
 
             if (!secreto) {
@@ -74,51 +75,53 @@ jobs:
 
             const db = getFirestore();
 
-           
-const usuarios = await db
-  .collection("suscripciones")
-  .listDocuments();
+            const usuarios = await db
+              .collection("suscripciones")
+              .listDocuments();
 
-const edicion = process.env.EDICION;
-const idEdicion = edicion.replace(/\.jpg$/i, "");
+            const edicion = process.env.EDICION;
+            const idEdicion = edicion.replace(/\.jpg$/i, "");
 
-let suscriptores = 0;
-let dispositivos = 0;
+            let suscriptores = 0;
+            let dispositivos = 0;
 
-for (const usuario of usuarios) {
+            for (const usuario of usuarios) {
 
-  const solicitud = await usuario
-    .collection("ediciones")
-    .doc(idEdicion)
-    .get();
+              const solicitud = await usuario
+                .collection("ediciones")
+                .doc(idEdicion)
+                .get();
 
-  if (!solicitud.exists ||
-      solicitud.data().activa !== true) {
-    continue;
-  }
+              if (!solicitud.exists ||
+                  solicitud.data().activa !== true) {
+                continue;
+              }
 
-  suscriptores++;
+              suscriptores++;
 
-  const registros = await usuario
-    .collection("dispositivos")
-    .get();
+              const registros = await usuario
+                .collection("dispositivos")
+                .get();
 
-  registros.forEach((registro) => {
-    const datos = registro.data();
+              registros.forEach((registro) => {
 
-    if (typeof datos.token === "string" &&
-        datos.token.length > 0) {
-      dispositivos++;
-    }
-  });
-}
+                const datos = registro.data();
 
-console.log("Conexión con Firebase correcta.");
-console.log("Edición:", edicion);
-console.log("Usuarios registrados:", usuarios.length);
-console.log("Suscriptores de esta edición:", suscriptores);
-console.log("Dispositivos para avisar:", dispositivos);
-console.log("MODO PRUEBA: no se enviaron notificaciones.");
+                if (typeof datos.token === "string" &&
+                    datos.token.length > 0) {
+                  dispositivos++;
+                }
+
+              });
+
+            }
+
+            console.log("Conexión con Firebase correcta.");
+            console.log("Edición:", edicion);
+            console.log("Usuarios registrados:", usuarios.length);
+            console.log("Suscriptores de esta edición:", suscriptores);
+            console.log("Dispositivos para avisar:", dispositivos);
+            console.log("MODO PRUEBA: no se enviaron notificaciones.");
 
           }
 
