@@ -289,3 +289,35 @@ body {
 #btnDescargaAlternativa.oculta {
     display: none !important;
 }
+
+
+/* ==========================================
+   BOTÓN DE AVISO - EDICIONES PENDIENTES
+   ========================================== */
+
+#btnAvisarEdicion {
+    background: linear-gradient(
+        135deg,
+        #6a0dad,
+        #b34dff
+    );
+
+    color: #ffffff;
+    border: 2px solid #d5a5ff;
+    border-radius: 12px;
+
+    padding: 13px 16px;
+    font-size: 13px;
+    font-weight: bold;
+
+    cursor: pointer;
+    max-width: 100%;
+}
+
+/* ACOMODAR BOTONES EN CELULAR */
+
+.botones-vista {
+    flex-wrap: wrap;
+    align-items: center;
+}
+
