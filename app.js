@@ -48,24 +48,38 @@ const calendarios = [
     "E8.jpg"
 ];
 
-// Nuevas ediciones: personalización pendiente
+
+// ==========================================
+// EDICIONES AGRUPADAS POR TEMÁTICA
+// ==========================================
+
 const edicionesPendientes = [
+
+    // 🎂 CUMPLEAÑOS Y FELICITACIONES
     "felicitacionjimininstarmy.jpg",
-    "welcomebts.jpg",
-    "instaarmygolden.jpg",
+    "felicitacionjiminkorean.jpg",
     "felicitacionVinstaarmy.jpg",
     "felicitacionsugainstaarmy.jpg",
-    "felicitacionjiminkorean.jpg",
-    "runjininstaarmy.jpg",
-    "instaarmybankplatinum.jpg",
-    "Mndiainstaarmy.jpg",
     "felicitacionJKinstaarmy.jpg",
+
+    // 💳 CREDENCIALES BANCARIAS
     "instaarmybank.jpg",
+    "instaarmybankplatinum.jpg",
+    "instaarmygolden.jpg",
+    "instaarmybienestar.jpg",
+
+    // 📜 DIPLOMAS Y CERTIFICADOS
     "diplomainstaarmy.jpg",
     "CertificadodebautismoInstaarmy.jpg",
-    "instaarmyswim.jpg",
-    "instaarmybienestar.jpg"
+
+    // 💜 OTRAS EDICIONES
+    "welcomebts.jpg",
+    "runjininstaarmy.jpg",
+    "Mndiainstaarmy.jpg",
+    "instaarmyswim.jpg"
+
 ];
+
 
 const todosLosDisenos = [
     ...calendarios,
