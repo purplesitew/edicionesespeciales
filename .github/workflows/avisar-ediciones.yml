@@ -1,0 +1,49 @@
+
+# ==========================================
+# EDICIONES ESPECIALES
+# AVISOS DE DISPONIBILIDAD
+# ==========================================
+
+name: Avisar ediciones especiales
+
+# Ejecutar solamente cuando tú lo decidas
+on:
+  workflow_dispatch:
+    inputs:
+      edicion:
+        description: "Selecciona la edición que terminaste"
+        required: true
+        type: choice
+        options:
+          - felicitacionjimininstarmy.jpg
+          - felicitacionjiminkorean.jpg
+          - felicitacionVinstaarmy.jpg
+          - felicitacionsugainstaarmy.jpg
+          - felicitacionJKinstaarmy.jpg
+          - instaarmybank.jpg
+          - instaarmybankplatinum.jpg
+          - instaarmygolden.jpg
+          - instaarmybienestar.jpg
+          - diplomainstaarmy.jpg
+          - CertificadodebautismoInstaarmy.jpg
+          - welcomebts.jpg
+          - runjininstaarmy.jpg
+          - Mndiainstaarmy.jpg
+          - instaarmyswim.jpg
+
+permissions:
+  contents: read
+
+jobs:
+  preparar-aviso:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Confirmar edición seleccionada
+        env:
+          EDICION: ${{ inputs.edicion }}
+        run: |
+          echo "Ediciones Especiales"
+          echo "Edición seleccionada: $EDICION"
+          echo "Selector configurado correctamente."
+          echo "MODO PRUEBA: no se enviaron notificaciones."
