@@ -1,1 +1,170 @@
 
+/* ==========================================
+   CONFIGURACIÓN GENERAL
+   ========================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+
+    background-color: #180b24;
+    background-image: url("./fondo.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+
+    color: white;
+    text-align: center;
+}
+
+.oculta {
+    display: none !important;
+}
+
+/* ==========================================
+   PANTALLA DE INICIO
+   ========================================== */
+
+#pantalla-inicio {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100dvh;
+
+    z-index: 9999;
+    background: #180b24;
+}
+
+#pantalla-inicio img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ==========================================
+   APLICACIÓN PRINCIPAL
+   ========================================== */
+
+#aplicacion {
+    min-height: 100dvh;
+    padding: 20px 12px 50px;
+}
+
+#menu-disenos h1 {
+    color: #e3baff;
+    font-size: 25px;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 8px #350452;
+}
+
+#menu-disenos p {
+    font-size: 16px;
+    margin-bottom: 25px;
+}
+
+/* ==========================================
+   GALERÍA DE DISEÑOS
+   ========================================== */
+
+#lista-disenos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+
+    width: 100%;
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+.plantilla-diseno {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    border: 2px solid #c58aff;
+
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* ==========================================
+   VISTA PREVIA AMPLIADA
+   ========================================== */
+
+#vista-previa {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+
+    background: rgba(10, 0, 20, 0.9);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 15px;
+}
+
+.contenido-vista-previa {
+    width: 100%;
+    max-width: 420px;
+    max-height: 95dvh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+#imagen-vista-previa {
+    display: block;
+    max-width: 100%;
+    max-height: 75dvh;
+    object-fit: contain;
+
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(197, 138, 255, 0.4);
+}
+
+.botones-vista {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.botones-vista button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 12px;
+
+    background: #6a0dad;
+    color: white;
+
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#btnCerrar {
+    background: #a52a7a;
+}
+
+/* ==========================================
+   AJUSTES PARA COMPUTADORA
+   ========================================== */
+
+@media (min-width: 900px) {
+
+    #lista-disenos {
+        grid-template-columns: repeat(5, 1fr);
+    }
+
+    #menu-disenos h1 {
+        font-size: 32px;
+    }
+}
