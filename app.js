@@ -158,8 +158,6 @@ if (btnAvisarEdicion) {
 
     });
 
-}
-
 
 }
 
