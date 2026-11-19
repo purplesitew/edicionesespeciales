@@ -1,1 +1,65 @@
 
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Ediciones Especiales</title>
+
+    <link rel="stylesheet" href="./style.css">
+    <link rel="manifest" href="./manifest.json">
+</head>
+
+<body>
+
+    <!-- PANTALLA DE INICIO -->
+    <div id="pantalla-inicio">
+        <img src="./inicio.jpg" alt="Bienvenida">
+    </div>
+
+    <!-- APLICACIÓN PRINCIPAL -->
+    <main id="aplicacion" class="oculta">
+
+        <section id="menu-disenos">
+
+            <h1>EDICIONES ESPECIALES 💜</h1>
+
+            <p>Elige tu diseño favorito</p>
+
+            <div id="lista-disenos"></div>
+
+        </section>
+
+        <!-- VISTA PREVIA -->
+        <div id="vista-previa" class="oculta">
+
+            <div class="contenido-vista-previa">
+
+                <img id="imagen-vista-previa" alt="Vista previa">
+
+                <div class="botones-vista">
+
+                    <button id="btnCrear">
+                        CREAR 💜
+                    </button>
+
+                    <button id="btnCerrar">
+                        CERRAR
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <script src="./app.js"></script>
+
+</body>
+</html>
+
