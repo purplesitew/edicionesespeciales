@@ -74,14 +74,52 @@ jobs:
 
             const db = getFirestore();
 
-            const usuarios = await db
-              .collection("suscripciones")
-              .listDocuments();
+           
+const usuarios = await db
+  .collection("suscripciones")
+  .listDocuments();
 
-            console.log("Conexión con Firebase correcta.");
-            console.log("Edición:", process.env.EDICION);
-            console.log("Registros encontrados:", usuarios.length);
-            console.log("MODO PRUEBA: no se enviaron notificaciones.");
+const edicion = process.env.EDICION;
+const idEdicion = edicion.replace(/\.jpg$/i, "");
+
+let suscriptores = 0;
+let dispositivos = 0;
+
+for (const usuario of usuarios) {
+
+  const solicitud = await usuario
+    .collection("ediciones")
+    .doc(idEdicion)
+    .get();
+
+  if (!solicitud.exists ||
+      solicitud.data().activa !== true) {
+    continue;
+  }
+
+  suscriptores++;
+
+  const registros = await usuario
+    .collection("dispositivos")
+    .get();
+
+  registros.forEach((registro) => {
+    const datos = registro.data();
+
+    if (typeof datos.token === "string" &&
+        datos.token.length > 0) {
+      dispositivos++;
+    }
+  });
+}
+
+console.log("Conexión con Firebase correcta.");
+console.log("Edición:", edicion);
+console.log("Usuarios registrados:", usuarios.length);
+console.log("Suscriptores de esta edición:", suscriptores);
+console.log("Dispositivos para avisar:", dispositivos);
+console.log("MODO PRUEBA: no se enviaron notificaciones.");
+
           }
 
           probar().catch(error => {
