@@ -31,31 +31,108 @@ document.addEventListener("DOMContentLoaded", () => {
     // DE DISEÑOS QUE SUBAS A GITHUB
    const cantidadDisenos = 8;
 
-    for (let i = 1; i <= cantidadDisenos; i++) {
+    
+// ==========================================
+// GALERÍA DE EDICIONES ESPECIALES
+// ==========================================
 
-        const imagen = document.createElement("img");
+// Primeras 8 imágenes: descarga disponible
+const calendarios = [
+    "E1.jpg",
+    "E2.jpg",
+    "E3.jpg",
+    "E4.jpg",
+    "E5.jpg",
+    "E6.jpg",
+    "E7.jpg",
+    "E8.jpg"
+];
 
-        imagen.src = `./E${i}.jpg`;
-        imagen.alt = `Diseño ${i}`;
-        imagen.className = "plantilla-diseno";
+// Nuevas ediciones: personalización pendiente
+const edicionesPendientes = [
+    "felicitacionjimininstarmy.jpg",
+    "welcomebts.jpg",
+    "instaarmygolden.jpg",
+    "felicitacionVinstaarmy.jpg",
+    "felicitacionsugainstaarmy.jpg",
+    "felicitacionjiminkorean.jpg",
+    "runjininstaarmy.jpg",
+    "instaarmybankplatinum.jpg",
+    "Mndiainstaarmy.jpg",
+    "felicitacionJKinstaarmy.jpg",
+    "instaarmybank.jpg",
+    "diplomainstaarmy.jpg",
+    "CertificadodebautismoInstaarmy.jpg",
+    "instaarmyswim.jpg",
+    "instaarmybienestar.jpg"
+];
 
-        // No mostrar imágenes que todavía no existan
-        imagen.onerror = () => {
-            imagen.remove();
-        };
+const todosLosDisenos = [
+    ...calendarios,
+    ...edicionesPendientes
+];
 
-        imagen.addEventListener("click", () => {
+const btnAvisarEdicion = document.getElementById(
+    "btnAvisarEdicion"
+);
 
-            disenoSeleccionado = `E${i}.jpg`;
+todosLosDisenos.forEach((archivo) => {
 
-            imagenVistaPrevia.src = `./${disenoSeleccionado}`;
+    const imagen = document.createElement("img");
 
-            vistaPrevia.classList.remove("oculta");
+    imagen.src = "./" + archivo;
+    imagen.alt = "Edición especial " + archivo;
+    imagen.className = "plantilla-diseno";
+    imagen.loading = "lazy";
 
-        });
+    // Ocultar únicamente imágenes que no carguen
+    imagen.onerror = () => {
+        imagen.remove();
+    };
 
-        listaDisenos.appendChild(imagen);
-    }
+    imagen.addEventListener("click", () => {
+
+        disenoSeleccionado = archivo;
+
+        imagenVistaPrevia.src = "./" + archivo;
+
+        const esCalendario = calendarios.includes(archivo);
+
+        // E1-E8 conservan su descarga y TikTok
+        btnDescargar.style.display = esCalendario
+            ? "inline-block"
+            : "none";
+
+        // Las otras 15 muestran AVÍSAME
+        if (btnAvisarEdicion) {
+            btnAvisarEdicion.style.display = esCalendario
+                ? "none"
+                : "inline-block";
+        }
+
+        vistaPrevia.classList.remove("oculta");
+
+    });
+
+    listaDisenos.appendChild(imagen);
+
+});
+
+// Botón informativo mientras configuramos los avisos push
+if (btnAvisarEdicion) {
+
+    btnAvisarEdicion.addEventListener("click", () => {
+
+        alert(
+            "💜 Esta edición estará disponible próximamente.\n\n" +
+            "Estamos preparando las notificaciones " +
+            "para avisarte cuando puedas personalizarla."
+        );
+
+    });
+
+}
+
 
 
     // ==========================================
