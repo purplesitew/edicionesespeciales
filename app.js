@@ -132,18 +132,34 @@ todosLosDisenos.forEach((archivo) => {
 
 });
 
-// Botón informativo mientras configuramos los avisos push
+
+// ==========================================
+// BOTÓN AVÍSAME - EDICIONES ESPECIALES
+// ==========================================
+
 if (btnAvisarEdicion) {
 
     btnAvisarEdicion.addEventListener("click", () => {
 
-        alert(
-            "💜 Esta edición estará disponible próximamente.\n\n" +
-            "Estamos preparando las notificaciones " +
-            "para avisarte cuando puedas personalizarla."
+        if (!disenoSeleccionado) {
+            alert("Primero selecciona una edición.");
+            return;
+        }
+
+        // Enviar la edición seleccionada
+        // al sistema de notificaciones
+        window.dispatchEvent(
+            new CustomEvent("solicitarAvisoEdicion", {
+                detail: {
+                    edicion: disenoSeleccionado
+                }
+            })
         );
 
     });
+
+}
+
 
 }
 
