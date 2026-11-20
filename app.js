@@ -852,6 +852,7 @@ async function crearImagenTikTokEdicion(imagenOriginal) {
 }
 
     
+
 // ==========================================
 // PREPARAR INSTA ARMY BANK PARA TIKTOK
 // ==========================================
@@ -865,35 +866,24 @@ async function prepararTikTokInstaArmyBank() {
 
     try {
 
-        // Imagen original con el nombre de la ARMY
+        // Imagen original con el nombre personalizado
         const imagenOriginal = canvasBank.toDataURL(
             "image/jpeg",
             0.98
         );
 
-        // Archivo original para descargar
+        // Convertir la imagen original en archivo
         const respuestaOriginal = await fetch(imagenOriginal);
         const blobOriginal = await respuestaOriginal.blob();
 
-        // ==========================================
-// CREAR URL PARA DESCARGAR INSTA ARMY BANK
-// ==========================================
-
-if (calendarioURL) {
-    URL.revokeObjectURL(calendarioURL);
-}
-
-calendarioURL = URL.createObjectURL(
-    calendarioArchivo
-);
-        
-        calendarioArchivo = new File(
+        // CREAR PRIMERO EL ARCHIVO
+        const nuevoArchivo = new File(
             [blobOriginal],
             "InstaArmyBank.jpg",
             { type: "image/jpeg" }
         );
 
-        // Copia con el mensaje grande para TikTok
+        // Preparar copia con texto para TikTok
         const imagenTikTok = await crearImagenTikTokEdicion(
             imagenOriginal
         );
@@ -901,11 +891,24 @@ calendarioURL = URL.createObjectURL(
         const respuestaTikTok = await fetch(imagenTikTok);
         const blobTikTok = await respuestaTikTok.blob();
 
-        archivoTikTokPreparado = new File(
+        const nuevoArchivoTikTok = new File(
             [blobTikTok],
             "InstaArmyBank-TikTok.jpg",
             { type: "image/jpeg" }
         );
+
+        // Crear dirección de descarga del archivo original
+        const nuevaURL = URL.createObjectURL(nuevoArchivo);
+
+        // Limpiar la dirección anterior
+        if (calendarioURL) {
+            URL.revokeObjectURL(calendarioURL);
+        }
+
+        // Guardar los archivos preparados
+        calendarioArchivo = nuevoArchivo;
+        calendarioURL = nuevaURL;
+        archivoTikTokPreparado = nuevoArchivoTikTok;
 
         return true;
 
@@ -919,10 +922,10 @@ calendarioURL = URL.createObjectURL(
         alert("No se pudo preparar la tarjeta para TikTok.");
 
         return false;
+
     }
 
 }
-
 
  // ==========================================
  // DESCARGAR INSTA ARMY BANK CON TIKTOK
