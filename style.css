@@ -321,3 +321,131 @@ body {
     align-items: center;
 }
 
+/* ==========================================
+   EDITOR EXCLUSIVO INSTA ARMY BANK
+   ========================================== */
+
+/* FUENTE ORIGINAL DE LA TARJETA */
+
+@font-face {
+    font-family: "PraysireDemo";
+    src: url("./Praysire%20Demo.otf") format("opentype");
+    font-display: swap;
+}
+
+/* CONTENEDOR PRINCIPAL */
+
+#editor-instaarmybank {
+    width: 100%;
+    min-height: 100dvh;
+    padding: 25px 12px 50px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+/* CAJA DEL EDITOR */
+
+.editor-bank-caja {
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 22px 15px;
+
+    background: rgba(24, 11, 36, 0.95);
+    border: 2px solid #c58aff;
+    border-radius: 20px;
+
+    box-shadow: 0 0 25px rgba(197, 138, 255, 0.3);
+}
+
+.editor-bank-caja h2 {
+    color: #e8c4ff;
+    font-size: 22px;
+    margin-bottom: 12px;
+}
+
+.editor-bank-caja p {
+    color: #ffffff;
+    font-size: 14px;
+    margin-bottom: 18px;
+}
+
+.editor-bank-caja label {
+    display: block;
+    color: #e8c4ff;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* CAMPO PARA ESCRIBIR NOMBRE */
+
+#nombreInstaArmyBank {
+    display: block;
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto 20px;
+    padding: 14px;
+
+    border: 2px solid #c58aff;
+    border-radius: 12px;
+
+    background: #ffffff;
+    color: #321047;
+
+    font-size: 17px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* BOTONES DEL EDITOR */
+
+#editor-instaarmybank button {
+    display: block;
+    width: 100%;
+    max-width: 360px;
+    margin: 12px auto;
+    padding: 14px 18px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: linear-gradient(135deg, #6a0dad, #a347ed);
+    color: #ffffff;
+
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#btnDescargarInstaArmyBank {
+    background: linear-gradient(135deg, #b88a25, #e6c46d) !important;
+    color: #24102d !important;
+}
+
+#btnCerrarInstaArmyBank {
+    background: #714e86 !important;
+}
+
+/* VISTA DE LA TARJETA PERSONALIZADA */
+
+.canvas-bank-contenedor {
+    width: 100%;
+    margin: 20px auto;
+    overflow: hidden;
+}
+
+#canvasInstaArmyBank {
+    display: block;
+    width: 100%;
+    max-width: 640px;
+    height: auto;
+
+    margin: 0 auto;
+
+    border: 2px solid #d9b85b;
+    border-radius: 14px;
+
+    background: #271337;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.45);
+}
+
