@@ -105,6 +105,26 @@ const todosLosDisenos = [
 const btnAvisarEdicion = document.getElementById(
     "btnAvisarEdicion"
 );
+    // Botón exclusivo para personalizar Insta Army Bank
+const btnPersonalizarBank = document.createElement("button");
+
+btnPersonalizarBank.type = "button";
+btnPersonalizarBank.id = "btnPersonalizarBank";
+btnPersonalizarBank.textContent = "💜 PERSONALIZAR MI TARJETA";
+btnPersonalizarBank.style.display = "none";
+
+btnPersonalizarBank.style.background = "#6a0dad";
+btnPersonalizarBank.style.color = "#ffffff";
+btnPersonalizarBank.style.border = "2px solid #c58aff";
+btnPersonalizarBank.style.borderRadius = "12px";
+btnPersonalizarBank.style.padding = "13px 16px";
+btnPersonalizarBank.style.fontWeight = "bold";
+btnPersonalizarBank.style.cursor = "pointer";
+
+btnAvisarEdicion.parentElement.insertBefore(
+    btnPersonalizarBank,
+    btnAvisarEdicion
+);
 
 todosLosDisenos.forEach((archivo) => {
 
@@ -133,12 +153,24 @@ todosLosDisenos.forEach((archivo) => {
             ? "inline-block"
             : "none";
 
-        // Las otras 15 muestran AVÍSAME
-        if (btnAvisarEdicion) {
-            btnAvisarEdicion.style.display = esCalendario
-                ? "none"
-                : "inline-block";
-        }
+       // ==========================================
+// BOTONES SEGÚN LA EDICIÓN SELECCIONADA
+// ==========================================
+
+const esBank = archivo === "instaarmybank.jpg";
+
+// Mostrar PERSONALIZAR solamente en Insta Army Bank
+btnPersonalizarBank.style.display = esBank
+    ? "inline-block"
+    : "none";
+
+// Mostrar AVÍSAME en las ediciones pendientes
+if (btnAvisarEdicion) {
+    btnAvisarEdicion.style.display =
+        (!esCalendario && !esBank)
+            ? "inline-block"
+            : "none";
+}
 
         vistaPrevia.classList.remove("oculta");
 
@@ -148,6 +180,24 @@ todosLosDisenos.forEach((archivo) => {
 
 });
 
+
+    // ==========================================
+    // ABRIR EDITOR INSTA ARMY BANK
+    // ==========================================
+
+    btnPersonalizarBank.addEventListener("click", () => {
+
+        // Cerrar vista previa
+        vistaPrevia.classList.add("oculta");
+
+        // Ocultar menú de diseños
+        document.getElementById("menu-disenos")
+            .classList.add("oculta");
+
+        // Abrir editor bancario
+        abrirEditorInstaArmyBank();
+
+    });
 
 // ==========================================
 // BOTÓN AVÍSAME - EDICIONES ESPECIALES
@@ -366,6 +416,259 @@ btnCerrarCompartir.addEventListener("click", () => {
 
 });
 
+
+// ==========================================
+// EDITOR EXCLUSIVO INSTA ARMY BANK
+// ==========================================
+
+const editorBank = document.getElementById(
+    "editor-instaarmybank"
+);
+
+const nombreBank = document.getElementById(
+    "nombreInstaArmyBank"
+);
+
+const btnGenerarBank = document.getElementById(
+    "btnGenerarInstaArmyBank"
+);
+
+const btnDescargarBank = document.getElementById(
+    "btnDescargarInstaArmyBank"
+);
+
+const btnCerrarBank = document.getElementById(
+    "btnCerrarInstaArmyBank"
+);
+
+const canvasBank = document.getElementById(
+    "canvasInstaArmyBank"
+);
+
+let tarjetaBankGenerada = false;
+
+
+// ==========================================
+// ABRIR EDITOR INSTA ARMY BANK
+// ==========================================
+
+function abrirEditorInstaArmyBank() {
+
+    if (!editorBank) return;
+
+    editorBank.classList.remove("oculta");
+
+    nombreBank.value = "";
+
+    btnDescargarBank.style.display = "none";
+
+    tarjetaBankGenerada = false;
+
+    editorBank.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+
+}
+
+
+// ==========================================
+// GENERAR TARJETA CON NOMBRE
+// ==========================================
+
+async function generarInstaArmyBank() {
+
+    const nombre = nombreBank.value.trim();
+
+    if (!nombre) {
+        alert("💜 Escribe el nombre para tu tarjeta.");
+        return;
+    }
+
+    try {
+
+        // Cargar fuente personalizada
+        await document.fonts.load(
+            '80px "PraysireDemo"'
+        );
+
+        // Cargar plantilla limpia
+        const plantilla = new Image();
+
+        plantilla.src = "./instaarmybankplantilla.jpg";
+
+        await plantilla.decode();
+
+        // Mantener las dimensiones originales
+        canvasBank.width = plantilla.naturalWidth;
+        canvasBank.height = plantilla.naturalHeight;
+
+        const ctx = canvasBank.getContext("2d");
+
+        ctx.clearRect(
+            0,
+            0,
+            canvasBank.width,
+            canvasBank.height
+        );
+
+        ctx.drawImage(
+            plantilla,
+            0,
+            0,
+            canvasBank.width,
+            canvasBank.height
+        );
+
+        // ==================================
+        // COORDENADAS DEL NOMBRE
+        // ==================================
+
+        const ancho = canvasBank.width;
+        const alto = canvasBank.height;
+
+        const centroX = ancho * 0.50;
+        const centroY = alto * 0.71;
+
+        const anchoMaximo = ancho * 0.86;
+
+        let tamano = ancho * 0.08;
+
+        ctx.save();
+
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.lineJoin = "round";
+
+        // Ajustar texto al espacio disponible
+        ctx.font = `${tamano}px "PraysireDemo"`;
+
+        while (
+            ctx.measureText(nombre).width > anchoMaximo &&
+            tamano > 20
+        ) {
+
+            tamano -= 2;
+
+            ctx.font = `${tamano}px "PraysireDemo"`;
+
+        }
+
+        // Color dorado con contorno morado
+        ctx.fillStyle = "#d8b45b";
+        ctx.strokeStyle = "#6f4a8b";
+
+        ctx.lineWidth = Math.max(3, tamano * 0.075);
+
+        ctx.strokeText(
+            nombre,
+            centroX,
+            centroY,
+            anchoMaximo
+        );
+
+        ctx.fillText(
+            nombre,
+            centroX,
+            centroY,
+            anchoMaximo
+        );
+
+        ctx.restore();
+
+        tarjetaBankGenerada = true;
+
+        btnDescargarBank.style.display = "block";
+
+    } catch (error) {
+
+        console.error(
+            "Error al generar Insta Army Bank:",
+            error
+        );
+
+        alert(
+            "No se pudo generar la tarjeta. " +
+            "Revisa la plantilla y la fuente."
+        );
+
+    }
+
+}
+
+
+// ==========================================
+// DESCARGAR TARJETA PERSONALIZADA
+// ==========================================
+
+function descargarInstaArmyBank() {
+
+    if (!tarjetaBankGenerada) {
+
+        alert("Primero genera tu tarjeta 💜");
+        return;
+
+    }
+
+    const enlace = document.createElement("a");
+
+    enlace.href = canvasBank.toDataURL(
+        "image/jpeg",
+        0.98
+    );
+
+    enlace.download = "InstaArmyBank.jpg";
+
+    document.body.appendChild(enlace);
+
+    enlace.click();
+
+    enlace.remove();
+
+}
+
+
+// ==========================================
+// BOTONES DEL EDITOR
+// ==========================================
+
+if (btnGenerarBank) {
+
+    btnGenerarBank.addEventListener(
+        "click",
+        generarInstaArmyBank
+    );
+
+}
+
+if (btnDescargarBank) {
+
+    btnDescargarBank.addEventListener(
+        "click",
+        descargarInstaArmyBank
+    );
+
+}
+
+if (btnCerrarBank) {
+
+    btnCerrarBank.addEventListener("click", () => {
+
+        // Cerrar editor
+        editorBank.classList.add("oculta");
+
+        // Regresar al menú de diseños
+        document.getElementById("menu-disenos")
+            .classList.remove("oculta");
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    });
+
+}
 
     // ==========================================
     // REGISTRAR SERVICE WORKER
