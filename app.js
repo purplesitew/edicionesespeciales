@@ -851,49 +851,130 @@ async function crearImagenTikTokEdicion(imagenOriginal) {
 
 }
 
+    
 // ==========================================
-// DESCARGAR TARJETA PERSONALIZADA
+// PREPARAR INSTA ARMY BANK PARA TIKTOK
 // ==========================================
 
-function descargarInstaArmyBank() {
+async function prepararTikTokInstaArmyBank() {
 
     if (!tarjetaBankGenerada) {
+        alert("Primero genera tu tarjeta 💜");
+        return false;
+    }
 
+    try {
+
+        // Imagen original con el nombre de la ARMY
+        const imagenOriginal = canvasBank.toDataURL(
+            "image/jpeg",
+            0.98
+        );
+
+        // Archivo original para descargar
+        const respuestaOriginal = await fetch(imagenOriginal);
+        const blobOriginal = await respuestaOriginal.blob();
+
+        // ==========================================
+// CREAR URL PARA DESCARGAR INSTA ARMY BANK
+// ==========================================
+
+if (calendarioURL) {
+    URL.revokeObjectURL(calendarioURL);
+}
+
+calendarioURL = URL.createObjectURL(
+    calendarioArchivo
+);
+        
+        calendarioArchivo = new File(
+            [blobOriginal],
+            "InstaArmyBank.jpg",
+            { type: "image/jpeg" }
+        );
+
+        // Copia con el mensaje grande para TikTok
+        const imagenTikTok = await crearImagenTikTokEdicion(
+            imagenOriginal
+        );
+
+        const respuestaTikTok = await fetch(imagenTikTok);
+        const blobTikTok = await respuestaTikTok.blob();
+
+        archivoTikTokPreparado = new File(
+            [blobTikTok],
+            "InstaArmyBank-TikTok.jpg",
+            { type: "image/jpeg" }
+        );
+
+        return true;
+
+    } catch (error) {
+
+        console.error(
+            "Error preparando Insta Army Bank para TikTok:",
+            error
+        );
+
+        alert("No se pudo preparar la tarjeta para TikTok.");
+
+        return false;
+    }
+
+}
+
+
+ // ==========================================
+ // DESCARGAR INSTA ARMY BANK CON TIKTOK
+ // ==========================================
+
+async function descargarInstaArmyBank() {
+
+    if (!tarjetaBankGenerada) {
         alert("Primero genera tu tarjeta 💜");
         return;
+    }
+
+    // Evitar que se abra varias veces
+    btnDescargarBank.disabled = true;
+
+    try {
+
+        // Preparar la tarjeta original y la de TikTok
+        const preparado = await prepararTikTokInstaArmyBank();
+
+        if (!preparado) return;
+
+        // Mostrar ventana de TikTok existente
+        modalTikTok.classList.remove("oculta");
+
+        // Restaurar mensaje de invitación
+        mensajeTikTok.textContent =
+            "💜 ¡Tu edición especial está lista! " +
+            "Apóyanos compartiéndola en TikTok.";
+
+        // Ocultar descarga alternativa al abrir
+        btnDescargaAlternativa.classList.add("oculta");
+
+    } catch (error) {
+
+        console.error(
+            "Error abriendo TikTok para Insta Army Bank:",
+            error
+        );
+
+        alert("No se pudo preparar tu tarjeta.");
+
+    } finally {
+
+        btnDescargarBank.disabled = false;
 
     }
 
-    const enlace = document.createElement("a");
-
-    enlace.href = canvasBank.toDataURL(
-        "image/jpeg",
-        0.98
-    );
-
-    enlace.download = "InstaArmyBank.jpg";
-
-    document.body.appendChild(enlace);
-
-    enlace.click();
-
-    enlace.remove();
-
 }
-
-
 // ==========================================
-// BOTONES DEL EDITOR
+// ACTIVAR BOTÓN DESCARGAR INSTA ARMY BANK
 // ==========================================
-
-if (btnGenerarBank) {
-
-    btnGenerarBank.addEventListener(
-        "click",
-        generarInstaArmyBank
-    );
-
-}
 
 if (btnDescargarBank) {
 
@@ -901,26 +982,6 @@ if (btnDescargarBank) {
         "click",
         descargarInstaArmyBank
     );
-
-}
-
-if (btnCerrarBank) {
-
-    btnCerrarBank.addEventListener("click", () => {
-
-        // Cerrar editor
-        editorBank.classList.add("oculta");
-
-        // Regresar al menú de diseños
-        document.getElementById("menu-disenos")
-            .classList.remove("oculta");
-
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-
-    });
 
 }
 
