@@ -24,6 +24,17 @@ on:
           - runjininstaarmy.jpg
           - Mndiainstaarmy.jpg
           - instaarmyswim.jpg
+          
+          - instaarmyfelicitacionjin.jpg
+          - mcmorialinstaarmy.jpg
+          - instaarmyfesta2026.jpg
+          - instaarmy2026.jpg
+          - instaarmycomeback.jpg
+          - instarmymember.jpg
+          - instaarmyhoseok.jpg
+          - armyween.jpg
+          - Etiquetacola.jpg
+
 
       modo:
         description: "¿Probar o enviar notificaciones?"
