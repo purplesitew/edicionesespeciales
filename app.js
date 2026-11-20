@@ -76,7 +76,23 @@ const edicionesPendientes = [
     "welcomebts.jpg",
     "runjininstaarmy.jpg",
     "Mndiainstaarmy.jpg",
-    "instaarmyswim.jpg"
+    
+"instaarmyswim.jpg",
+
+// ==========================================
+// NUEVAS EDICIONES ESPECIALES
+// ==========================================
+
+"instaarmyfelicitacionjin.jpg",
+"mcmorialinstaarmy.jpg",
+"instaarmyfesta2026.jpg",
+"instaarmy2026.jpg",
+"instaarmycomeback.jpg",
+"instarmymember.jpg",
+"instaarmyhoseok.jpg",
+"armyween.jpg",
+"Etiquetacola.jpg"
+
 
 ];
 
