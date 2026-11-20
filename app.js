@@ -259,6 +259,7 @@ const mensajeTikTok = document.getElementById("mensajeCompartirTikTok");
 
 let calendarioArchivo = null;
 let calendarioURL = null;
+    let archivoTikTokPreparado = null;
 
 
 // ==========================================
@@ -279,6 +280,7 @@ btnDescargar.addEventListener("click", async () => {
     mensajeTikTok.textContent = "Preparando calendario...";
 
     calendarioArchivo = null;
+    archivoTikTokPreparado = null;
 
     if (calendarioURL) {
         URL.revokeObjectURL(calendarioURL);
@@ -304,6 +306,38 @@ btnDescargar.addEventListener("click", async () => {
         );
 
         calendarioURL = URL.createObjectURL(imagen);
+        
+        // ==========================================
+        // PREPARAR IMAGEN CON TEXTO PARA TIKTOK
+        // ANTES DE QUE LA ARMY TOQUE COMPARTIR
+        // ==========================================
+
+        try {
+
+            const imagenConTexto =
+                await crearImagenTikTokEdicion(calendarioURL);
+
+            const respuestaTikTok = await fetch(imagenConTexto);
+
+            const blobTikTok = await respuestaTikTok.blob();
+
+            archivoTikTokPreparado = new File(
+                [blobTikTok],
+                "EdicionesEspeciales-TikTok.jpg",
+                { type: "image/jpeg" }
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Error preparando imagen para TikTok:",
+                error
+            );
+
+            archivoTikTokPreparado = null;
+
+        }
+
 
         btnCompartirTikTok.disabled = false;
 
@@ -463,66 +497,66 @@ async function crearArchivoParaTikTok() {
 }
 
 
+/
 // ==========================================
-// COMPARTIR EN TIKTOK Y DESCARGAR
+// COMPARTIR EN TIKTOK Y DESCARGAR ORIGINAL
 // ==========================================
 
-btnCompartirTikTok.addEventListener("click", async () => {
+btnCompartirTikTok.addEventListener("click", () => {
 
     if (!calendarioArchivo) return;
 
-    try {
+    if (!archivoTikTokPreparado) {
 
-        // Descargar la credencial original
-        descargarCalendarioSeleccionado();
+        mensajeTikTok.textContent =
+            "La imagen para TikTok todavía no está lista. " +
+            "Inténtalo nuevamente.";
 
-        // Crear la versión con texto para TikTok
-        const archivoTikTok = await crearArchivoParaTikTok();
+        return;
+    }
 
-        if (!archivoTikTok) {
-            throw new Error("No se pudo crear el archivo para TikTok.");
-        }
-
-        const puedeCompartir =
-            typeof navigator.share === "function" &&
-            typeof navigator.canShare === "function" &&
-            navigator.canShare({
-                files: [archivoTikTok]
-            });
-
-        if (!puedeCompartir) {
-
-            mensajeTikTok.textContent =
-                "Tu credencial ya se descargó. " +
-                "Si tu dispositivo no permite compartirla directo, " +
-                "puedes subirla manualmente a TikTok desde tu galería.";
-
-            btnDescargaAlternativa.classList.remove("oculta");
-            return;
-        }
-
-        await navigator.share({
-            files: [archivoTikTok],
-            title: "Ediciones Especiales",
-            text: "QUÉ FÁCIL TENER LAS EDICIONES ESPECIALES 💜"
+    const puedeCompartir =
+        typeof navigator.share === "function" &&
+        typeof navigator.canShare === "function" &&
+        navigator.canShare({
+            files: [archivoTikTokPreparado]
         });
 
-    } catch (error) {
+    // Iniciar descarga de la imagen original
+    descargarCalendarioSeleccionado();
 
-        if (error.name === "AbortError") {
-            return;
-        }
+    if (!puedeCompartir) {
+
+        mensajeTikTok.textContent =
+            "Tu calendario se intentó descargar, pero " +
+            "este navegador no permite compartir imágenes " +
+            "directamente. Puedes subirlo manualmente a TikTok.";
+
+        btnDescargaAlternativa.classList.remove("oculta");
+
+        return;
+    }
+
+    // IMPORTANTE:
+    // Abrir compartir directamente, sin await previo
+    navigator.share({
+        files: [archivoTikTokPreparado],
+        title: "Ediciones Especiales",
+        text: "QUÉ FÁCIL TENER LAS EDICIONES ESPECIALES 💜"
+    }).catch((error) => {
+
+        if (error.name === "AbortError") return;
 
         console.error("Error al compartir:", error);
 
         mensajeTikTok.textContent =
-            "Se descargó tu credencial, pero no se pudo abrir " +
-            "el menú para compartir. Puedes subirla manualmente a TikTok.";
+            "No se pudo abrir el menú para compartir. " +
+            "Intenta nuevamente.";
 
-        btnDescargaAlternativa.classList.remove("oculta");
-    }
+    });
 
 });
+
 // ==========================================
 // DESCARGA ALTERNATIVA
 // ==========================================
