@@ -986,6 +986,18 @@ if (btnDescargarBank) {
 }
 
     // ==========================================
+// ACTIVAR BOTÓN GENERAR INSTA ARMY BANK
+// ==========================================
+
+if (btnGenerarBank) {
+
+    btnGenerarBank.addEventListener(
+        "click",
+        generarInstaArmyBank
+    );
+
+}
+    // ==========================================
     // REGISTRAR SERVICE WORKER
     // ==========================================
 
