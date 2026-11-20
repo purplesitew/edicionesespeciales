@@ -598,6 +598,98 @@ async function generarInstaArmyBank() {
 
 
 // ==========================================
+// IMAGEN PARA TIKTOK - EDICIONES ESPECIALES
+// FUNCIONA CON TODAS LAS EDICIONES
+// ==========================================
+
+async function crearImagenTikTokEdicion(imagenOriginal) {
+
+    const imagen = new Image();
+
+    const ruta = typeof imagenOriginal === "string"
+        ? imagenOriginal
+        : imagenOriginal.toDataURL("image/png");
+
+    imagen.src = ruta;
+
+    await imagen.decode();
+
+    const canvasTikTok = document.createElement("canvas");
+
+    canvasTikTok.width = imagen.naturalWidth;
+    canvasTikTok.height = imagen.naturalHeight;
+
+    const ctx = canvasTikTok.getContext("2d");
+
+    const ancho = canvasTikTok.width;
+    const alto = canvasTikTok.height;
+
+    // Dibujar la edición original
+    ctx.drawImage(imagen, 0, 0, ancho, alto);
+
+    // Franja morada semitransparente
+    const altoFranja = alto * 0.34;
+    const inicioFranja = (alto - altoFranja) / 2;
+
+    ctx.fillStyle = "rgba(55, 10, 80, 0.78)";
+    ctx.fillRect(0, inicioFranja, ancho, altoFranja);
+
+    // Mensaje que aparecerá en TikTok
+    const lineas = [
+        "QUÉ FÁCIL TENER",
+        "LAS EDICIONES",
+        "ESPECIALES 💜"
+    ];
+
+    let tamano = Math.round(
+        Math.min(ancho * 0.085, alto * 0.10)
+    );
+
+    const minimo = Math.max(12, Math.round(ancho * 0.025));
+
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.lineJoin = "round";
+
+    // Ajustar el tamaño según la imagen
+    while (tamano > minimo) {
+
+        ctx.font = `bold ${tamano}px Arial`;
+
+        if (lineas.every(linea =>
+            ctx.measureText(linea).width <= ancho * 0.90
+        )) {
+            break;
+        }
+
+        tamano -= 2;
+    }
+
+    ctx.font = `bold ${tamano}px Arial`;
+
+    ctx.fillStyle = "#ffffff";
+    ctx.strokeStyle = "#350052";
+    ctx.lineWidth = Math.max(3, tamano * 0.10);
+
+    const separacion = tamano * 1.4;
+    const centroY = alto / 2;
+
+    lineas.forEach((linea, indice) => {
+
+        const y = centroY +
+            (indice - 1) * separacion;
+
+        ctx.strokeText(linea, ancho / 2, y);
+        ctx.fillText(linea, ancho / 2, y);
+
+    });
+
+    // Devolver una copia, sin alterar la original
+    return canvasTikTok.toDataURL("image/jpeg", 0.95);
+
+}
+
+// ==========================================
 // DESCARGAR TARJETA PERSONALIZADA
 // ==========================================
 
