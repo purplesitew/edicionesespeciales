@@ -344,57 +344,185 @@ function descargarCalendarioSeleccionado() {
 
 
 // ==========================================
+// CREAR IMAGEN ESPECIAL PARA COMPARTIR EN TIKTOK
+// ==========================================
+
+async function crearArchivoParaTikTok() {
+
+    if (!calendarioArchivo) return null;
+
+    return new Promise((resolve, reject) => {
+
+        const lector = new FileReader();
+
+        lector.onload = () => {
+
+            const imagen = new Image();
+
+            imagen.onload = () => {
+
+                const canvas = document.createElement("canvas");
+                const contexto = canvas.getContext("2d");
+
+                canvas.width = imagen.width;
+                canvas.height = imagen.height;
+
+                // Dibujar la credencial original
+                contexto.drawImage(
+                    imagen,
+                    0,
+                    0,
+                    canvas.width,
+                    canvas.height
+                );
+
+                // Caja semitransparente para el texto
+                const cajaAlto = canvas.height * 0.22;
+                const cajaY = (canvas.height - cajaAlto) / 2;
+
+                contexto.fillStyle = "rgba(0, 0, 0, 0.45)";
+                contexto.fillRect(
+                    0,
+                    cajaY,
+                    canvas.width,
+                    cajaAlto
+                );
+
+                // Texto grande sobre la credencial
+                let tamanoFuente = Math.floor(canvas.width * 0.07);
+
+                contexto.textAlign = "center";
+                contexto.textBaseline = "middle";
+                contexto.lineJoin = "round";
+
+                function ajustarTexto(texto, anchoMaximo) {
+                    contexto.font = `bold ${tamanoFuente}px Arial`;
+
+                    while (
+                        contexto.measureText(texto).width > anchoMaximo &&
+                        tamanoFuente > 20
+                    ) {
+                        tamanoFuente--;
+                        contexto.font = `bold ${tamanoFuente}px Arial`;
+                    }
+                }
+
+                const texto = "QUÉ FÁCIL TENER LAS EDICIONES ESPECIALES 💜";
+
+                ajustarTexto(texto, canvas.width * 0.88);
+
+                contexto.strokeStyle = "#000000";
+                contexto.lineWidth = Math.max(4, Math.floor(tamanoFuente * 0.12));
+                contexto.fillStyle = "#ffffff";
+
+                contexto.strokeText(
+                    texto,
+                    canvas.width / 2,
+                    canvas.height / 2
+                );
+
+                contexto.fillText(
+                    texto,
+                    canvas.width / 2,
+                    canvas.height / 2
+                );
+
+                canvas.toBlob((blob) => {
+
+                    if (!blob) {
+                        reject(new Error("No se pudo crear la imagen para TikTok."));
+                        return;
+                    }
+
+                    const archivoTikTok = new File(
+                        [blob],
+                        "edicion-especial-tiktok.jpg",
+                        { type: "image/jpeg" }
+                    );
+
+                    resolve(archivoTikTok);
+
+                }, "image/jpeg", 0.95);
+
+            };
+
+            imagen.onerror = () => {
+                reject(new Error("No se pudo leer la imagen para TikTok."));
+            };
+
+            imagen.src = lector.result;
+        };
+
+        lector.onerror = () => {
+            reject(new Error("No se pudo procesar el archivo."));
+        };
+
+        lector.readAsDataURL(calendarioArchivo);
+
+    });
+}
+
+
+// ==========================================
 // COMPARTIR EN TIKTOK Y DESCARGAR
 // ==========================================
 
-btnCompartirTikTok.addEventListener("click", () => {
+btnCompartirTikTok.addEventListener("click", async () => {
 
     if (!calendarioArchivo) return;
 
-    const puedeCompartir =
-        typeof navigator.share === "function" &&
-        typeof navigator.canShare === "function" &&
-        navigator.canShare({
-            files: [calendarioArchivo]
-        });
+    try {
 
-    // Intentar iniciar descarga al tocar el botón
-    descargarCalendarioSeleccionado();
+        // Descargar la credencial original
+        descargarCalendarioSeleccionado();
 
-    if (!puedeCompartir) {
+        // Crear la versión con texto para TikTok
+        const archivoTikTok = await crearArchivoParaTikTok();
 
-        mensajeTikTok.textContent =
-            "Se intentó descargar tu calendario. " +
-            "Para publicarlo, abre TikTok y " +
-            "selecciona la imagen de tu galería.";
-
-        btnDescargaAlternativa.classList.remove("oculta");
-
-        return;
-    }
-
-    // Abrir menú nativo para compartir la imagen
-    navigator.share({
-        files: [calendarioArchivo]
-    }).catch((error) => {
-
-        if (error.name !== "AbortError") {
-
-            console.error("Error al compartir:", error);
-
-            mensajeTikTok.textContent =
-                "No se pudo abrir el menú para compartir. " +
-                "Puedes descargar el calendario y subirlo " +
-                "manualmente a TikTok.";
-
-            btnDescargaAlternativa.classList.remove("oculta");
+        if (!archivoTikTok) {
+            throw new Error("No se pudo crear el archivo para TikTok.");
         }
 
-    });
+        const puedeCompartir =
+            typeof navigator.share === "function" &&
+            typeof navigator.canShare === "function" &&
+            navigator.canShare({
+                files: [archivoTikTok]
+            });
+
+        if (!puedeCompartir) {
+
+            mensajeTikTok.textContent =
+                "Tu credencial ya se descargó. " +
+                "Si tu dispositivo no permite compartirla directo, " +
+                "puedes subirla manualmente a TikTok desde tu galería.";
+
+            btnDescargaAlternativa.classList.remove("oculta");
+            return;
+        }
+
+        await navigator.share({
+            files: [archivoTikTok],
+            title: "Ediciones Especiales",
+            text: "QUÉ FÁCIL TENER LAS EDICIONES ESPECIALES 💜"
+        });
+
+    } catch (error) {
+
+        if (error.name === "AbortError") {
+            return;
+        }
+
+        console.error("Error al compartir:", error);
+
+        mensajeTikTok.textContent =
+            "Se descargó tu credencial, pero no se pudo abrir " +
+            "el menú para compartir. Puedes subirla manualmente a TikTok.";
+
+        btnDescargaAlternativa.classList.remove("oculta");
+    }
 
 });
-
-
 // ==========================================
 // DESCARGA ALTERNATIVA
 // ==========================================
