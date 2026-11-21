@@ -588,11 +588,51 @@ async function crearPDFCalendarioEspecial(archivoFrente) {
     return pdf;
 }
 
+
 // ==========================================
-// FUNCIÓN PARA INICIAR DESCARGA
+// DESCARGAR CALENDARIOS EN PDF
+// CONSERVAR DESCARGAS DE OTRAS EDICIONES
 // ==========================================
 
-function descargarCalendarioSeleccionado() {
+async function descargarCalendarioSeleccionado() {
+
+    // ==========================================
+    // CALENDARIOS E1-E8: DESCARGAR PDF
+    // ==========================================
+
+    if (calendarios.includes(disenoSeleccionado)) {
+
+        try {
+
+            const pdf = await crearPDFCalendarioEspecial(
+                disenoSeleccionado
+            );
+
+            const nombrePDF =
+                disenoSeleccionado.replace(".jpg", ".pdf");
+
+            pdf.save(nombrePDF);
+
+        } catch (error) {
+
+            console.error(
+                "Error al descargar calendario PDF:",
+                error
+            );
+
+            alert(
+                "No se pudo crear el PDF. " +
+                "Revisa que las instrucciones y el reverso existan."
+            );
+
+        }
+
+        return;
+    }
+
+    // ==========================================
+    // OTRAS EDICIONES: CONSERVAR DESCARGA ORIGINAL
+    // ==========================================
 
     if (!calendarioArchivo || !calendarioURL) return;
 
@@ -605,7 +645,9 @@ function descargarCalendarioSeleccionado() {
 
     enlace.click();
     enlace.remove();
+
 }
+
 
 
 // ==========================================
