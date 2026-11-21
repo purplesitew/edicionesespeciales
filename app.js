@@ -451,11 +451,12 @@ btnDescargar.addEventListener("click", async () => {
 
 
 
-// ==========================================
-// CREAR PDF DE CALENDARIOS E1-E8
-// PÁGINA 1: INSTRUCCIONES
-// PÁGINA 2: FRENTE Y REVERSO DEL MISMO TAMAÑO
-// ==========================================
+
+ // ==========================================
+ // CREAR PDF DE CALENDARIOS E1-E8
+ // PÁGINA 1: INSTRUCCIONES
+ // PÁGINA 2: FRENTE Y REVERSO DEL MISMO TAMAÑO
+ // ==========================================
 
 async function crearPDFCalendarioEspecial(archivoFrente) {
 
@@ -468,9 +469,7 @@ async function crearPDFCalendarioEspecial(archivoFrente) {
     }
 
     if (!window.jspdf || !window.jspdf.jsPDF) {
-        throw new Error(
-            "No se pudo cargar la biblioteca de PDF."
-        );
+        throw new Error("No se pudo cargar la biblioteca de PDF.");
     }
 
     // ==========================================
@@ -530,8 +529,7 @@ async function crearPDFCalendarioEspecial(archivoFrente) {
     );
 
     // ==========================================
-    // PÁGINA 2: FRENTE Y REVERSO
-    // AMBOS EXACTAMENTE DEL MISMO TAMAÑO
+    // PÁGINA 2: FRENTE Y REVERSO IGUALES
     // ==========================================
 
     pdf.addPage("a4", "landscape");
@@ -549,10 +547,9 @@ async function crearPDFCalendarioEspecial(archivoFrente) {
 
     const xFrente = margen;
     const xReverso = margen + anchoImagen + separacion;
-
     const yImagen = margen;
 
-    // FRENTE
+    // FRENTE DEL CALENDARIO
     pdf.addImage(
         frente,
         "JPEG",
@@ -562,7 +559,7 @@ async function crearPDFCalendarioEspecial(archivoFrente) {
         altoImagen
     );
 
-    // REVERSO
+    // REVERSO CORRESPONDIENTE
     pdf.addImage(
         reverso,
         "JPEG",
@@ -572,68 +569,9 @@ async function crearPDFCalendarioEspecial(archivoFrente) {
         altoImagen
     );
 
-    // Devolver PDF terminado
     return pdf;
-
 }
 
-    const pdf = new jsPDF({
-        orientation: "portrait",
-        unit: "mm",
-        format: "a4"
-    });
-
-    const anchoPagina1 = pdf.internal.pageSize.getWidth();
-    const altoPagina1 = pdf.internal.pageSize.getHeight();
-
-    colocarImagenCalendarioPDF(
-        pdf,
-        instrucciones,
-        5,
-        5,
-        anchoPagina1 - 10,
-        altoPagina1 - 10
-    );
-
-        // ==========================================
-        // PÁGINA 2 - FRENTE Y REVERSO EN LA MISMA HOJA
-        // MISMO TAMAÑO PARA AMBAS IMÁGENES
-        // ==========================================
-        pdf.addPage("letter", "portrait");
-
-        const anchoPagina = pdf.internal.pageSize.getWidth();
-        const altoPagina = pdf.internal.pageSize.getHeight();
-
-        const margenLateral = 12;
-        const margenSuperior = 28;
-        const espacioEntre = 8;
-
-        const anchoImagen =
-            (anchoPagina - (margenLateral * 2) - espacioEntre) / 2;
-
-        const altoImagen = 145;
-
-        const xFrente = margenLateral;
-        const xReverso = margenLateral + anchoImagen + espacioEntre;
-        const yImagen = margenSuperior;
-
-        pdf.addImage(
-            frenteDataURL,
-            "JPEG",
-            xFrente,
-            yImagen,
-            anchoImagen,
-            altoImagen
-        );
-
-        pdf.addImage(
-            reversoDataURL,
-            "JPEG",
-            xReverso,
-            yImagen,
-            anchoImagen,
-            altoImagen
-        );
 
 // ==========================================
 // DESCARGAR CALENDARIOS EN PDF
@@ -642,9 +580,7 @@ async function crearPDFCalendarioEspecial(archivoFrente) {
 
 async function descargarCalendarioSeleccionado() {
 
-    // ==========================================
     // CALENDARIOS E1-E8: DESCARGAR PDF
-    // ==========================================
 
     if (calendarios.includes(disenoSeleccionado)) {
 
@@ -676,9 +612,7 @@ async function descargarCalendarioSeleccionado() {
         return;
     }
 
-    // ==========================================
     // OTRAS EDICIONES: CONSERVAR DESCARGA ORIGINAL
-    // ==========================================
 
     if (!calendarioArchivo || !calendarioURL) return;
 
