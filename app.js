@@ -47,7 +47,22 @@ const calendarios = [
     "E7.jpg",
     "E8.jpg"
 ];
+// ==========================================
+// REVERSOS EXCLUSIVOS DE CALENDARIOS E1-E8
+// ==========================================
 
+const reversosCalendarios = {
+    "E1.jpg": "E1REVERSO.jpg",
+    "E2.jpg": "E2REVERSO.jpg",
+    "E3.jpg": "E3REVERSO.jpg",
+    "E4.jpg": "E4REVERSO.jpg",
+    "E5.jpg": "E5REVERSO.jpg",
+    "E6.jpg": "E6REVERSO.jpg",
+    "E7.jpg": "E7REVERSO.jpg",
+    "E8.jpg": "E8REVERSO.jpg"
+};
+
+const instruccionesCalendarios = "instruccionesE.jpg";
 
 // ==========================================
 // EDICIONES AGRUPADAS POR TEMÁTICA
