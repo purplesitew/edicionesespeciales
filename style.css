@@ -448,4 +448,7 @@ body {
     background: #271337;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.45);
 }
-
+@font-face {
+    font-family: "TangoRegular";
+    src: url("./Tango Regular.ttf") format("truetype");
+}
