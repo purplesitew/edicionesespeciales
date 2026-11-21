@@ -1151,7 +1151,101 @@ function abrirEditorCertificadoBautismo() {
     });
 }
 
+// ==========================================
+// FIRMAS DEL CERTIFICADO DE BAUTISMO
+// ==========================================
 
+function normalizarBiasFirmaCertificado(texto) {
+
+    const valor = String(texto || "")
+        .trim()
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[.\-_]/g, "")
+        .replace(/\s+/g, "");
+
+    const equivalencias = {
+        // RM
+        rm: "rm",
+        namjoon: "rm",
+        nam: "rm",
+        namjonie: "rm",
+        kimnamjoon: "rm",
+        rapmonster: "rm",
+
+        // JIN
+        jin: "jin",
+        seokjin: "jin",
+        kimseokjin: "jin",
+        worldwidehandsome: "jin",
+
+        // SUGA
+        suga: "suga",
+        yoongi: "suga",
+        minyoongi: "suga",
+        agustd: "suga",
+
+        // J-HOPE
+        jhope: "jhope",
+        hoseok: "jhope",
+        junghoseok: "jhope",
+        hobi: "jhope",
+
+        // JIMIN
+        jimin: "jimin",
+        parkjimin: "jimin",
+        chimchim: "jimin",
+        mochi: "jimin",
+
+        // V
+        v: "v",
+        taehyung: "v",
+        kimtaehyung: "v",
+        tae: "v",
+        taetae: "v",
+
+        // JUNGKOOK
+        jungkook: "jungkook",
+        jk: "jungkook",
+        jeonjungkook: "jungkook",
+        kookie: "jungkook",
+        kook: "jungkook"
+    };
+
+    return equivalencias[valor] || valor;
+}
+
+function obtenerFirmaBiasCertificado(bias) {
+
+    const biasNormalizado = normalizarBiasFirmaCertificado(bias);
+
+    const firmas = {
+        v: "firmav.png",
+        jin: "firmajin.png",
+        suga: "firmasuga.png",
+        jhope: "firmajhope.png",
+        jimin: "firmajimin.png",
+        rm: "firmarm.png",
+        jungkook: "firmajungkook.png"
+    };
+
+    return firmas[biasNormalizado] || null;
+}
+
+function cargarImagenLocal(ruta) {
+    return new Promise((resolve, reject) => {
+        const imagen = new Image();
+
+        imagen.onload = () => resolve(imagen);
+
+        imagen.onerror = () => reject(
+            new Error("No se pudo cargar la imagen: " + ruta)
+        );
+
+        imagen.src = ruta;
+    });
+}
 // ==========================================
 // GENERAR CERTIFICADO DE BAUTISMO
 // ==========================================
@@ -1265,6 +1359,38 @@ async function generarCertificadoBautismo() {
             anchoMaximoBias
         );
         ctx.restore();
+
+        
+        // ==========================================
+        // FIRMA DEL BIAS EN EL CERTIFICADO
+        // ==========================================
+
+        const archivoFirma = obtenerFirmaBiasCertificado(bias);
+
+        if (archivoFirma) {
+
+            const imagenFirma = await cargarImagenLocal(
+                "./" + archivoFirma
+            );
+
+            const firmaAncho = ancho * 0.23;
+
+            const proporcionFirma =
+                imagenFirma.naturalHeight / imagenFirma.naturalWidth;
+
+            const firmaAlto = firmaAncho * proporcionFirma;
+
+            const firmaX = ancho * 0.11;
+            const firmaY = alto * 0.69 - (firmaAlto / 2);
+
+            ctx.drawImage(
+                imagenFirma,
+                firmaX,
+                firmaY,
+                firmaAncho,
+                firmaAlto
+            );
+        }
 
         certificadoBautismoGenerado = true;
 
