@@ -241,6 +241,25 @@ if (btnAvisarEdicion) {
 
     });
 
+    
+// ==========================================
+// ABRIR EDITOR CERTIFICADO DE BAUTISMO
+// ==========================================
+
+btnPersonalizarCertificadoBautismo.addEventListener("click", () => {
+
+    // Cerrar la vista previa
+    vistaPrevia.classList.add("oculta");
+
+    // Ocultar menú de diseños
+    document.getElementById("menu-disenos")
+        .classList.add("oculta");
+
+    // Abrir editor exclusivo del certificado
+    abrirEditorCertificadoBautismo();
+
+});
+
     // ==========================================
 // ABRIR EDITOR CERTIFICADO DE BAUTISMO
 // ==========================================
