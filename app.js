@@ -450,11 +450,11 @@ btnDescargar.addEventListener("click", async () => {
 });
 
 
-    
+
 // ==========================================
 // CREAR PDF DE CALENDARIOS E1-E8
 // PÁGINA 1: INSTRUCCIONES
-// PÁGINA 2: FRENTE Y REVERSO JUNTOS
+// PÁGINA 2: FRENTE Y REVERSO DEL MISMO TAMAÑO
 // ==========================================
 
 async function crearPDFCalendarioEspecial(archivoFrente) {
@@ -473,7 +473,10 @@ async function crearPDFCalendarioEspecial(archivoFrente) {
         );
     }
 
-    // Cargar imágenes desde GitHub Pages
+    // ==========================================
+    // CARGAR IMÁGENES
+    // ==========================================
+
     async function cargarImagenCalendarioPDF(nombreArchivo) {
 
         const imagen = new Image();
@@ -485,38 +488,6 @@ async function crearPDFCalendarioEspecial(archivoFrente) {
         return imagen;
     }
 
-    // Ajustar imagen sin deformarla ni recortarla
-    function colocarImagenCalendarioPDF(
-        pdf,
-        imagen,
-        x,
-        y,
-        espacioAncho,
-        espacioAlto
-    ) {
-
-        const proporcion = Math.min(
-            espacioAncho / imagen.naturalWidth,
-            espacioAlto / imagen.naturalHeight
-        );
-
-        const anchoFinal = imagen.naturalWidth * proporcion;
-        const altoFinal = imagen.naturalHeight * proporcion;
-
-        const xFinal = x + (espacioAncho - anchoFinal) / 2;
-        const yFinal = y + (espacioAlto - altoFinal) / 2;
-
-        pdf.addImage(
-            imagen,
-            "JPEG",
-            xFinal,
-            yFinal,
-            anchoFinal,
-            altoFinal
-        );
-    }
-
-    // Cargar las tres imágenes
     const [instrucciones, frente, reverso] = await Promise.all([
         cargarImagenCalendarioPDF(instruccionesCalendarios),
         cargarImagenCalendarioPDF(archivoFrente),
@@ -526,8 +497,85 @@ async function crearPDFCalendarioEspecial(archivoFrente) {
     const { jsPDF } = window.jspdf;
 
     // ==========================================
-    // PÁGINA 1: INSTRUCCIONES DE IMPRESIÓN
+    // PÁGINA 1: INSTRUCCIONES
     // ==========================================
+
+    const pdf = new jsPDF({
+        orientation: "portrait",
+        unit: "mm",
+        format: "a4"
+    });
+
+    const anchoPagina1 = pdf.internal.pageSize.getWidth();
+    const altoPagina1 = pdf.internal.pageSize.getHeight();
+
+    const escalaInstrucciones = Math.min(
+        (anchoPagina1 - 10) / instrucciones.naturalWidth,
+        (altoPagina1 - 10) / instrucciones.naturalHeight
+    );
+
+    const anchoInstrucciones =
+        instrucciones.naturalWidth * escalaInstrucciones;
+
+    const altoInstrucciones =
+        instrucciones.naturalHeight * escalaInstrucciones;
+
+    pdf.addImage(
+        instrucciones,
+        "JPEG",
+        (anchoPagina1 - anchoInstrucciones) / 2,
+        (altoPagina1 - altoInstrucciones) / 2,
+        anchoInstrucciones,
+        altoInstrucciones
+    );
+
+    // ==========================================
+    // PÁGINA 2: FRENTE Y REVERSO
+    // AMBOS EXACTAMENTE DEL MISMO TAMAÑO
+    // ==========================================
+
+    pdf.addPage("a4", "landscape");
+
+    const anchoPagina2 = pdf.internal.pageSize.getWidth();
+    const altoPagina2 = pdf.internal.pageSize.getHeight();
+
+    const margen = 10;
+    const separacion = 8;
+
+    const anchoImagen =
+        (anchoPagina2 - margen * 2 - separacion) / 2;
+
+    const altoImagen = altoPagina2 - margen * 2;
+
+    const xFrente = margen;
+    const xReverso = margen + anchoImagen + separacion;
+
+    const yImagen = margen;
+
+    // FRENTE
+    pdf.addImage(
+        frente,
+        "JPEG",
+        xFrente,
+        yImagen,
+        anchoImagen,
+        altoImagen
+    );
+
+    // REVERSO
+    pdf.addImage(
+        reverso,
+        "JPEG",
+        xReverso,
+        yImagen,
+        anchoImagen,
+        altoImagen
+    );
+
+    // Devolver PDF terminado
+    return pdf;
+
+}
 
     const pdf = new jsPDF({
         orientation: "portrait",
