@@ -450,6 +450,144 @@ btnDescargar.addEventListener("click", async () => {
 });
 
 
+    
+// ==========================================
+// CREAR PDF DE CALENDARIOS E1-E8
+// PÁGINA 1: INSTRUCCIONES
+// PÁGINA 2: FRENTE Y REVERSO JUNTOS
+// ==========================================
+
+async function crearPDFCalendarioEspecial(archivoFrente) {
+
+    const archivoReverso = reversosCalendarios[archivoFrente];
+
+    if (!archivoReverso) {
+        throw new Error(
+            "No se encontró el reverso de " + archivoFrente
+        );
+    }
+
+    if (!window.jspdf || !window.jspdf.jsPDF) {
+        throw new Error(
+            "No se pudo cargar la biblioteca de PDF."
+        );
+    }
+
+    // Cargar imágenes desde GitHub Pages
+    async function cargarImagenCalendarioPDF(nombreArchivo) {
+
+        const imagen = new Image();
+
+        imagen.src = "./" + nombreArchivo;
+
+        await imagen.decode();
+
+        return imagen;
+    }
+
+    // Ajustar imagen sin deformarla ni recortarla
+    function colocarImagenCalendarioPDF(
+        pdf,
+        imagen,
+        x,
+        y,
+        espacioAncho,
+        espacioAlto
+    ) {
+
+        const proporcion = Math.min(
+            espacioAncho / imagen.naturalWidth,
+            espacioAlto / imagen.naturalHeight
+        );
+
+        const anchoFinal = imagen.naturalWidth * proporcion;
+        const altoFinal = imagen.naturalHeight * proporcion;
+
+        const xFinal = x + (espacioAncho - anchoFinal) / 2;
+        const yFinal = y + (espacioAlto - altoFinal) / 2;
+
+        pdf.addImage(
+            imagen,
+            "JPEG",
+            xFinal,
+            yFinal,
+            anchoFinal,
+            altoFinal
+        );
+    }
+
+    // Cargar las tres imágenes
+    const [instrucciones, frente, reverso] = await Promise.all([
+        cargarImagenCalendarioPDF(instruccionesCalendarios),
+        cargarImagenCalendarioPDF(archivoFrente),
+        cargarImagenCalendarioPDF(archivoReverso)
+    ]);
+
+    const { jsPDF } = window.jspdf;
+
+    // ==========================================
+    // PÁGINA 1: INSTRUCCIONES DE IMPRESIÓN
+    // ==========================================
+
+    const pdf = new jsPDF({
+        orientation: "portrait",
+        unit: "mm",
+        format: "a4"
+    });
+
+    const anchoPagina1 = pdf.internal.pageSize.getWidth();
+    const altoPagina1 = pdf.internal.pageSize.getHeight();
+
+    colocarImagenCalendarioPDF(
+        pdf,
+        instrucciones,
+        5,
+        5,
+        anchoPagina1 - 10,
+        altoPagina1 - 10
+    );
+
+    // ==========================================
+    // PÁGINA 2: FRENTE Y REVERSO EN LA MISMA HOJA
+    // ==========================================
+
+    pdf.addPage("a4", "landscape");
+
+    const anchoPagina2 = pdf.internal.pageSize.getWidth();
+    const altoPagina2 = pdf.internal.pageSize.getHeight();
+
+    const margen = 8;
+    const separacion = 6;
+
+    const anchoDisponible =
+        anchoPagina2 - (margen * 2) - separacion;
+
+    const anchoCadaImagen = anchoDisponible / 2;
+    const altoDisponible = altoPagina2 - (margen * 2);
+
+    // Frente del calendario: izquierda
+    colocarImagenCalendarioPDF(
+        pdf,
+        frente,
+        margen,
+        margen,
+        anchoCadaImagen,
+        altoDisponible
+    );
+
+    // Reverso correspondiente: derecha
+    colocarImagenCalendarioPDF(
+        pdf,
+        reverso,
+        margen + anchoCadaImagen + separacion,
+        margen,
+        anchoCadaImagen,
+        altoDisponible
+    );
+
+    return pdf;
+}
+
 // ==========================================
 // FUNCIÓN PARA INICIAR DESCARGA
 // ==========================================
