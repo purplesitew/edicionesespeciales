@@ -452,3 +452,194 @@ body {
     font-family: "TangoRegular";
     src: url("./Tango Regular.ttf") format("truetype");
 }
+
+/* ==========================================
+   EDITOR BONITO CERTIFICADO DE BAUTISMO
+   EXCLUSIVO DE ESTA EDICIÓN
+========================================== */
+
+#editor-certificado-bautismo {
+    width: 100%;
+    min-height: 100dvh;
+    padding: 28px 14px 50px;
+    box-sizing: border-box;
+    text-align: center;
+    background: linear-gradient(
+        180deg,
+        #21102f,
+        #3b1654,
+        #1c0b2b
+    );
+}
+
+/* Título principal */
+#editor-certificado-bautismo h2 {
+    color: #f4ddff;
+    font-size: 26px;
+    line-height: 1.3;
+    text-align: center;
+    margin: 8px auto 24px;
+    text-shadow: 0 2px 12px #9d65c5;
+}
+
+/* Caja del formulario */
+#editor-certificado-bautismo .formulario-contenedor {
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto 24px;
+    padding: 28px 20px;
+    box-sizing: border-box;
+
+    background: rgba(75, 31, 105, 0.85);
+
+    border: 2px solid #b889dd;
+    border-radius: 24px;
+
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.35),
+        0 0 18px rgba(184, 137, 221, 0.2);
+}
+
+/* Etiquetas */
+#editor-certificado-bautismo label {
+    display: block;
+    color: #f2d7ff;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: left;
+    margin: 16px 0 9px;
+}
+
+/* Campos para nombre y bias */
+#nombreCertificadoBautismo,
+#biasCertificadoBautismo {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 16px 15px;
+    margin-bottom: 20px;
+
+    background: #fffaff;
+    color: #39134f;
+
+    border: 2px solid #c69be5;
+    border-radius: 14px;
+
+    font-size: 17px;
+    font-family: Arial, sans-serif;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s,
+        box-shadow 0.2s;
+}
+
+/* Efecto al escribir */
+#nombreCertificadoBautismo:focus,
+#biasCertificadoBautismo:focus {
+    border-color: #e3bd75;
+    box-shadow: 0 0 0 4px rgba(227, 189, 117, 0.25);
+}
+
+/* Todos los botones del editor */
+#editor-certificado-bautismo button {
+    display: block;
+    width: 100%;
+    max-width: 420px;
+    box-sizing: border-box;
+
+    margin: 14px auto;
+    padding: 16px;
+
+    border: none;
+    border-radius: 14px;
+
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+}
+
+/* Generar certificado */
+#btnGenerarCertificadoBautismo {
+    background: linear-gradient(
+        135deg,
+        #6a0dad,
+        #ad64e2
+    );
+
+    box-shadow: 0 5px 16px rgba(150, 79, 209, 0.3);
+}
+
+/* Descargar certificado */
+#btnDescargarCertificadoBautismo {
+    background: linear-gradient(
+        135deg,
+        #b78a38,
+        #efd18a
+    );
+
+    color: #2a1534 !important;
+    box-shadow: 0 5px 16px rgba(201, 163, 84, 0.3);
+}
+
+/* Cerrar */
+#btnCerrarCertificadoBautismo {
+    background: #513465;
+    border: 1px solid #ac87c4 !important;
+}
+
+/* Efecto al tocar */
+#editor-certificado-bautismo button:active {
+    transform: scale(0.97);
+}
+
+/* Vista previa del certificado */
+#editor-certificado-bautismo .vista-previa-bank {
+    width: 100%;
+    max-width: 850px;
+    margin: 25px auto;
+    padding: 10px;
+    box-sizing: border-box;
+
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid #ae80cf;
+    border-radius: 18px;
+}
+
+/* Imagen del certificado adaptable al celular */
+#canvasCertificadoBautismo {
+    display: block;
+    width: 100%;
+    height: auto;
+
+    border-radius: 10px;
+}
+
+/* Ajustes exclusivos para celular */
+@media (max-width: 600px) {
+
+    #editor-certificado-bautismo {
+        padding: 20px 10px 40px;
+    }
+
+    #editor-certificado-bautismo h2 {
+        font-size: 22px;
+    }
+
+    #editor-certificado-bautismo .formulario-contenedor {
+        padding: 22px 15px;
+        border-radius: 18px;
+    }
+
+    #editor-certificado-bautismo button {
+        font-size: 14px;
+    }
+}
