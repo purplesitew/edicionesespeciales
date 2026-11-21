@@ -547,47 +547,45 @@ async function crearPDFCalendarioEspecial(archivoFrente) {
         altoPagina1 - 10
     );
 
-    // ==========================================
-    // PÁGINA 2: FRENTE Y REVERSO EN LA MISMA HOJA
-    // ==========================================
+        // ==========================================
+        // PÁGINA 2 - FRENTE Y REVERSO EN LA MISMA HOJA
+        // MISMO TAMAÑO PARA AMBAS IMÁGENES
+        // ==========================================
+        pdf.addPage("letter", "portrait");
 
-    pdf.addPage("a4", "landscape");
+        const anchoPagina = pdf.internal.pageSize.getWidth();
+        const altoPagina = pdf.internal.pageSize.getHeight();
 
-    const anchoPagina2 = pdf.internal.pageSize.getWidth();
-    const altoPagina2 = pdf.internal.pageSize.getHeight();
+        const margenLateral = 12;
+        const margenSuperior = 28;
+        const espacioEntre = 8;
 
-    const margen = 8;
-    const separacion = 6;
+        const anchoImagen =
+            (anchoPagina - (margenLateral * 2) - espacioEntre) / 2;
 
-    const anchoDisponible =
-        anchoPagina2 - (margen * 2) - separacion;
+        const altoImagen = 145;
 
-    const anchoCadaImagen = anchoDisponible / 2;
-    const altoDisponible = altoPagina2 - (margen * 2);
+        const xFrente = margenLateral;
+        const xReverso = margenLateral + anchoImagen + espacioEntre;
+        const yImagen = margenSuperior;
 
-    // Frente del calendario: izquierda
-    colocarImagenCalendarioPDF(
-        pdf,
-        frente,
-        margen,
-        margen,
-        anchoCadaImagen,
-        altoDisponible
-    );
+        pdf.addImage(
+            frenteDataURL,
+            "JPEG",
+            xFrente,
+            yImagen,
+            anchoImagen,
+            altoImagen
+        );
 
-    // Reverso correspondiente: derecha
-    colocarImagenCalendarioPDF(
-        pdf,
-        reverso,
-        margen + anchoCadaImagen + separacion,
-        margen,
-        anchoCadaImagen,
-        altoDisponible
-    );
-
-    return pdf;
-}
-
+        pdf.addImage(
+            reversoDataURL,
+            "JPEG",
+            xReverso,
+            yImagen,
+            anchoImagen,
+            altoImagen
+        );
 
 // ==========================================
 // DESCARGAR CALENDARIOS EN PDF
