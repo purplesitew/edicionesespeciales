@@ -1209,7 +1209,7 @@ async function generarCertificadoBautismo() {
 
         let tamanoNombre = Math.round(ancho * 0.12);
         const centroXNombre = ancho * 0.50;
-        const centroYNombre = alto * 0.46;
+        const centroYNombre = alto * 0.42;
         const anchoMaximoNombre = ancho * 0.74;
 
         ctx.save();
