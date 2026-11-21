@@ -126,6 +126,36 @@ btnAvisarEdicion.parentElement.insertBefore(
     btnAvisarEdicion
 );
 
+// ==========================================
+// BOTÓN EXCLUSIVO CERTIFICADO DE BAUTISMO
+// ==========================================
+
+const btnPersonalizarCertificadoBautismo =
+    document.createElement("button");
+
+btnPersonalizarCertificadoBautismo.type = "button";
+btnPersonalizarCertificadoBautismo.id =
+    "btnPersonalizarCertificadoBautismo";
+
+btnPersonalizarCertificadoBautismo.textContent =
+    "💜 PERSONALIZAR CERTIFICADO";
+
+btnPersonalizarCertificadoBautismo.style.display = "none";
+
+btnPersonalizarCertificadoBautismo.style.background = "#6a0dad";
+btnPersonalizarCertificadoBautismo.style.color = "#ffffff";
+btnPersonalizarCertificadoBautismo.style.border = "2px solid #c58aff";
+btnPersonalizarCertificadoBautismo.style.borderRadius = "12px";
+btnPersonalizarCertificadoBautismo.style.padding = "13px 16px";
+btnPersonalizarCertificadoBautismo.style.fontWeight = "bold";
+btnPersonalizarCertificadoBautismo.style.cursor = "pointer";
+
+// Colocar el botón junto al de Insta Army Bank
+btnAvisarEdicion.parentElement.insertBefore(
+    btnPersonalizarCertificadoBautismo,
+    btnAvisarEdicion
+);
+
 todosLosDisenos.forEach((archivo) => {
 
     const imagen = document.createElement("img");
@@ -164,10 +194,22 @@ btnPersonalizarBank.style.display = esBank
     ? "inline-block"
     : "none";
 
+        // ==========================================
+// MOSTRAR BOTÓN DEL CERTIFICADO DE BAUTISMO
+// ==========================================
+
+const esCertificadoBautismo =
+    archivo === "CertificadodebautismoInstaarmy.jpg";
+
+btnPersonalizarCertificadoBautismo.style.display =
+    esCertificadoBautismo
+        ? "inline-block"
+        : "none";
+        
 // Mostrar AVÍSAME en las ediciones pendientes
 if (btnAvisarEdicion) {
     btnAvisarEdicion.style.display =
-        (!esCalendario && !esBank)
+       (!esCalendario && !esBank && !esCertificadoBautismo)
             ? "inline-block"
             : "none";
 }
@@ -199,6 +241,23 @@ if (btnAvisarEdicion) {
 
     });
 
+    // ==========================================
+// ABRIR EDITOR CERTIFICADO DE BAUTISMO
+// ==========================================
+
+btnPersonalizarCertificadoBautismo.addEventListener("click", () => {
+
+    // Cerrar vista previa
+    vistaPrevia.classList.add("oculta");
+
+    // Ocultar menú de diseños
+    document.getElementById("menu-disenos")
+        .classList.add("oculta");
+
+    // Abrir editor del certificado
+    abrirEditorCertificadoBautismo();
+
+});
 // ==========================================
 // BOTÓN AVÍSAME - EDICIONES ESPECIALES
 // ==========================================
@@ -999,6 +1058,356 @@ if (btnGenerarBank) {
         generarInstaArmyBank
     );
 
+}
+
+    // ==========================================
+// EDITOR EXCLUSIVO CERTIFICADO DE BAUTISMO
+// ==========================================
+
+const editorCertificadoBautismo = document.getElementById(
+    "editor-certificado-bautismo"
+);
+
+const nombreCertificadoBautismo = document.getElementById(
+    "nombreCertificadoBautismo"
+);
+
+const biasCertificadoBautismo = document.getElementById(
+    "biasCertificadoBautismo"
+);
+
+const btnGenerarCertificadoBautismo = document.getElementById(
+    "btnGenerarCertificadoBautismo"
+);
+
+const btnDescargarCertificadoBautismo = document.getElementById(
+    "btnDescargarCertificadoBautismo"
+);
+
+const btnCerrarCertificadoBautismo = document.getElementById(
+    "btnCerrarCertificadoBautismo"
+);
+
+const canvasCertificadoBautismo = document.getElementById(
+    "canvasCertificadoBautismo"
+);
+
+let certificadoBautismoGenerado = false;
+
+
+// ==========================================
+// ABRIR EDITOR CERTIFICADO DE BAUTISMO
+// ==========================================
+
+function abrirEditorCertificadoBautismo() {
+
+    if (!editorCertificadoBautismo) return;
+
+    const menuDisenos = document.getElementById("menu-disenos");
+
+    if (menuDisenos) {
+        menuDisenos.classList.add("oculta");
+    }
+
+    editorCertificadoBautismo.classList.remove("oculta");
+
+    nombreCertificadoBautismo.value = "";
+    biasCertificadoBautismo.value = "";
+
+    btnDescargarCertificadoBautismo.style.display = "none";
+
+    certificadoBautismoGenerado = false;
+
+    const ctx = canvasCertificadoBautismo.getContext("2d");
+    ctx.clearRect(
+        0,
+        0,
+        canvasCertificadoBautismo.width,
+        canvasCertificadoBautismo.height
+    );
+
+    editorCertificadoBautismo.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}
+
+
+// ==========================================
+// GENERAR CERTIFICADO DE BAUTISMO
+// ==========================================
+
+async function generarCertificadoBautismo() {
+
+    const nombre = nombreCertificadoBautismo.value.trim();
+    const bias = biasCertificadoBautismo.value.trim();
+
+    if (!nombre) {
+        alert("💜 Escribe el nombre de la persona.");
+        return;
+    }
+
+    if (!bias) {
+        alert("💜 Escribe el bias o padrino.");
+        return;
+    }
+
+    try {
+
+        await document.fonts.load('100px "TangoRegular"');
+
+        const plantilla = new Image();
+        plantilla.src = "./CertificadodebautismoInstaarmyplantilla.jpg";
+
+        await plantilla.decode();
+
+        canvasCertificadoBautismo.width = plantilla.naturalWidth;
+        canvasCertificadoBautismo.height = plantilla.naturalHeight;
+
+        const ctx = canvasCertificadoBautismo.getContext("2d");
+
+        ctx.clearRect(
+            0,
+            0,
+            canvasCertificadoBautismo.width,
+            canvasCertificadoBautismo.height
+        );
+
+        ctx.drawImage(
+            plantilla,
+            0,
+            0,
+            canvasCertificadoBautismo.width,
+            canvasCertificadoBautismo.height
+        );
+
+        const ancho = canvasCertificadoBautismo.width;
+        const alto = canvasCertificadoBautismo.height;
+
+        // ==========================================
+        // NOMBRE GRANDE (FERNANDA)
+        // ==========================================
+
+        let tamanoNombre = Math.round(ancho * 0.12);
+        const centroXNombre = ancho * 0.50;
+        const centroYNombre = alto * 0.46;
+        const anchoMaximoNombre = ancho * 0.74;
+
+        ctx.save();
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillStyle = "#000000";
+        ctx.font = `${tamanoNombre}px "TangoRegular"`;
+
+        while (
+            ctx.measureText(nombre).width > anchoMaximoNombre &&
+            tamanoNombre > 20
+        ) {
+            tamanoNombre -= 2;
+            ctx.font = `${tamanoNombre}px "TangoRegular"`;
+        }
+
+        ctx.fillText(
+            nombre,
+            centroXNombre,
+            centroYNombre,
+            anchoMaximoNombre
+        );
+        ctx.restore();
+
+
+        // ==========================================
+        // BIAS / PADRINO (TARHYUNG)
+        // ==========================================
+
+        let tamanoBias = Math.round(ancho * 0.09);
+        const centroXBias = ancho * 0.50;
+        const centroYBias = alto * 0.74;
+        const anchoMaximoBias = ancho * 0.48;
+
+        ctx.save();
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillStyle = "#000000";
+        ctx.font = `${tamanoBias}px "TangoRegular"`;
+
+        while (
+            ctx.measureText(bias).width > anchoMaximoBias &&
+            tamanoBias > 20
+        ) {
+            tamanoBias -= 2;
+            ctx.font = `${tamanoBias}px "TangoRegular"`;
+        }
+
+        ctx.fillText(
+            bias,
+            centroXBias,
+            centroYBias,
+            anchoMaximoBias
+        );
+        ctx.restore();
+
+        certificadoBautismoGenerado = true;
+
+        btnDescargarCertificadoBautismo.style.display = "block";
+
+    } catch (error) {
+
+        console.error(
+            "Error al generar Certificado de Bautismo:",
+            error
+        );
+
+        alert(
+            "No se pudo generar el certificado. " +
+            "Revisa la plantilla y la fuente."
+        );
+
+    }
+
+}
+
+
+// ==========================================
+// PREPARAR CERTIFICADO PARA TIKTOK
+// ==========================================
+
+async function prepararTikTokCertificadoBautismo() {
+
+    if (!certificadoBautismoGenerado) {
+        alert("Primero genera tu certificado 💜");
+        return false;
+    }
+
+    try {
+
+        const imagenOriginal = canvasCertificadoBautismo.toDataURL(
+            "image/jpeg",
+            0.98
+        );
+
+        const respuestaOriginal = await fetch(imagenOriginal);
+        const blobOriginal = await respuestaOriginal.blob();
+
+        calendarioArchivo = new File(
+            [blobOriginal],
+            "CertificadodebautismoInstaarmy.jpg",
+            { type: "image/jpeg" }
+        );
+
+        if (calendarioURL) {
+            URL.revokeObjectURL(calendarioURL);
+        }
+
+        calendarioURL = URL.createObjectURL(calendarioArchivo);
+
+        const imagenTikTok = await crearImagenTikTokEdicion(
+            imagenOriginal
+        );
+
+        const respuestaTikTok = await fetch(imagenTikTok);
+        const blobTikTok = await respuestaTikTok.blob();
+
+        archivoTikTokPreparado = new File(
+            [blobTikTok],
+            "CertificadodebautismoInstaarmy-TikTok.jpg",
+            { type: "image/jpeg" }
+        );
+
+        return true;
+
+    } catch (error) {
+
+        console.error(
+            "Error preparando Certificado de Bautismo para TikTok:",
+            error
+        );
+
+        alert("No se pudo preparar el certificado para TikTok.");
+
+        return false;
+    }
+
+}
+
+
+// ==========================================
+// DESCARGAR CERTIFICADO CON TIKTOK
+// ==========================================
+
+async function descargarCertificadoBautismo() {
+
+    if (!certificadoBautismoGenerado) {
+        alert("Primero genera tu certificado 💜");
+        return;
+    }
+
+    btnDescargarCertificadoBautismo.disabled = true;
+
+    try {
+
+        const preparado = await prepararTikTokCertificadoBautismo();
+
+        if (!preparado) return;
+
+        modalTikTok.classList.remove("oculta");
+
+        mensajeTikTok.textContent =
+            "💜 ¡Tu edición especial está lista! " +
+            "Apóyanos compartiéndola en TikTok.";
+
+        btnDescargaAlternativa.classList.add("oculta");
+
+    } catch (error) {
+
+        console.error(
+            "Error abriendo TikTok para Certificado de Bautismo:",
+            error
+        );
+
+        alert("No se pudo preparar tu certificado.");
+
+    } finally {
+
+        btnDescargarCertificadoBautismo.disabled = false;
+
+    }
+
+}
+
+
+// ==========================================
+// BOTONES DEL EDITOR CERTIFICADO
+// ==========================================
+
+if (btnGenerarCertificadoBautismo) {
+    btnGenerarCertificadoBautismo.addEventListener(
+        "click",
+        generarCertificadoBautismo
+    );
+}
+
+if (btnDescargarCertificadoBautismo) {
+    btnDescargarCertificadoBautismo.addEventListener(
+        "click",
+        descargarCertificadoBautismo
+    );
+}
+
+if (btnCerrarCertificadoBautismo) {
+    btnCerrarCertificadoBautismo.addEventListener("click", () => {
+
+        editorCertificadoBautismo.classList.add("oculta");
+
+        document.getElementById("menu-disenos")
+            .classList.remove("oculta");
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    });
 }
     // ==========================================
     // REGISTRAR SERVICE WORKER
