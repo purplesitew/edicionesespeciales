@@ -122,6 +122,26 @@ const btnAvisarEdicion = document.getElementById(
 );
     // Botón exclusivo para personalizar Insta Army Bank
 const btnPersonalizarBank = document.createElement("button");
+    // Botón exclusivo para personalizar Insta Army Bienestar
+const btnPersonalizarBienestar = document.createElement("button");
+
+btnPersonalizarBienestar.type = "button";
+btnPersonalizarBienestar.id = "btnPersonalizarBienestar";
+btnPersonalizarBienestar.textContent = "💜 PERSONALIZAR MI TARJETA BIENESTAR";
+btnPersonalizarBienestar.style.display = "none";
+
+btnPersonalizarBienestar.style.background = "#6a0dad";
+btnPersonalizarBienestar.style.color = "#ffffff";
+btnPersonalizarBienestar.style.border = "2px solid #c58aff";
+btnPersonalizarBienestar.style.borderRadius = "12px";
+btnPersonalizarBienestar.style.padding = "13px 16px";
+btnPersonalizarBienestar.style.fontWeight = "bold";
+btnPersonalizarBienestar.style.cursor = "pointer";
+
+btnAvisarEdicion.parentElement.insertBefore(
+    btnPersonalizarBienestar,
+    btnAvisarEdicion
+);
     // Botón exclusivo para personalizar Insta Army Bank Platinum
 const btnPersonalizarBankPlatinum = document.createElement("button");
 
@@ -219,6 +239,17 @@ todosLosDisenos.forEach((archivo) => {
             ? "inline-block"
             : "none";
 
+        const esBienestar =
+    archivo === "instaarmybienestar.jpg";
+
+btnPersonalizarBienestar.style.display =
+    esBienestar ? "inline-block" : "none";
+
+if (esBienestar) {
+    btnDescargar.style.display = "none";
+    btnAvisarEdicion.style.display = "none";
+}
+        
         btnPersonalizarBank.style.display =
     archivo === "instaarmybank.jpg"
         ? "inline-block"
@@ -360,7 +391,19 @@ function abrirEditorInstaArmyBankPlatinum() {
         block: "start"
     });
 }
+btnPersonalizarBienestar.addEventListener("click", () => {
 
+    // Cerrar vista previa
+    vistaPrevia.classList.add("oculta");
+
+    // Ocultar menú
+    document.getElementById("menu-disenos")
+        .classList.add("oculta");
+
+    // Abrir editor de bienestar
+    abrirEditorInstaArmyBienestar();
+
+});
 
 // ==========================================
 // GENERAR TARJETA PLATINUM CON NOMBRE
