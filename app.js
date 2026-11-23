@@ -122,6 +122,27 @@ const btnAvisarEdicion = document.getElementById(
 );
     // Botón exclusivo para personalizar Insta Army Bank
 const btnPersonalizarBank = document.createElement("button");
+    // Botón exclusivo para personalizar Insta Army Bank Platinum
+const btnPersonalizarBankPlatinum = document.createElement("button");
+
+btnPersonalizarBankPlatinum.type = "button";
+btnPersonalizarBankPlatinum.id = "btnPersonalizarBankPlatinum";
+btnPersonalizarBankPlatinum.textContent =
+    "💜 PERSONALIZAR MI TARJETA PLATINUM";
+btnPersonalizarBankPlatinum.style.display = "none";
+
+btnPersonalizarBankPlatinum.style.background = "#6a0dad";
+btnPersonalizarBankPlatinum.style.color = "#ffffff";
+btnPersonalizarBankPlatinum.style.border = "2px solid #c58aff";
+btnPersonalizarBankPlatinum.style.borderRadius = "12px";
+btnPersonalizarBankPlatinum.style.padding = "13px 16px";
+btnPersonalizarBankPlatinum.style.fontWeight = "bold";
+btnPersonalizarBankPlatinum.style.cursor = "pointer";
+
+btnAvisarEdicion.parentElement.insertBefore(
+    btnPersonalizarBankPlatinum,
+    btnAvisarEdicion
+);
 
 btnPersonalizarBank.type = "button";
 btnPersonalizarBank.id = "btnPersonalizarBank";
@@ -198,6 +219,15 @@ todosLosDisenos.forEach((archivo) => {
             ? "inline-block"
             : "none";
 
+        btnPersonalizarBank.style.display =
+    archivo === "instaarmybank.jpg"
+        ? "inline-block"
+        : "none";
+
+btnPersonalizarBankPlatinum.style.display =
+    archivo === "instaarmybankplatinum.jpg"
+        ? "inline-block"
+        : "none";
        // ==========================================
 // BOTONES SEGÚN LA EDICIÓN SELECCIONADA
 // ==========================================
@@ -244,6 +274,20 @@ if (btnAvisarEdicion) {
 
     btnPersonalizarBank.addEventListener("click", () => {
 
+        btnPersonalizarBankPlatinum.addEventListener("click", () => {
+
+    // Cerrar vista previa
+    vistaPrevia.classList.add("oculta");
+
+    // Ocultar menú de diseños
+    document.getElementById("menu-disenos")
+        .classList.add("oculta");
+
+    // Abrir editor Platinum
+    abrirEditorInstaArmyBankPlatinum();
+
+});
+
         // Cerrar vista previa
         vistaPrevia.classList.add("oculta");
 
@@ -255,7 +299,262 @@ if (btnAvisarEdicion) {
         abrirEditorInstaArmyBank();
 
     });
+ // ==========================================
+// EDITOR EXCLUSIVO INSTA ARMY BANK PLATINUM
+// ==========================================
 
+const editorBankPlatinum = document.getElementById(
+    "editor-instaarmybankplatinum"
+);
+
+const nombreBankPlatinum = document.getElementById(
+    "nombreInstaArmyBankPlatinum"
+);
+
+const btnGenerarBankPlatinum = document.getElementById(
+    "btnGenerarInstaArmyBankPlatinum"
+);
+
+const btnDescargarBankPlatinum = document.getElementById(
+    "btnDescargarInstaArmyBankPlatinum"
+);
+
+const btnCerrarBankPlatinum = document.getElementById(
+    "btnCerrarInstaArmyBankPlatinum"
+);
+
+const canvasBankPlatinum = document.getElementById(
+    "canvasInstaArmyBankPlatinum"
+);
+
+let tarjetaBankPlatinumGenerada = false;
+
+
+// ==========================================
+// ABRIR EDITOR INSTA ARMY BANK PLATINUM
+// ==========================================
+
+function abrirEditorInstaArmyBankPlatinum() {
+
+    if (!editorBankPlatinum) return;
+
+    editorBankPlatinum.classList.remove("oculta");
+
+    nombreBankPlatinum.value = "";
+
+    btnDescargarBankPlatinum.style.display = "none";
+
+    tarjetaBankPlatinumGenerada = false;
+
+    const ctx = canvasBankPlatinum.getContext("2d");
+    ctx.clearRect(
+        0,
+        0,
+        canvasBankPlatinum.width,
+        canvasBankPlatinum.height
+    );
+
+    editorBankPlatinum.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}
+
+
+// ==========================================
+// GENERAR TARJETA PLATINUM CON NOMBRE
+// ==========================================
+
+async function generarInstaArmyBankPlatinum() {
+
+    const nombre = nombreBankPlatinum.value.trim();
+
+    if (!nombre) {
+        alert("💜 Escribe el nombre para tu tarjeta Platinum.");
+        return;
+    }
+
+    try {
+
+        await document.fonts.load('80px "GravuraLET"');
+
+        const plantilla = new Image();
+        plantilla.src = "./instaarmybankplatinumplantilla.jpg";
+
+        await plantilla.decode();
+
+        canvasBankPlatinum.width = plantilla.naturalWidth;
+        canvasBankPlatinum.height = plantilla.naturalHeight;
+
+        const ctx = canvasBankPlatinum.getContext("2d");
+
+        ctx.clearRect(
+            0,
+            0,
+            canvasBankPlatinum.width,
+            canvasBankPlatinum.height
+        );
+
+        ctx.drawImage(
+            plantilla,
+            0,
+            0,
+            canvasBankPlatinum.width,
+            canvasBankPlatinum.height
+        );
+
+        // ==================================
+        // COORDENADAS DEL NOMBRE
+        // ==================================
+
+        const ancho = canvasBankPlatinum.width;
+        const alto = canvasBankPlatinum.height;
+
+        const centroX = ancho * 0.77;
+        const centroY = alto * 0.83;
+        const anchoMaximo = ancho * 0.33;
+
+        let tamano = ancho * 0.085;
+
+        ctx.save();
+
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.lineJoin = "round";
+
+        ctx.font = `${tamano}px "GravuraLET"`;
+
+        while (
+            ctx.measureText(nombre).width > anchoMaximo &&
+            tamano > 20
+        ) {
+            tamano -= 2;
+            ctx.font = `${tamano}px "GravuraLET"`;
+        }
+
+        // Estilo parecido al ejemplo
+        ctx.fillStyle = "#f7f7f7";
+        ctx.strokeStyle = "#000000";
+        ctx.lineWidth = Math.max(3, tamano * 0.08);
+
+        ctx.strokeText(
+            nombre,
+            centroX,
+            centroY,
+            anchoMaximo
+        );
+
+        ctx.fillText(
+            nombre,
+            centroX,
+            centroY,
+            anchoMaximo
+        );
+
+        ctx.restore();
+
+        tarjetaBankPlatinumGenerada = true;
+        btnDescargarBankPlatinum.style.display = "block";
+
+    } catch (error) {
+
+        console.error(
+            "Error al generar Insta Army Bank Platinum:",
+            error
+        );
+
+        alert(
+            "No se pudo generar la tarjeta Platinum. " +
+            "Revisa la plantilla y la fuente."
+        );
+    }
+}
+
+
+// ==========================================
+// DESCARGAR INSTRUCCIONES PLATINUM
+// ==========================================
+
+function descargarInstruccionesBankPlatinum() {
+
+    const enlace = document.createElement("a");
+
+    enlace.href = "./instaarmybankplatinumintrucciones.jpg";
+    enlace.download = "instaarmybankplatinumintrucciones.jpg";
+
+    document.body.appendChild(enlace);
+    enlace.click();
+    enlace.remove();
+
+}
+
+
+// ==========================================
+// DESCARGAR TARJETA PLATINUM
+// + INSTRUCCIONES
+// ==========================================
+
+function descargarInstaArmyBankPlatinum() {
+
+    if (!tarjetaBankPlatinumGenerada) {
+        alert("Primero genera tu tarjeta Platinum 💜");
+        return;
+    }
+
+    const enlace = document.createElement("a");
+
+    enlace.href = canvasBankPlatinum.toDataURL(
+        "image/jpeg",
+        0.98
+    );
+
+    enlace.download = "InstaArmyBankPlatinum.jpg";
+
+    document.body.appendChild(enlace);
+    enlace.click();
+    enlace.remove();
+
+    // Descargar también instrucciones
+    setTimeout(() => {
+        descargarInstruccionesBankPlatinum();
+    }, 500);
+
+}
+
+
+// ==========================================
+// BOTONES DEL EDITOR PLATINUM
+// ==========================================
+
+if (btnGenerarBankPlatinum) {
+    btnGenerarBankPlatinum.addEventListener(
+        "click",
+        generarInstaArmyBankPlatinum
+    );
+}
+
+if (btnDescargarBankPlatinum) {
+    btnDescargarBankPlatinum.addEventListener(
+        "click",
+        descargarInstaArmyBankPlatinum
+    );
+}
+
+if (btnCerrarBankPlatinum) {
+    btnCerrarBankPlatinum.addEventListener("click", () => {
+
+        editorBankPlatinum.classList.add("oculta");
+
+        document.getElementById("menu-disenos")
+            .classList.remove("oculta");
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    });
+}
     
 // ==========================================
 // ABRIR EDITOR CERTIFICADO DE BAUTISMO
@@ -1701,6 +2000,7 @@ if (btnCerrarCertificadoBautismo) {
     }
 
 });
+
 
 
 
