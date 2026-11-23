@@ -212,6 +212,34 @@ btnAvisarEdicion.parentElement.insertBefore(
     btnAvisarEdicion
 );
 
+    
+// ==========================================
+// BOTÓN EXCLUSIVO DIPLOMA INSTA ARMY
+// ==========================================
+
+const btnPersonalizarDiploma = document.createElement("button");
+
+btnPersonalizarDiploma.type = "button";
+btnPersonalizarDiploma.id = "btnPersonalizarDiploma";
+
+btnPersonalizarDiploma.textContent =
+    "💜 PERSONALIZAR MI DIPLOMA";
+
+btnPersonalizarDiploma.style.display = "none";
+
+btnPersonalizarDiploma.style.background = "#6a0dad";
+btnPersonalizarDiploma.style.color = "#ffffff";
+btnPersonalizarDiploma.style.border = "2px solid #c58aff";
+btnPersonalizarDiploma.style.borderRadius = "12px";
+btnPersonalizarDiploma.style.padding = "14px 18px";
+btnPersonalizarDiploma.style.fontWeight = "bold";
+btnPersonalizarDiploma.style.cursor = "pointer";
+
+btnAvisarEdicion.parentElement.insertBefore(
+    btnPersonalizarDiploma,
+    btnAvisarEdicion
+);
+
 todosLosDisenos.forEach((archivo) => {
 
     const imagen = document.createElement("img");
@@ -238,6 +266,14 @@ todosLosDisenos.forEach((archivo) => {
         btnDescargar.style.display = esCalendario
             ? "inline-block"
             : "none";
+          // ==========================================
+// MOSTRAR BOTÓN PERSONALIZAR DIPLOMA
+// ==========================================
+
+btnPersonalizarDiploma.style.display =
+    archivo === "diplomainstaarmy.jpg"
+        ? "inline-block"
+        : "none";
 
         const esBienestar =
     archivo === "instaarmybienestar.jpg";
@@ -285,7 +321,7 @@ btnPersonalizarCertificadoBautismo.style.display =
 // Mostrar AVÍSAME en las ediciones pendientes
 if (btnAvisarEdicion) {
     btnAvisarEdicion.style.display =
-       (!esCalendario && !esBank && !esCertificadoBautismo && archivo !== "instaarmybankplatinum.jpg" && !esBienestar)
+       (!esCalendario && !esBank && !esCertificadoBautismo && archivo !== "instaarmybankplatinum.jpg" && !esBienestar && archivo !== "diplomainstaarmy.jpg")
             ? "inline-block"
             : "none";
 }
