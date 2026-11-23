@@ -268,37 +268,38 @@ if (btnAvisarEdicion) {
 });
 
 
-    // ==========================================
-    // ABRIR EDITOR INSTA ARMY BANK
-    // ==========================================
+  
+// ==========================================
+// ABRIR EDITOR INSTA ARMY BANK
+// ==========================================
 
-    btnPersonalizarBank.addEventListener("click", () => {
+btnPersonalizarBank.addEventListener("click", () => {
 
-        btnPersonalizarBankPlatinum.addEventListener("click", () => {
-
-    // Cerrar vista previa
     vistaPrevia.classList.add("oculta");
 
-    // Ocultar menú de diseños
     document.getElementById("menu-disenos")
         .classList.add("oculta");
 
-    // Abrir editor Platinum
+    abrirEditorInstaArmyBank();
+
+});
+
+
+// ==========================================
+// ABRIR EDITOR INSTA ARMY BANK PLATINUM
+// ==========================================
+
+btnPersonalizarBankPlatinum.addEventListener("click", () => {
+
+    vistaPrevia.classList.add("oculta");
+
+    document.getElementById("menu-disenos")
+        .classList.add("oculta");
+
     abrirEditorInstaArmyBankPlatinum();
 
 });
 
-        // Cerrar vista previa
-        vistaPrevia.classList.add("oculta");
-
-        // Ocultar menú de diseños
-        document.getElementById("menu-disenos")
-            .classList.add("oculta");
-
-        // Abrir editor bancario
-        abrirEditorInstaArmyBank();
-
-    });
  // ==========================================
 // EDITOR EXCLUSIVO INSTA ARMY BANK PLATINUM
 // ==========================================
@@ -2000,6 +2001,7 @@ if (btnCerrarCertificadoBautismo) {
     }
 
 });
+
 
 
 
