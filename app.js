@@ -513,20 +513,23 @@ async function descargarCalendarioEnImagenes(archivoFrente) {
 }
 
 
+
 // ==========================================
 // DESCARGAR DISEÑO SELECCIONADO
 // CALENDARIOS: 3 IMÁGENES
-// OTRAS EDICIONES: 1 IMAGEN
+// INSTA ARMY BANK: 2 IMÁGENES
+// CERTIFICADO: 1 IMAGEN
 // ==========================================
 
 async function descargarCalendarioSeleccionado() {
 
     // ==========================================
-    // CALENDARIOS E1-E8
-    // DESCARGAR 3 IMÁGENES
+    // CALENDARIOS E1-E8: 3 IMÁGENES
     // ==========================================
 
-    if (calendarios.includes(disenoSeleccionado)) {
+    if (calendarios.includes(disenoSeleccionado) &&
+        calendarioArchivo &&
+        calendarioArchivo.name === disenoSeleccionado) {
 
         try {
 
@@ -542,17 +545,16 @@ async function descargarCalendarioSeleccionado() {
             );
 
             alert(
-                "No se pudieron descargar las imágenes del calendario. " +
-                "Revisa que existan las instrucciones y el reverso."
+                "No se pudieron descargar las imágenes del calendario."
             );
+
         }
 
         return;
     }
 
     // ==========================================
-    // OTRAS EDICIONES
-    // DESCARGAR SOLO 1 IMAGEN
+    // DESCARGAR IMAGEN ORIGINAL PERSONALIZADA
     // ==========================================
 
     if (!calendarioArchivo || !calendarioURL) return;
@@ -566,6 +568,20 @@ async function descargarCalendarioSeleccionado() {
 
     enlace.click();
     enlace.remove();
+
+    // ==========================================
+    // INSTRUCCIONES EXCLUSIVAS INSTA ARMY BANK
+    // ==========================================
+
+    if (calendarioArchivo.name === "InstaArmyBank.jpg") {
+
+        await descargarImagenDesdeRuta(
+            "./instaarmybankinstrucciones.jpg",
+            "instaarmybankinstrucciones.jpg"
+        );
+
+    }
+
 }
 
 // ==========================================
@@ -1685,5 +1701,6 @@ if (btnCerrarCertificadoBautismo) {
     }
 
 });
+
 
 
