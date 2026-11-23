@@ -2416,6 +2416,136 @@ if (btnCerrarDiplomaInstaArmy) {
     });
 
 }
+    
+// ==========================================
+// GENERAR DIPLOMA INSTA ARMY CON NOMBRE
+// ==========================================
+
+async function generarDiplomaInstaArmy() {
+
+    const nombre = nombreDiplomaInstaArmy.value.trim();
+
+    if (!nombre) {
+        alert("💜 Escribe el nombre para tu diploma.");
+        return;
+    }
+
+    try {
+
+        // Cargar fuente personalizada
+        await document.fonts.load(
+            '100px "BlackerValentine"'
+        );
+
+        // Cargar plantilla limpia
+        const plantilla = new Image();
+
+        plantilla.src = "./diplomainstaarmyplantilla.jpg";
+
+        await plantilla.decode();
+
+        // Mantener resolución original
+        canvasDiplomaInstaArmy.width = plantilla.naturalWidth;
+        canvasDiplomaInstaArmy.height = plantilla.naturalHeight;
+
+        const ctx = canvasDiplomaInstaArmy.getContext("2d");
+
+        ctx.clearRect(
+            0,
+            0,
+            canvasDiplomaInstaArmy.width,
+            canvasDiplomaInstaArmy.height
+        );
+
+        ctx.drawImage(
+            plantilla,
+            0,
+            0,
+            canvasDiplomaInstaArmy.width,
+            canvasDiplomaInstaArmy.height
+        );
+
+        const ancho = canvasDiplomaInstaArmy.width;
+        const alto = canvasDiplomaInstaArmy.height;
+
+        // ==========================================
+        // NOMBRE DONDE APARECE JESSICA
+        // ==========================================
+
+        const centroX = ancho * 0.50;
+        const posicionY = alto * 0.60;
+        const anchoMaximo = ancho * 0.50;
+
+        let tamano = Math.round(ancho * 0.095);
+
+        ctx.save();
+
+        ctx.textAlign = "center";
+        ctx.textBaseline = "bottom";
+
+        ctx.fillStyle = "#ffffff";
+
+        ctx.font = `${tamano}px "BlackerValentine"`;
+
+        // Reducir tamaño si el nombre es largo
+        while (
+            ctx.measureText(nombre).width > anchoMaximo &&
+            tamano > 26
+        ) {
+
+            tamano -= 2;
+
+            ctx.font = `${tamano}px "BlackerValentine"`;
+
+        }
+
+        ctx.fillText(
+            nombre,
+            centroX,
+            posicionY,
+            anchoMaximo
+        );
+
+        ctx.restore();
+
+        diplomaInstaArmyGenerado = true;
+
+        // Mostrar diploma completo
+        canvasDiplomaInstaArmy.style.display = "block";
+
+        // Mostrar botón de descarga
+        btnDescargarDiplomaInstaArmy.style.display = "block";
+
+    } catch (error) {
+
+        console.error(
+            "Error al generar diploma:",
+            error
+        );
+
+        alert(
+            "No se pudo generar el diploma. " +
+            "Revisa la plantilla y la fuente."
+        );
+
+    }
+
+}
+
+
+// ==========================================
+// ACTIVAR BOTÓN GENERAR DIPLOMA
+// ==========================================
+
+if (btnGenerarDiplomaInstaArmy) {
+
+    btnGenerarDiplomaInstaArmy.addEventListener(
+        "click",
+        generarDiplomaInstaArmy
+    );
+
+}
+
 
     // ==========================================
     // REGISTRAR SERVICE WORKER
