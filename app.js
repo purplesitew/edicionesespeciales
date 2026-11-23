@@ -412,7 +412,7 @@ async function generarInstaArmyBankPlatinum() {
         const alto = canvasBankPlatinum.height;
 
         const centroX = ancho * 0.77;
-        const centroY = alto * 0.90;
+        const centroY = alto * 0.94;
         const anchoMaximo = ancho * 0.33;
 
         let tamano = ancho * 0.085;
