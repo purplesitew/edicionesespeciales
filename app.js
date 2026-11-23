@@ -452,13 +452,36 @@ btnDescargar.addEventListener("click", async () => {
 
 
 
- // ==========================================
- // CREAR PDF DE CALENDARIOS E1-E8
- // PÁGINA 1: INSTRUCCIONES
- // PÁGINA 2: FRENTE Y REVERSO DEL MISMO TAMAÑO
- // ==========================================
+// ==========================================
+// DESCARGAR UNA IMAGEN DESDE RUTA
+// ==========================================
 
-async function crearPDFCalendarioEspecial(archivoFrente) {
+function descargarImagenDesdeRuta(ruta, nombreArchivo) {
+    return new Promise((resolve) => {
+
+        const enlace = document.createElement("a");
+
+        enlace.href = ruta;
+        enlace.download = nombreArchivo;
+
+        document.body.appendChild(enlace);
+
+        enlace.click();
+        enlace.remove();
+
+        setTimeout(resolve, 500);
+    });
+}
+
+
+// ==========================================
+// DESCARGAR CALENDARIOS E1-E8 EN 3 IMÁGENES
+// 1) INSTRUCCIONES
+// 2) FRENTE
+// 3) REVERSO
+// ==========================================
+
+async function descargarCalendarioEnImagenes(archivoFrente) {
 
     const archivoReverso = reversosCalendarios[archivoFrente];
 
@@ -468,151 +491,69 @@ async function crearPDFCalendarioEspecial(archivoFrente) {
         );
     }
 
-    if (!window.jspdf || !window.jspdf.jsPDF) {
-        throw new Error("No se pudo cargar la biblioteca de PDF.");
-    }
+    const nombreBase = archivoFrente.replace(".jpg", "");
 
-    // ==========================================
-    // CARGAR IMÁGENES
-    // ==========================================
-
-    async function cargarImagenCalendarioPDF(nombreArchivo) {
-
-        const imagen = new Image();
-
-        imagen.src = "./" + nombreArchivo;
-
-        await imagen.decode();
-
-        return imagen;
-    }
-
-    const [instrucciones, frente, reverso] = await Promise.all([
-        cargarImagenCalendarioPDF(instruccionesCalendarios),
-        cargarImagenCalendarioPDF(archivoFrente),
-        cargarImagenCalendarioPDF(archivoReverso)
-    ]);
-
-    const { jsPDF } = window.jspdf;
-
-    // ==========================================
-    // PÁGINA 1: INSTRUCCIONES
-    // ==========================================
-
-    const pdf = new jsPDF({
-        orientation: "portrait",
-        unit: "mm",
-        format: "a4"
-    });
-
-    const anchoPagina1 = pdf.internal.pageSize.getWidth();
-    const altoPagina1 = pdf.internal.pageSize.getHeight();
-
-    const escalaInstrucciones = Math.min(
-        (anchoPagina1 - 10) / instrucciones.naturalWidth,
-        (altoPagina1 - 10) / instrucciones.naturalHeight
+    // 1) Instrucciones
+    await descargarImagenDesdeRuta(
+        "./" + instruccionesCalendarios,
+        nombreBase + "-INSTRUCCIONES.jpg"
     );
 
-    const anchoInstrucciones =
-        instrucciones.naturalWidth * escalaInstrucciones;
-
-    const altoInstrucciones =
-        instrucciones.naturalHeight * escalaInstrucciones;
-
-    pdf.addImage(
-        instrucciones,
-        "JPEG",
-        (anchoPagina1 - anchoInstrucciones) / 2,
-        (altoPagina1 - altoInstrucciones) / 2,
-        anchoInstrucciones,
-        altoInstrucciones
+    // 2) Frente
+    await descargarImagenDesdeRuta(
+        "./" + archivoFrente,
+        nombreBase + "-FRENTE.jpg"
     );
 
-    // ==========================================
-    // PÁGINA 2: FRENTE Y REVERSO IGUALES
-    // ==========================================
-
-    pdf.addPage("a4", "landscape");
-
-    const anchoPagina2 = pdf.internal.pageSize.getWidth();
-    const altoPagina2 = pdf.internal.pageSize.getHeight();
-
-    const margen = 10;
-    const separacion = 8;
-
-    const anchoImagen =
-        (anchoPagina2 - margen * 2 - separacion) / 2;
-
-    const altoImagen = altoPagina2 - margen * 2;
-
-    const xFrente = margen;
-    const xReverso = margen + anchoImagen + separacion;
-    const yImagen = margen;
-
-    // FRENTE DEL CALENDARIO
-    pdf.addImage(
-        frente,
-        "JPEG",
-        xFrente,
-        yImagen,
-        anchoImagen,
-        altoImagen
+    // 3) Reverso
+    await descargarImagenDesdeRuta(
+        "./" + archivoReverso,
+        nombreBase + "-REVERSO.jpg"
     );
-
-    // REVERSO CORRESPONDIENTE
-    pdf.addImage(
-        reverso,
-        "JPEG",
-        xReverso,
-        yImagen,
-        anchoImagen,
-        altoImagen
-    );
-
-    return pdf;
 }
 
 
 // ==========================================
-// DESCARGAR CALENDARIOS EN PDF
-// CONSERVAR DESCARGAS DE OTRAS EDICIONES
+// DESCARGAR DISEÑO SELECCIONADO
+// CALENDARIOS: 3 IMÁGENES
+// OTRAS EDICIONES: 1 IMAGEN
 // ==========================================
 
 async function descargarCalendarioSeleccionado() {
 
-    // CALENDARIOS E1-E8: DESCARGAR PDF
+    // ==========================================
+    // CALENDARIOS E1-E8
+    // DESCARGAR 3 IMÁGENES
+    // ==========================================
 
     if (calendarios.includes(disenoSeleccionado)) {
 
         try {
 
-            const pdf = await crearPDFCalendarioEspecial(
+            await descargarCalendarioEnImagenes(
                 disenoSeleccionado
             );
-
-            const nombrePDF =
-                disenoSeleccionado.replace(".jpg", ".pdf");
-
-            pdf.save(nombrePDF);
 
         } catch (error) {
 
             console.error(
-                "Error al descargar calendario PDF:",
+                "Error al descargar calendario:",
                 error
             );
 
             alert(
-                "No se pudo crear el PDF. " +
-                "Revisa que las instrucciones y el reverso existan."
+                "No se pudieron descargar las imágenes del calendario. " +
+                "Revisa que existan las instrucciones y el reverso."
             );
-
         }
 
         return;
     }
 
-    // OTRAS EDICIONES: CONSERVAR DESCARGA ORIGINAL
+    // ==========================================
+    // OTRAS EDICIONES
+    // DESCARGAR SOLO 1 IMAGEN
+    // ==========================================
 
     if (!calendarioArchivo || !calendarioURL) return;
 
@@ -625,10 +566,7 @@ async function descargarCalendarioSeleccionado() {
 
     enlace.click();
     enlace.remove();
-
 }
-
-
 
 // ==========================================
 // CREAR IMAGEN ESPECIAL PARA COMPARTIR EN TIKTOK
@@ -1747,4 +1685,5 @@ if (btnCerrarCertificadoBautismo) {
     }
 
 });
+
 
