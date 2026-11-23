@@ -391,6 +391,83 @@ function abrirEditorInstaArmyBankPlatinum() {
         block: "start"
     });
 }
+    
+// ==========================================
+// EDITOR EXCLUSIVO INSTA ARMY BIENESTAR
+// ==========================================
+
+const editorBienestar = document.getElementById(
+    "editor-instaarmybienestar"
+);
+
+const nombreBienestar = document.getElementById(
+    "nombreInstaArmyBienestar"
+);
+
+const btnGenerarBienestar = document.getElementById(
+    "btnGenerarInstaArmyBienestar"
+);
+
+const btnDescargarBienestar = document.getElementById(
+    "btnDescargarInstaArmyBienestar"
+);
+
+const btnCerrarBienestar = document.getElementById(
+    "btnCerrarInstaArmyBienestar"
+);
+
+const canvasBienestar = document.getElementById(
+    "canvasInstaArmyBienestar"
+);
+
+let tarjetaBienestarGenerada = false;
+
+
+// ==========================================
+// ABRIR EDITOR INSTA ARMY BIENESTAR
+// ==========================================
+
+function abrirEditorInstaArmyBienestar() {
+
+    if (
+        !editorBienestar ||
+        !nombreBienestar ||
+        !btnDescargarBienestar ||
+        !canvasBienestar
+    ) {
+        alert("No se encontró el editor Bienestar.");
+        return;
+    }
+
+    // Mostrar editor
+    editorBienestar.classList.remove("oculta");
+
+    // Limpiar nombre anterior
+    nombreBienestar.value = "";
+
+    // Ocultar descarga hasta generar la tarjeta
+    btnDescargarBienestar.style.display = "none";
+
+    tarjetaBienestarGenerada = false;
+
+    // Limpiar vista previa anterior
+    const ctx = canvasBienestar.getContext("2d");
+
+    ctx.clearRect(
+        0,
+        0,
+        canvasBienestar.width,
+        canvasBienestar.height
+    );
+
+    // Llevar la pantalla al editor
+    editorBienestar.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+
+}
+
 btnPersonalizarBienestar.addEventListener("click", () => {
 
     // Cerrar vista previa
