@@ -285,7 +285,7 @@ btnPersonalizarCertificadoBautismo.style.display =
 // Mostrar AVÍSAME en las ediciones pendientes
 if (btnAvisarEdicion) {
     btnAvisarEdicion.style.display =
-       (!esCalendario && !esBank && !esCertificadoBautismo && archivo !== "instaarmybankplatinum.jpg")
+       (!esCalendario && !esBank && !esCertificadoBautismo && archivo !== "instaarmybankplatinum.jpg" && !esBienestar)
             ? "inline-block"
             : "none";
 }
