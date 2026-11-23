@@ -428,6 +428,172 @@ let tarjetaBienestarGenerada = false;
 // ==========================================
 
 function abrirEditorInstaArmyBienestar() {
+    // ==========================================
+// GENERAR TARJETA INSTA ARMY BIENESTAR
+// ==========================================
+
+async function generarInstaArmyBienestar() {
+
+    const nombre = nombreBienestar.value.trim();
+
+    if (!nombre) {
+        alert("💜 Escribe el nombre para tu tarjeta.");
+        return;
+    }
+
+    try {
+
+        await document.fonts.load(
+            '80px "ArchivoBlackRegular"'
+        );
+
+        const plantilla = new Image();
+
+        plantilla.src = "./instaarmybienestarplantilla.jpg";
+
+        await plantilla.decode();
+
+        canvasBienestar.width = plantilla.naturalWidth;
+        canvasBienestar.height = plantilla.naturalHeight;
+
+        const ctx = canvasBienestar.getContext("2d");
+
+        ctx.clearRect(
+            0,
+            0,
+            canvasBienestar.width,
+            canvasBienestar.height
+        );
+
+        ctx.drawImage(
+            plantilla,
+            0,
+            0,
+            canvasBienestar.width,
+            canvasBienestar.height
+        );
+
+        const ancho = canvasBienestar.width;
+        const alto = canvasBienestar.height;
+
+        // ==========================================
+        // POSICIÓN DEL NOMBRE
+        // ==========================================
+
+        const x = ancho * 0.06;
+        const y = alto * 0.92;
+        const anchoMaximo = ancho * 0.52;
+
+        let tamano = Math.round(ancho * 0.12);
+
+        ctx.save();
+
+        ctx.textAlign = "left";
+        ctx.textBaseline = "bottom";
+        ctx.lineJoin = "round";
+
+        ctx.font = `${tamano}px "ArchivoBlackRegular"`;
+
+        while (
+            ctx.measureText(nombre).width > anchoMaximo &&
+            tamano > 28
+        ) {
+            tamano -= 2;
+            ctx.font = `${tamano}px "ArchivoBlackRegular"`;
+        }
+
+        // Color guinda / borgoña
+        ctx.fillStyle = "#7b1238";
+
+        ctx.fillText(
+            nombre,
+            x,
+            y,
+            anchoMaximo
+        );
+
+        ctx.restore();
+
+        tarjetaBienestarGenerada = true;
+
+        btnDescargarBienestar.style.display = "inline-block";
+
+    } catch (error) {
+
+        console.error(
+            "Error al generar Insta Army Bienestar:",
+            error
+        );
+
+        alert(
+            "No se pudo generar la tarjeta Bienestar. " +
+            "Revisa la plantilla o la fuente."
+        );
+    }
+}
+
+
+// ==========================================
+// DESCARGAR TARJETA BIENESTAR
+// ==========================================
+
+function descargarInstaArmyBienestar() {
+
+    if (!tarjetaBienestarGenerada) {
+        alert("Primero genera tu tarjeta 💜");
+        return;
+    }
+
+    const enlace = document.createElement("a");
+
+    enlace.href = canvasBienestar.toDataURL(
+        "image/jpeg",
+        0.98
+    );
+
+    enlace.download = "InstaArmyBienestar.jpg";
+
+    document.body.appendChild(enlace);
+
+    enlace.click();
+
+    enlace.remove();
+}
+
+
+// ==========================================
+// BOTONES DEL EDITOR BIENESTAR
+// ==========================================
+
+if (btnGenerarBienestar) {
+    btnGenerarBienestar.addEventListener(
+        "click",
+        generarInstaArmyBienestar
+    );
+}
+
+if (btnDescargarBienestar) {
+    btnDescargarBienestar.addEventListener(
+        "click",
+        descargarInstaArmyBienestar
+    );
+}
+
+if (btnCerrarBienestar) {
+    btnCerrarBienestar.addEventListener("click", () => {
+
+        editorBienestar.classList.add("oculta");
+
+        document.getElementById("menu-disenos")
+            .classList.remove("oculta");
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    });
+}
 
     if (
         !editorBienestar ||
