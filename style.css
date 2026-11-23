@@ -904,4 +904,158 @@ body {
     }
 }
 
+/* ==========================================
+   FUENTE DIPLOMA INSTA ARMY
+========================================== */
+
+@font-face {
+    font-family: "BlackerValentine";
+    src: url("./Blacker%20Valentine.ttf") format("truetype");
+    font-display: swap;
+}
+
+
+/* ==========================================
+   EDITOR EXCLUSIVO DIPLOMA INSTA ARMY
+========================================== */
+
+#editor-diploma-instaarmy {
+    width: 100%;
+    min-height: 100dvh;
+    padding: 25px 12px 50px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+#editor-diploma-instaarmy .editor-bank-caja {
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 26px 18px;
+    box-sizing: border-box;
+
+    background: rgba(33, 12, 52, 0.96);
+    border: 2px solid #c58aff;
+    border-radius: 24px;
+
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.45);
+}
+
+#editor-diploma-instaarmy h2 {
+    color: #f0d7ff;
+    font-size: 25px;
+    margin-bottom: 12px;
+}
+
+#editor-diploma-instaarmy p {
+    color: #ffffff;
+    font-size: 15px;
+    margin-bottom: 22px;
+}
+
+#editor-diploma-instaarmy label {
+    display: block;
+    color: #ead3ff;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+#nombreDiplomaInstaArmy {
+    display: block;
+    width: 100%;
+    max-width: 430px;
+    margin: 0 auto 22px;
+    padding: 16px;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+    color: #351447;
+
+    border: 2px solid #c58aff;
+    border-radius: 14px;
+
+    font-size: 17px;
+    text-align: center;
+}
+
+#nombreDiplomaInstaArmy:focus {
+    outline: none;
+    border-color: #e5c487;
+    box-shadow: 0 0 0 4px rgba(229,196,135,0.25);
+}
+
+#editor-diploma-instaarmy button {
+    display: block;
+    width: 100%;
+    max-width: 420px;
+
+    margin: 14px auto;
+    padding: 16px;
+
+    border: none;
+    border-radius: 14px;
+
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+#btnGenerarDiplomaInstaArmy {
+    background: linear-gradient(135deg, #6a0dad, #b15ee5);
+}
+
+#btnDescargarDiplomaInstaArmy {
+    background: linear-gradient(135deg, #b69045, #f0d38d);
+    color: #291335 !important;
+}
+
+#btnCerrarDiplomaInstaArmy {
+    background: #634477;
+}
+
+#editor-diploma-instaarmy .canvas-bank-contenedor {
+    width: 100%;
+    margin: 22px auto;
+    overflow: hidden;
+}
+
+#canvasDiplomaInstaArmy {
+    display: block;
+    width: 100%;
+    max-width: 700px;
+    height: auto;
+
+    margin: 0 auto;
+
+    box-sizing: border-box;
+
+    border: 2px solid #e2c68a;
+    border-radius: 14px;
+
+    box-shadow: 0 6px 25px rgba(0,0,0,0.4);
+}
+
+@media (max-width: 600px) {
+
+    #editor-diploma-instaarmy {
+        padding: 15px 10px 40px;
+    }
+
+    #editor-diploma-instaarmy .editor-bank-caja {
+        padding: 22px 14px;
+    }
+
+    #editor-diploma-instaarmy h2 {
+        font-size: 21px;
+    }
+
+    #editor-diploma-instaarmy button {
+        font-size: 14px;
+    }
+}
+
 
