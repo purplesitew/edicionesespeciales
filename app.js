@@ -2473,7 +2473,7 @@ async function generarDiplomaInstaArmy() {
         // ==========================================
 
         const centroX = ancho * 0.50;
-        const posicionY = alto * 0.60;
+        const posicionY = alto * 0.64;
         const anchoMaximo = ancho * 0.50;
 
         let tamano = Math.round(ancho * 0.095);
