@@ -450,7 +450,8 @@ body {
 }
 @font-face {
     font-family: "TangoRegular";
-    src: url("./Tango Regular.ttf") format("truetype");
+    src: url("./Tango%20Regular.otf") format("opentype");
+    font-display: swap;
 }
 
 /* ==========================================
@@ -643,3 +644,4 @@ body {
         font-size: 14px;
     }
 }
+
