@@ -453,7 +453,10 @@ body {
     src: url("./Tango%20Regular.otf") format("opentype");
     font-display: swap;
 }
-
+@font-face {
+    font-family: "GravuraLET";
+    src: url("./Gravura LET Regular.ttf") format("truetype");
+}
 /* ==========================================
    EDITOR BONITO CERTIFICADO DE BAUTISMO
    EXCLUSIVO DE ESTA EDICIÓN
@@ -644,4 +647,5 @@ body {
         font-size: 14px;
     }
 }
+
 
