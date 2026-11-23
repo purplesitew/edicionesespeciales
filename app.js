@@ -254,7 +254,7 @@ btnPersonalizarCertificadoBautismo.style.display =
 // Mostrar AVÍSAME en las ediciones pendientes
 if (btnAvisarEdicion) {
     btnAvisarEdicion.style.display =
-       (!esCalendario && !esBank && !esCertificadoBautismo)
+       (!esCalendario && !esBank && !esCertificadoBautismo && archivo !== "instaarmybankplatinum.jpg")
             ? "inline-block"
             : "none";
 }
@@ -2001,6 +2001,7 @@ if (btnCerrarCertificadoBautismo) {
     }
 
 });
+
 
 
 
