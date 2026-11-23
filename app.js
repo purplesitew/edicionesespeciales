@@ -2305,6 +2305,118 @@ if (btnCerrarCertificadoBautismo) {
 
     });
 }
+    
+// ==========================================
+// EDITOR EXCLUSIVO DIPLOMA INSTA ARMY
+// ==========================================
+
+const editorDiplomaInstaArmy = document.getElementById(
+    "editor-diploma-instaarmy"
+);
+
+const nombreDiplomaInstaArmy = document.getElementById(
+    "nombreDiplomaInstaArmy"
+);
+
+const btnGenerarDiplomaInstaArmy = document.getElementById(
+    "btnGenerarDiplomaInstaArmy"
+);
+
+const btnDescargarDiplomaInstaArmy = document.getElementById(
+    "btnDescargarDiplomaInstaArmy"
+);
+
+const btnCerrarDiplomaInstaArmy = document.getElementById(
+    "btnCerrarDiplomaInstaArmy"
+);
+
+const canvasDiplomaInstaArmy = document.getElementById(
+    "canvasDiplomaInstaArmy"
+);
+
+let diplomaInstaArmyGenerado = false;
+
+
+// ==========================================
+// ABRIR EDITOR DEL DIPLOMA
+// ==========================================
+
+function abrirEditorDiplomaInstaArmy() {
+
+    if (!editorDiplomaInstaArmy || !canvasDiplomaInstaArmy) {
+        alert("No se encontró el editor del diploma.");
+        return;
+    }
+
+    // Cerrar vista previa
+    vistaPrevia.classList.add("oculta");
+
+    // Ocultar galería
+    document.getElementById("menu-disenos")
+        .classList.add("oculta");
+
+    // Mostrar editor
+    editorDiplomaInstaArmy.classList.remove("oculta");
+
+    // Limpiar datos anteriores
+    nombreDiplomaInstaArmy.value = "";
+
+    btnDescargarDiplomaInstaArmy.style.display = "none";
+
+    diplomaInstaArmyGenerado = false;
+
+    // Limpiar canvas anterior
+    const ctx = canvasDiplomaInstaArmy.getContext("2d");
+
+    ctx.clearRect(
+        0,
+        0,
+        canvasDiplomaInstaArmy.width,
+        canvasDiplomaInstaArmy.height
+    );
+
+    // Mostrar editor desde arriba
+    editorDiplomaInstaArmy.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+
+}
+
+
+// ==========================================
+// ACTIVAR BOTÓN PERSONALIZAR DIPLOMA
+// ==========================================
+
+btnPersonalizarDiploma.addEventListener("click", () => {
+
+    abrirEditorDiplomaInstaArmy();
+
+});
+
+
+// ==========================================
+// CERRAR EDITOR DEL DIPLOMA
+// ==========================================
+
+if (btnCerrarDiplomaInstaArmy) {
+
+    btnCerrarDiplomaInstaArmy.addEventListener("click", () => {
+
+        editorDiplomaInstaArmy.classList.add("oculta");
+
+        document.getElementById("menu-disenos")
+            .classList.remove("oculta");
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    });
+
+}
+
     // ==========================================
     // REGISTRAR SERVICE WORKER
     // ==========================================
