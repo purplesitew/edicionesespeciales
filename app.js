@@ -1018,6 +1018,30 @@ function abrirEditorInstaArmy2026() {
         block: "start"
     });
 }
+    
+ // ==========================================
+ // ACTIVAR BOTÓN PERSONALIZAR INSTA ARMY 2026
+ // ==========================================
+
+btnPersonalizar2026.addEventListener("click", () => {
+
+    if (!editorInstaArmy2026) {
+        alert("No se encontró el editor Insta Army 2026.");
+        return;
+    }
+
+    // Cerrar vista previa
+    vistaPrevia.classList.add("oculta");
+
+    // Ocultar galería
+    document.getElementById("menu-disenos")
+        .classList.add("oculta");
+
+    // Abrir editor
+    abrirEditorInstaArmy2026();
+
+});
+
     // ==========================================
 // GENERAR INSTA ARMY 2026
 // ==========================================
