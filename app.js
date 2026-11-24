@@ -2770,7 +2770,7 @@ async function generarEtiquetaCola() {
         // ==========================================
 
         const centroX = ancho * 0.78;
-        const centroY = alto * 0.35;
+        const centroY = alto * 0.32;
         const anchoMaximo = ancho * 0.26;
 
         let tamano = ancho * 0.055;
