@@ -2696,6 +2696,180 @@ if (btnCerrarEtiquetaCola) {
 
 }
 
+// ==========================================
+// CARGAR FUENTE DE ETIQUETA COLA
+// ==========================================
+
+async function cargarFuenteEtiquetaCola() {
+
+    if (document.fonts.check('20px "CocaColaII"')) {
+        return;
+    }
+
+    const fuente = new FontFace(
+        "CocaColaII",
+        'url("./Coca Cola ii.ttf")'
+    );
+
+    await fuente.load();
+
+    document.fonts.add(fuente);
+}
+
+
+// ==========================================
+// GENERAR ETIQUETA COLA
+// ==========================================
+
+async function generarEtiquetaCola() {
+
+    const nombre = nombreEtiquetaCola.value.trim();
+
+    if (!nombre) {
+        alert("💜 Escribe el nombre para tu etiqueta.");
+        return;
+    }
+
+    try {
+
+        await cargarFuenteEtiquetaCola();
+
+        const plantilla = new Image();
+
+        plantilla.src = "./Etiquetacolaplantilla.jpg";
+
+        await plantilla.decode();
+
+        canvasEtiquetaCola.width = plantilla.naturalWidth;
+        canvasEtiquetaCola.height = plantilla.naturalHeight;
+
+        const ctx = canvasEtiquetaCola.getContext("2d");
+
+        ctx.clearRect(
+            0,
+            0,
+            canvasEtiquetaCola.width,
+            canvasEtiquetaCola.height
+        );
+
+        ctx.drawImage(
+            plantilla,
+            0,
+            0,
+            canvasEtiquetaCola.width,
+            canvasEtiquetaCola.height
+        );
+
+        const ancho = canvasEtiquetaCola.width;
+        const alto = canvasEtiquetaCola.height;
+
+        // ==========================================
+        // POSICIÓN DEL NOMBRE
+        // donde dice: Cecilia Curs
+        // ==========================================
+
+        const centroX = ancho * 0.78;
+        const centroY = alto * 0.35;
+        const anchoMaximo = ancho * 0.26;
+
+        let tamano = ancho * 0.055;
+
+        ctx.save();
+
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.lineJoin = "round";
+
+        ctx.font = `${tamano}px "CocaColaII"`;
+
+        while (
+            ctx.measureText(nombre).width > anchoMaximo &&
+            tamano > 18
+        ) {
+            tamano -= 2;
+            ctx.font = `${tamano}px "CocaColaII"`;
+        }
+
+        // Estilo del nombre
+        ctx.fillStyle = "#ffffff";
+        ctx.shadowColor = "rgba(0, 0, 0, 0.25)";
+        ctx.shadowBlur = 6;
+        ctx.shadowOffsetX = 2;
+        ctx.shadowOffsetY = 2;
+
+        ctx.fillText(
+            nombre,
+            centroX,
+            centroY,
+            anchoMaximo
+        );
+
+        ctx.restore();
+
+        etiquetaColaGenerada = true;
+
+        btnDescargarEtiquetaCola.style.display = "inline-block";
+
+    } catch (error) {
+
+        console.error(
+            "Error al generar Etiqueta Cola:",
+            error
+        );
+
+        alert(
+            "No se pudo generar la etiqueta. " +
+            "Revisa que existan la plantilla y la fuente."
+        );
+    }
+}
+
+
+// ==========================================
+// DESCARGAR ETIQUETA COLA
+// ==========================================
+
+function descargarEtiquetaCola() {
+
+    if (!etiquetaColaGenerada) {
+        alert("Primero genera tu etiqueta 💜");
+        return;
+    }
+
+    const enlace = document.createElement("a");
+
+    enlace.href = canvasEtiquetaCola.toDataURL(
+        "image/jpeg",
+        0.98
+    );
+
+    enlace.download = "Etiquetacola.jpg";
+
+    document.body.appendChild(enlace);
+
+    enlace.click();
+
+    enlace.remove();
+}
+
+
+// ==========================================
+// BOTONES DE ETIQUETA COLA
+// ==========================================
+
+if (btnGenerarEtiquetaCola) {
+    btnGenerarEtiquetaCola.addEventListener(
+        "click",
+        generarEtiquetaCola
+    );
+}
+
+if (btnDescargarEtiquetaCola) {
+    btnDescargarEtiquetaCola.addEventListener(
+        "click",
+        descargarEtiquetaCola
+    );
+}
 
     // ==========================================
     // REGISTRAR SERVICE WORKER
