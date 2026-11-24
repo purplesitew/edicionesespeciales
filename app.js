@@ -1149,7 +1149,7 @@ ctx.translate(
     alto * 0.73
 );
 
-ctx.rotate(-8 * Math.PI / 180);
+ctx.rotate(-11 * Math.PI / 180);
 
 let tamanoBias = ancho * 0.055;
 
@@ -1187,7 +1187,7 @@ ctx.translate(
     alto * 0.54
 );
 
-ctx.rotate(-8 * Math.PI / 180);
+ctx.rotate(-11 * Math.PI / 180);
 
 let tamanoPais = ancho * 0.06;
 
