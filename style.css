@@ -1263,3 +1263,43 @@ body {
 }
 
 
+/* ==========================================
+   VISTA PREVIA INSTA ARMY 2026
+   SOLO AFECTA A ESTA EDICIÓN
+========================================== */
+
+#editor-instaarmy2026 .canvas-bank-contenedor {
+    width: 100%;
+    max-width: 480px;
+    margin: 20px auto;
+    overflow: hidden;
+}
+
+#canvasInstaArmy2026 {
+    display: block;
+    width: 100%;
+    max-width: 480px;
+    height: auto;
+    margin: 0 auto;
+
+    border: 2px solid #c58aff;
+    border-radius: 15px;
+    box-sizing: border-box;
+
+    box-shadow: 0 0 20px rgba(197, 138, 255, 0.3);
+}
+
+/* Ajuste para celulares */
+
+@media (max-width: 600px) {
+
+    #editor-instaarmy2026 .canvas-bank-contenedor {
+        max-width: 100%;
+    }
+
+    #canvasInstaArmy2026 {
+        max-width: 100%;
+    }
+
+}
+
