@@ -1061,7 +1061,7 @@ async function generarInstaArmy2026() {
 
         // Usa el MISMO nombre de familia que ya estás usando
         // en Platinum para Gravura LET Regular.ttf
-        await document.fonts.load('80px "GravuraLETRegular"');
+        await document.fonts.load('80px "GravuraLET"');
 
         const plantilla = new Image();
         plantilla.src = "./instaarmy2026plantilla.jpg";
@@ -1100,14 +1100,14 @@ async function generarInstaArmy2026() {
             ctx.textBaseline = "middle";
             ctx.lineJoin = "round";
 
-            ctx.font = `${tamano}px "GravuraLETRegular"`;
+            ctx.font = `${tamano}px "GravuraLET"`;
 
             while (
                 ctx.measureText(texto).width > maxWidth &&
                 tamano > 20
             ) {
                 tamano -= 2;
-                ctx.font = `${tamano}px "GravuraLETRegular"`;
+                ctx.font = `${tamano}px "GravuraLET"`;
             }
 
             ctx.fillStyle = "#ffffff";
@@ -1290,6 +1290,55 @@ async function prepararInstaArmy2026TikTok() {
         return false;
     }
 }
+    
+ // ==========================================
+ // DESCARGAR INSTA ARMY 2026
+ // ==========================================
+
+async function descargarInstaArmy2026() {
+
+    if (!instaArmy2026Generada) {
+        alert("Primero genera tu edición 💜");
+        return;
+    }
+
+    btnDescargarInstaArmy2026.disabled = true;
+
+    try {
+
+        const preparado =
+            await prepararInstaArmy2026TikTok();
+
+        if (!preparado) return;
+
+        // Activar el botón de compartir
+        btnCompartirTikTok.disabled = false;
+
+        // Abrir ventana de TikTok
+        modalTikTok.classList.remove("oculta");
+
+        mensajeTikTok.textContent =
+            "💜 ¡Tu edición especial está lista! " +
+            "Apóyanos compartiéndola en TikTok.";
+
+        btnDescargaAlternativa.classList.add("oculta");
+
+    } catch (error) {
+
+        console.error(
+            "Error descargando Insta Army 2026:",
+            error
+        );
+
+        alert("No se pudo preparar la descarga.");
+
+    } finally {
+
+        btnDescargarInstaArmy2026.disabled = false;
+
+    }
+}
+
     // ==========================================
 // BOTONES DEL EDITOR INSTA ARMY 2026
 // ==========================================
