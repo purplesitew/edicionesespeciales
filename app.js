@@ -1125,23 +1125,31 @@ async function generarInstaArmy2026() {
             ctx.restore();
         }
 
-        // NOMBRE → Esther Monroy
+       
+        // ==================================
+        // NOMBRE - SEGUNDA FRANJA NEGRA
+        // ==================================
+
         dibujarTexto(
             nombre,
             ancho * 0.52,
-            alto * 0.34,
+            alto * 0.40,
             ancho * 0.42,
             ancho * 0.060
         );
 
-        // BIAS → Suga
+        // ==================================
+        // BIAS - TERCERA FRANJA NEGRA
+        // ==================================
+
         dibujarTexto(
             bias,
             ancho * 0.53,
-            alto * 0.53,
+            alto * 0.57,
             ancho * 0.33,
             ancho * 0.068
         );
+
 
         // PAÍS → Francia
         dibujarTexto(
