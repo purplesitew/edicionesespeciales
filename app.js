@@ -1156,14 +1156,14 @@ let tamanoBias = ancho * 0.055;
 ctx.textAlign = "center";
 ctx.textBaseline = "middle";
 ctx.lineJoin = "round";
-ctx.font = `${tamanoBias}px "GravuraLETRegular"`;
+ctx.font = `${tamanoBias}px "GravuraLET"`;
 
 while (
     ctx.measureText(bias).width > ancho * 0.34 &&
     tamanoBias > 18
 ) {
     tamanoBias -= 2;
-    ctx.font = `${tamanoBias}px "GravuraLETRegular"`;
+    ctx.font = `${tamanoBias}px "GravuraLET"`;
 }
 
 ctx.fillStyle = "#ffffff";
@@ -1194,14 +1194,14 @@ let tamanoPais = ancho * 0.055;
 ctx.textAlign = "center";
 ctx.textBaseline = "middle";
 ctx.lineJoin = "round";
-ctx.font = `${tamanoPais}px "GravuraLETRegular"`;
+ctx.font = `${tamanoPais}px "GravuraLET"`;
 
 while (
     ctx.measureText(pais).width > ancho * 0.34 &&
     tamanoPais > 18
 ) {
     tamanoPais -= 2;
-    ctx.font = `${tamanoPais}px "GravuraLETRegular"`;
+    ctx.font = `${tamanoPais}px "GravuraLET"`;
 }
 
 ctx.fillStyle = "#ffffff";
