@@ -358,13 +358,28 @@ btnPersonalizarCertificadoBautismo.style.display =
         ? "inline-block"
         : "none";
         
-// Mostrar AVÍSAME en las ediciones pendientes
+
+// ==========================================
+// MOSTRAR AVÍSAME SOLO EN EDICIONES PENDIENTES
+// ==========================================
+
 if (btnAvisarEdicion) {
+
     btnAvisarEdicion.style.display =
-       (!esCalendario && !esBank && !esCertificadoBautismo && archivo !== "instaarmybankplatinum.jpg" && !esBienestar && archivo !== "diplomainstaarmy.jpg")
-            ? "inline-block"
-            : "none";
+        (
+            !esCalendario &&
+            !esBank &&
+            !esCertificadoBautismo &&
+            archivo !== "instaarmybankplatinum.jpg" &&
+            !esBienestar &&
+            archivo !== "diplomainstaarmy.jpg" &&
+            archivo !== "Etiquetacola.jpg" &&
+            archivo !== "instaarmy2026.jpg"
+        )
+        ? "inline-block"
+        : "none";
 }
+
 
         
 // ==========================================
