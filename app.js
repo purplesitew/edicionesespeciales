@@ -957,7 +957,347 @@ btnAvisarEdicion.parentElement.insertBefore(
     btnPersonalizar2026,
     btnAvisarEdicion
 );
-    
+
+    // ==========================================
+// EDITOR EXCLUSIVO INSTA ARMY 2026
+// ==========================================
+
+const editorInstaArmy2026 = document.getElementById(
+    "editor-instaarmy2026"
+);
+
+const nombreInstaArmy2026 = document.getElementById(
+    "nombreInstaArmy2026"
+);
+
+const biasInstaArmy2026 = document.getElementById(
+    "biasInstaArmy2026"
+);
+
+const paisInstaArmy2026 = document.getElementById(
+    "paisInstaArmy2026"
+);
+
+const btnGenerarInstaArmy2026 = document.getElementById(
+    "btnGenerarInstaArmy2026"
+);
+
+const btnDescargarInstaArmy2026 = document.getElementById(
+    "btnDescargarInstaArmy2026"
+);
+
+const btnCerrarInstaArmy2026 = document.getElementById(
+    "btnCerrarInstaArmy2026"
+);
+
+const canvasInstaArmy2026 = document.getElementById(
+    "canvasInstaArmy2026"
+);
+
+let instaArmy2026Generada = false;
+    // ==========================================
+// ABRIR EDITOR INSTA ARMY 2026
+// ==========================================
+
+function abrirEditorInstaArmy2026() {
+
+    if (!editorInstaArmy2026) return;
+
+    editorInstaArmy2026.classList.remove("oculta");
+
+    nombreInstaArmy2026.value = "";
+    biasInstaArmy2026.value = "";
+    paisInstaArmy2026.value = "";
+
+    btnDescargarInstaArmy2026.style.display = "none";
+
+    instaArmy2026Generada = false;
+
+    editorInstaArmy2026.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}
+    // ==========================================
+// GENERAR INSTA ARMY 2026
+// ==========================================
+
+async function generarInstaArmy2026() {
+
+    const nombre = nombreInstaArmy2026.value.trim();
+    const bias = biasInstaArmy2026.value.trim();
+    const pais = paisInstaArmy2026.value.trim();
+
+    if (!nombre || !bias || !pais) {
+        alert("💜 Escribe el nombre, bias y país.");
+        return;
+    }
+
+    try {
+
+        // Usa el MISMO nombre de familia que ya estás usando
+        // en Platinum para Gravura LET Regular.ttf
+        await document.fonts.load('80px "GravuraLETRegular"');
+
+        const plantilla = new Image();
+        plantilla.src = "./instaarmy2026plantilla.jpg";
+
+        await plantilla.decode();
+
+        canvasInstaArmy2026.width = plantilla.naturalWidth;
+        canvasInstaArmy2026.height = plantilla.naturalHeight;
+
+        const ctx = canvasInstaArmy2026.getContext("2d");
+
+        ctx.clearRect(
+            0,
+            0,
+            canvasInstaArmy2026.width,
+            canvasInstaArmy2026.height
+        );
+
+        ctx.drawImage(
+            plantilla,
+            0,
+            0,
+            canvasInstaArmy2026.width,
+            canvasInstaArmy2026.height
+        );
+
+        const ancho = canvasInstaArmy2026.width;
+        const alto = canvasInstaArmy2026.height;
+
+        function dibujarTexto(texto, centerX, centerY, maxWidth, fontSize) {
+
+            let tamano = fontSize;
+
+            ctx.save();
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.lineJoin = "round";
+
+            ctx.font = `${tamano}px "GravuraLETRegular"`;
+
+            while (
+                ctx.measureText(texto).width > maxWidth &&
+                tamano > 20
+            ) {
+                tamano -= 2;
+                ctx.font = `${tamano}px "GravuraLETRegular"`;
+            }
+
+            ctx.fillStyle = "#ffffff";
+            ctx.strokeStyle = "#000000";
+            ctx.lineWidth = Math.max(2, tamano * 0.045);
+
+            ctx.shadowColor = "rgba(0,0,0,0.35)";
+            ctx.shadowBlur = 8;
+            ctx.shadowOffsetX = 2;
+            ctx.shadowOffsetY = 2;
+
+            ctx.strokeText(texto, centerX, centerY);
+            ctx.fillText(texto, centerX, centerY);
+
+            ctx.restore();
+        }
+
+        // NOMBRE → Esther Monroy
+        dibujarTexto(
+            nombre,
+            ancho * 0.52,
+            alto * 0.34,
+            ancho * 0.42,
+            ancho * 0.060
+        );
+
+        // BIAS → Suga
+        dibujarTexto(
+            bias,
+            ancho * 0.53,
+            alto * 0.53,
+            ancho * 0.33,
+            ancho * 0.068
+        );
+
+        // PAÍS → Francia
+        dibujarTexto(
+            pais,
+            ancho * 0.54,
+            alto * 0.73,
+            ancho * 0.42,
+            ancho * 0.075
+        );
+
+        instaArmy2026Generada = true;
+        btnDescargarInstaArmy2026.style.display = "block";
+
+    } catch (error) {
+
+        console.error(
+            "Error al generar Insta Army 2026:",
+            error
+        );
+
+        alert(
+            "No se pudo generar la edición 2026. " +
+            "Revisa la plantilla y la fuente."
+        );
+    }
+}
+    // ==========================================
+// PREPARAR INSTA ARMY 2026 PARA TIKTOK
+// ==========================================
+
+async function prepararInstaArmy2026TikTok() {
+
+    if (!instaArmy2026Generada) {
+        alert("Primero genera tu edición 💜");
+        return false;
+    }
+
+    try {
+
+        const imagenOriginal = canvasInstaArmy2026.toDataURL(
+            "image/jpeg",
+            0.98
+        );
+
+        const respuestaOriginal = await fetch(imagenOriginal);
+        const blobOriginal = await respuestaOriginal.blob();
+
+        calendarioArchivo = new File(
+            [blobOriginal],
+            "InstaArmy2026.jpg",
+            { type: "image/jpeg" }
+        );
+
+        if (calendarioURL) {
+            URL.revokeObjectURL(calendarioURL);
+        }
+
+        calendarioURL = URL.createObjectURL(
+            calendarioArchivo
+        );
+
+        const imagenTikTok = await crearImagenTikTokEdicion(
+            imagenOriginal
+        );
+
+        const respuestaTikTok = await fetch(imagenTikTok);
+        const blobTikTok = await respuestaTikTok.blob();
+
+        archivoTikTokPreparado = new File(
+            [blobTikTok],
+            "InstaArmy2026-TikTok.jpg",
+            { type: "image/jpeg" }
+        );
+
+        return true;
+
+    } catch (error) {
+
+        console.error(
+            "Error preparando Insta Army 2026 para TikTok:",
+            error
+        );
+
+        alert("No se pudo preparar la edición para TikTok.");
+        return false;
+    }
+}
+    // ==========================================
+// PREPARAR INSTA ARMY 2026 PARA TIKTOK
+// ==========================================
+
+async function prepararInstaArmy2026TikTok() {
+
+    if (!instaArmy2026Generada) {
+        alert("Primero genera tu edición 💜");
+        return false;
+    }
+
+    try {
+
+        const imagenOriginal = canvasInstaArmy2026.toDataURL(
+            "image/jpeg",
+            0.98
+        );
+
+        const respuestaOriginal = await fetch(imagenOriginal);
+        const blobOriginal = await respuestaOriginal.blob();
+
+        calendarioArchivo = new File(
+            [blobOriginal],
+            "InstaArmy2026.jpg",
+            { type: "image/jpeg" }
+        );
+
+        if (calendarioURL) {
+            URL.revokeObjectURL(calendarioURL);
+        }
+
+        calendarioURL = URL.createObjectURL(
+            calendarioArchivo
+        );
+
+        const imagenTikTok = await crearImagenTikTokEdicion(
+            imagenOriginal
+        );
+
+        const respuestaTikTok = await fetch(imagenTikTok);
+        const blobTikTok = await respuestaTikTok.blob();
+
+        archivoTikTokPreparado = new File(
+            [blobTikTok],
+            "InstaArmy2026-TikTok.jpg",
+            { type: "image/jpeg" }
+        );
+
+        return true;
+
+    } catch (error) {
+
+        console.error(
+            "Error preparando Insta Army 2026 para TikTok:",
+            error
+        );
+
+        alert("No se pudo preparar la edición para TikTok.");
+        return false;
+    }
+}
+    // ==========================================
+// BOTONES DEL EDITOR INSTA ARMY 2026
+// ==========================================
+
+if (btnGenerarInstaArmy2026) {
+    btnGenerarInstaArmy2026.addEventListener(
+        "click",
+        generarInstaArmy2026
+    );
+}
+
+if (btnDescargarInstaArmy2026) {
+    btnDescargarInstaArmy2026.addEventListener(
+        "click",
+        descargarInstaArmy2026
+    );
+}
+
+if (btnCerrarInstaArmy2026) {
+    btnCerrarInstaArmy2026.addEventListener("click", () => {
+
+        editorInstaArmy2026.classList.add("oculta");
+
+        document.getElementById("menu-disenos")
+            .classList.remove("oculta");
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    });
+}
 // ==========================================
 // ABRIR EDITOR CERTIFICADO DE BAUTISMO
 // ==========================================
