@@ -2700,11 +2700,23 @@ if (btnCerrarEtiquetaCola) {
 // CARGAR FUENTE DE ETIQUETA COLA
 // ==========================================
 
+ // ==========================================
+ // CARGAR FUENTE ORIGINAL COCA COLA
+ // ==========================================
+
 async function cargarFuenteEtiquetaCola() {
 
-    if (document.fonts.check('20px "CocaColaII"')) {
-        return;
-    }
+    const fuente = new FontFace(
+        "CocaColaII",
+        'url("./Coca%20Cola%20ii.ttf")'
+    );
+
+    await fuente.load();
+
+    document.fonts.add(fuente);
+
+}
+
 
     const fuente = new FontFace(
         "CocaColaII",
