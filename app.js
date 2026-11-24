@@ -1138,28 +1138,80 @@ async function generarInstaArmy2026() {
             ancho * 0.060
         );
 
-        // ==================================
-        // BIAS - TERCERA FRANJA NEGRA
-        // ==================================
+       // ==========================================
+// BIAS
+// ==========================================
 
-        dibujarTexto(
-            bias,
-            ancho * 0.53,
-            alto * 0.57,
-            ancho * 0.33,
-            ancho * 0.068
-        );
+ctx.save();
+
+ctx.translate(
+    ancho * 0.54,
+    alto * 0.54
+);
+
+ctx.rotate(-8 * Math.PI / 180);
+
+let tamanoBias = ancho * 0.055;
+
+ctx.textAlign = "center";
+ctx.textBaseline = "middle";
+ctx.lineJoin = "round";
+ctx.font = `${tamanoBias}px "GravuraLETRegular"`;
+
+while (
+    ctx.measureText(bias).width > ancho * 0.34 &&
+    tamanoBias > 18
+) {
+    tamanoBias -= 2;
+    ctx.font = `${tamanoBias}px "GravuraLETRegular"`;
+}
+
+ctx.fillStyle = "#ffffff";
+ctx.strokeStyle = "#000000";
+ctx.lineWidth = Math.max(2, tamanoBias * 0.08);
+
+ctx.strokeText(bias, 0, 0);
+ctx.fillText(bias, 0, 0);
+
+ctx.restore();
 
 
-        // PAÍS → Francia
-        dibujarTexto(
-            pais,
-            ancho * 0.54,
-            alto * 0.73,
-            ancho * 0.42,
-            ancho * 0.075
-        );
+       // ==========================================
+// PAÍS
+// ==========================================
 
+ctx.save();
+
+ctx.translate(
+    ancho * 0.49,
+    alto * 0.76
+);
+
+ctx.rotate(-8 * Math.PI / 180);
+
+let tamanoPais = ancho * 0.055;
+
+ctx.textAlign = "center";
+ctx.textBaseline = "middle";
+ctx.lineJoin = "round";
+ctx.font = `${tamanoPais}px "GravuraLETRegular"`;
+
+while (
+    ctx.measureText(pais).width > ancho * 0.34 &&
+    tamanoPais > 18
+) {
+    tamanoPais -= 2;
+    ctx.font = `${tamanoPais}px "GravuraLETRegular"`;
+}
+
+ctx.fillStyle = "#ffffff";
+ctx.strokeStyle = "#000000";
+ctx.lineWidth = Math.max(2, tamanoPais * 0.08);
+
+ctx.strokeText(pais, 0, 0);
+ctx.fillText(pais, 0, 0);
+
+ctx.restore();
         instaArmy2026Generada = true;
         btnDescargarInstaArmy2026.style.display = "block";
 
