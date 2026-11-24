@@ -1145,10 +1145,10 @@ async function generarInstaArmy2026() {
 
         ctx.save();
 
-        ctx.translate(
-            ancho * 0.55,
-            alto * 0.57
-        );
+       ctx.translate(
+    ancho * 0.55,
+    alto * 0.54
+);
 
         ctx.rotate(-11 * Math.PI / 180);
 
