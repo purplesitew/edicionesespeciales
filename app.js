@@ -240,6 +240,36 @@ btnAvisarEdicion.parentElement.insertBefore(
     btnAvisarEdicion
 );
 
+    
+// ==========================================
+// BOTÓN EXCLUSIVO ETIQUETA COLA
+// ==========================================
+
+const btnPersonalizarEtiquetaCola =
+    document.createElement("button");
+
+btnPersonalizarEtiquetaCola.type = "button";
+btnPersonalizarEtiquetaCola.id = "btnPersonalizarEtiquetaCola";
+
+btnPersonalizarEtiquetaCola.textContent =
+    "💜 PERSONALIZAR MI ETIQUETA";
+
+btnPersonalizarEtiquetaCola.style.display = "none";
+
+btnPersonalizarEtiquetaCola.style.background = "#6a0dad";
+btnPersonalizarEtiquetaCola.style.color = "#ffffff";
+btnPersonalizarEtiquetaCola.style.border = "2px solid #c58aff";
+btnPersonalizarEtiquetaCola.style.borderRadius = "12px";
+btnPersonalizarEtiquetaCola.style.padding = "14px 18px";
+btnPersonalizarEtiquetaCola.style.fontWeight = "bold";
+btnPersonalizarEtiquetaCola.style.cursor = "pointer";
+
+// Colocar el botón en la vista previa
+btnAvisarEdicion.parentElement.insertBefore(
+    btnPersonalizarEtiquetaCola,
+    btnAvisarEdicion
+);
+
 todosLosDisenos.forEach((archivo) => {
 
     const imagen = document.createElement("img");
@@ -324,6 +354,23 @@ if (btnAvisarEdicion) {
        (!esCalendario && !esBank && !esCertificadoBautismo && archivo !== "instaarmybankplatinum.jpg" && !esBienestar && archivo !== "diplomainstaarmy.jpg")
             ? "inline-block"
             : "none";
+}
+
+        
+// ==========================================
+// MOSTRAR BOTÓN PERSONALIZAR ETIQUETA COLA
+// ==========================================
+
+const esEtiquetaCola =
+    archivo === "Etiquetacola.jpg";
+
+// Mostrar el botón solo para Etiqueta Cola
+btnPersonalizarEtiquetaCola.style.display =
+    esEtiquetaCola ? "inline-block" : "none";
+
+// Ocultar AVÍSAME cuando sea Etiqueta Cola
+if (esEtiquetaCola && btnAvisarEdicion) {
+    btnAvisarEdicion.style.display = "none";
 }
 
         vistaPrevia.classList.remove("oculta");
