@@ -2593,6 +2593,109 @@ if (btnGenerarDiplomaInstaArmy) {
 
 }
 
+    
+// ==========================================
+// ABRIR EDITOR DE ETIQUETA COLA
+// ==========================================
+
+const editorEtiquetaCola = document.getElementById(
+    "editor-etiqueta-cola"
+);
+
+const nombreEtiquetaCola = document.getElementById(
+    "nombreEtiquetaCola"
+);
+
+const btnGenerarEtiquetaCola = document.getElementById(
+    "btnGenerarEtiquetaCola"
+);
+
+const btnDescargarEtiquetaCola = document.getElementById(
+    "btnDescargarEtiquetaCola"
+);
+
+const btnCerrarEtiquetaCola = document.getElementById(
+    "btnCerrarEtiquetaCola"
+);
+
+const canvasEtiquetaCola = document.getElementById(
+    "canvasEtiquetaCola"
+);
+
+let etiquetaColaGenerada = false;
+
+
+// ==========================================
+// BOTÓN PERSONALIZAR MI ETIQUETA
+// ==========================================
+
+btnPersonalizarEtiquetaCola.addEventListener("click", () => {
+
+    if (!editorEtiquetaCola) {
+        alert("No se encontró el editor de Etiqueta Cola.");
+        return;
+    }
+
+    // Cerrar vista previa
+    vistaPrevia.classList.add("oculta");
+
+    // Ocultar galería
+    document.getElementById("menu-disenos")
+        .classList.add("oculta");
+
+    // Mostrar editor
+    editorEtiquetaCola.classList.remove("oculta");
+
+    // Limpiar nombre anterior
+    nombreEtiquetaCola.value = "";
+
+    // Ocultar descarga
+    btnDescargarEtiquetaCola.style.display = "none";
+
+    etiquetaColaGenerada = false;
+
+    // Limpiar imagen anterior
+    const ctx = canvasEtiquetaCola.getContext("2d");
+
+    ctx.clearRect(
+        0,
+        0,
+        canvasEtiquetaCola.width,
+        canvasEtiquetaCola.height
+    );
+
+    // Ir al editor
+    editorEtiquetaCola.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+
+});
+
+
+// ==========================================
+// CERRAR EDITOR DE ETIQUETA COLA
+// ==========================================
+
+if (btnCerrarEtiquetaCola) {
+
+    btnCerrarEtiquetaCola.addEventListener("click", () => {
+
+        editorEtiquetaCola.classList.add("oculta");
+
+        // Regresar a la galería
+        document.getElementById("menu-disenos")
+            .classList.remove("oculta");
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    });
+
+}
+
 
     // ==========================================
     // REGISTRAR SERVICE WORKER
