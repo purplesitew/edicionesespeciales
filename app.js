@@ -296,6 +296,16 @@ todosLosDisenos.forEach((archivo) => {
         btnDescargar.style.display = esCalendario
             ? "inline-block"
             : "none";
+
+        btnPersonalizar2026.style.display =
+    archivo === "instaarmy2026.jpg"
+        ? "inline-block"
+        : "none";
+
+        if (archivo === "instaarmy2026.jpg") {
+    btnAvisarEdicion.style.display = "none";
+    btnDescargar.style.display = "none";
+}
           // ==========================================
 // MOSTRAR BOTÓN PERSONALIZAR DIPLOMA
 // ==========================================
@@ -925,6 +935,28 @@ if (btnCerrarBankPlatinum) {
 
     });
 }
+
+    // Botón exclusivo para personalizar Insta Army 2026
+const btnPersonalizar2026 = document.createElement("button");
+
+btnPersonalizar2026.type = "button";
+btnPersonalizar2026.id = "btnPersonalizar2026";
+btnPersonalizar2026.textContent = "💜 PERSONALIZAR INSTA ARMY 2026";
+btnPersonalizar2026.style.display = "none";
+
+btnPersonalizar2026.style.background = "linear-gradient(135deg, #6a0dad, #b06cff)";
+btnPersonalizar2026.style.color = "#ffffff";
+btnPersonalizar2026.style.border = "2px solid #e0b3ff";
+btnPersonalizar2026.style.borderRadius = "14px";
+btnPersonalizar2026.style.padding = "14px 18px";
+btnPersonalizar2026.style.fontWeight = "bold";
+btnPersonalizar2026.style.cursor = "pointer";
+btnPersonalizar2026.style.boxShadow = "0 0 18px rgba(181, 102, 255, 0.35)";
+
+btnAvisarEdicion.parentElement.insertBefore(
+    btnPersonalizar2026,
+    btnAvisarEdicion
+);
     
 // ==========================================
 // ABRIR EDITOR CERTIFICADO DE BAUTISMO
