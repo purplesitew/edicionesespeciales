@@ -1176,20 +1176,20 @@ ctx.fillText(bias, 0, 0);
 ctx.restore();
 
 
-       // ==========================================
+ // ==========================================
 // PAÍS
 // ==========================================
 
 ctx.save();
 
 ctx.translate(
-    ancho * 0.49,
-    alto * 0.76
+    ancho * 0.46,
+    alto * 0.73
 );
 
 ctx.rotate(-8 * Math.PI / 180);
 
-let tamanoPais = ancho * 0.055;
+let tamanoPais = ancho * 0.06;
 
 ctx.textAlign = "center";
 ctx.textBaseline = "middle";
