@@ -20,6 +20,37 @@ document.addEventListener("DOMContentLoaded", () => {
     // ==========================================
 
     const listaDisenos = document.getElementById("lista-disenos");
+    
+ // ==========================================
+ // BANNER ANIMADO DE REDES SOCIALES
+ // EDICIONES ESPECIALES
+ // ==========================================
+
+const contenedorBannerRedes = document.createElement("div");
+
+contenedorBannerRedes.id = "contenedorBannerRedes";
+
+const videoBannerRedes = document.createElement("video");
+
+videoBannerRedes.id = "videoBannerRedes";
+videoBannerRedes.src = "./bannerredes.mp4";
+
+videoBannerRedes.autoplay = true;
+videoBannerRedes.loop = true;
+videoBannerRedes.muted = true;
+videoBannerRedes.playsInline = true;
+
+videoBannerRedes.setAttribute("playsinline", "");
+videoBannerRedes.setAttribute("muted", "");
+
+contenedorBannerRedes.appendChild(videoBannerRedes);
+
+// Colocar debajo de todas las ediciones
+listaDisenos.insertAdjacentElement(
+    "afterend",
+    contenedorBannerRedes
+);
+
     const vistaPrevia = document.getElementById("vista-previa");
     const imagenVistaPrevia = document.getElementById("imagen-vista-previa");
     const btnCerrar = document.getElementById("btnCerrar");
