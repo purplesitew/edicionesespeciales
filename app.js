@@ -136,6 +136,35 @@ videoBannerRedes.addEventListener("keydown", (evento) => {
 
     const vistaPrevia = document.getElementById("vista-previa");
     const imagenVistaPrevia = document.getElementById("imagen-vista-previa");
+    
+// ==========================================
+// ANUNCIO ADSTERRA EN VISTAS PREVIAS
+// EDICIONES ESPECIALES
+// ==========================================
+
+const anuncioVistaPrevia = document.createElement("div");
+
+anuncioVistaPrevia.id = "anuncioVistaPrevia";
+anuncioVistaPrevia.hidden = true;
+
+const marcoAnuncioPrevia = document.createElement("iframe");
+
+marcoAnuncioPrevia.id = "marcoAnuncioPrevia";
+marcoAnuncioPrevia.title = "Publicidad";
+marcoAnuncioPrevia.width = "300";
+marcoAnuncioPrevia.height = "250";
+marcoAnuncioPrevia.setAttribute(
+    "referrerpolicy",
+    "strict-origin-when-cross-origin"
+);
+
+anuncioVistaPrevia.appendChild(marcoAnuncioPrevia);
+
+imagenVistaPrevia.insertAdjacentElement(
+    "afterend",
+    anuncioVistaPrevia
+);
+
     const btnCerrar = document.getElementById("btnCerrar");
    const btnDescargar = document.getElementById("btnDescargar");
 
@@ -507,6 +536,26 @@ btnPersonalizarEtiquetaCola.style.display =
 // Ocultar AVÍSAME cuando sea Etiqueta Cola
 if (esEtiquetaCola && btnAvisarEdicion) {
     btnAvisarEdicion.style.display = "none";
+}
+
+        
+// ==========================================
+// MOSTRAR ANUNCIO SOLO EN EDICIONES ESPECIALES
+// ==========================================
+
+const mostrarAnuncioEdicion = !esCalendario;
+
+anuncioVistaPrevia.hidden = !mostrarAnuncioEdicion;
+
+vistaPrevia.querySelector(".contenido-vista-previa")
+    .classList.toggle("con-anuncio", mostrarAnuncioEdicion);
+
+// Cargar el anuncio cuando se abra una edición especial
+if (
+    mostrarAnuncioEdicion &&
+    !marcoAnuncioPrevia.getAttribute("src")
+) {
+    marcoAnuncioPrevia.src = "./anuncio-previa.html";
 }
 
         vistaPrevia.classList.remove("oculta");
