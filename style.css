@@ -1694,3 +1694,59 @@ body {
     }
 
 }
+
+
+/* ==========================================
+   ADSTERRA EN VISTAS PREVIAS
+   EDICIONES ESPECIALES
+========================================== */
+
+#anuncioVistaPrevia[hidden] {
+    display: none !important;
+}
+
+#anuncioVistaPrevia {
+    width: 300px;
+    height: 250px;
+    max-width: 100%;
+
+    margin: 10px auto;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#marcoAnuncioPrevia {
+    display: block;
+    width: 300px;
+    height: 250px;
+
+    border: none;
+    background: transparent;
+}
+
+/* Permitir desplazarse si la pantalla es pequeña */
+
+#vista-previa .contenido-vista-previa {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* Reducir la imagen solo cuando hay anuncio */
+
+#vista-previa .contenido-vista-previa.con-anuncio
+#imagen-vista-previa {
+    max-height: 38dvh;
+    flex-shrink: 0;
+}
+
+/* Evitar que los botones se compriman */
+
+#vista-previa .contenido-vista-previa.con-anuncio
+.botones-vista {
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    padding-bottom: 12px;
+}
