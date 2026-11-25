@@ -1549,7 +1549,7 @@ body {
 
 #contenedorBannerRedes {
     width: 100%;
-    max-width: 480px;
+    max-width: 360px;
     margin: 35px auto 45px;
     padding: 0 12px;
     box-sizing: border-box;
@@ -1560,6 +1560,7 @@ body {
     display: block;
     width: 100%;
     height: auto;
+   object-fit: contain;
 
     border-radius: 20px;
     border: 2px solid #c58aff;
