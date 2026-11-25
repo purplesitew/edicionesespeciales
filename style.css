@@ -1540,3 +1540,48 @@ body {
         font-size: 14px;
     }
 }
+
+
+/* ==========================================
+   BANNER DE REDES SOCIALES
+   EDICIONES ESPECIALES
+========================================== */
+
+#contenedorBannerRedes {
+    width: 100%;
+    max-width: 480px;
+    margin: 35px auto 45px;
+    padding: 0 12px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+#videoBannerRedes {
+    display: block;
+    width: 100%;
+    height: auto;
+
+    border-radius: 20px;
+    border: 2px solid #c58aff;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.4),
+        0 0 22px rgba(164, 86, 232, 0.35);
+
+    background: transparent;
+}
+
+/* CELULARES */
+
+@media (max-width: 600px) {
+
+    #contenedorBannerRedes {
+        max-width: 95%;
+        margin: 25px auto 35px;
+        padding: 0;
+    }
+
+    #videoBannerRedes {
+        border-radius: 16px;
+    }
+}
