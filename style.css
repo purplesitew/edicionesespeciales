@@ -1586,3 +1586,77 @@ body {
         border-radius: 16px;
     }
 }
+
+/* ==========================================
+   REDES SOCIALES - EDICIONES ESPECIALES
+========================================== */
+
+#enlacesBannerRedes[hidden] {
+    display: none !important;
+}
+
+#enlacesBannerRedes {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    width: 100%;
+    margin: 18px auto 0;
+}
+
+/* BOTONES DE REDES */
+
+.botonRedEdiciones {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 52px;
+    padding: 12px 8px;
+
+    box-sizing: border-box;
+
+    color: #ffffff;
+    background: linear-gradient(
+        135deg,
+        #6a0dad,
+        #a65ce2
+    );
+
+    border: 2px solid #c58aff;
+    border-radius: 14px;
+
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+
+    box-shadow: 0 5px 16px rgba(106, 13, 173, 0.3);
+
+    transition:
+        transform 0.2s,
+        background 0.2s;
+}
+
+.botonRedEdiciones:hover {
+    background: #8835c9;
+}
+
+.botonRedEdiciones:active {
+    transform: scale(0.96);
+}
+
+/* CELULARES */
+
+@media (max-width: 600px) {
+
+    #enlacesBannerRedes {
+        gap: 9px;
+    }
+
+    .botonRedEdiciones {
+        font-size: 13px;
+        padding: 12px 5px;
+        min-height: 48px;
+    }
+
+}
