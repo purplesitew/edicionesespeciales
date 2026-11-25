@@ -51,6 +51,89 @@ listaDisenos.insertAdjacentElement(
     contenedorBannerRedes
 );
 
+ // ==========================================
+ // REDES SOCIALES - EDICIONES ESPECIALES
+ // ==========================================
+
+const enlacesBannerRedes = document.createElement("div");
+
+enlacesBannerRedes.id = "enlacesBannerRedes";
+enlacesBannerRedes.hidden = true;
+
+const redesEdiciones = [
+    {
+        nombre: "📸 Instagram",
+        url: "https://www.instagram.com/instaarmyapp?avpt=dWo3cjNnOGZ1MzY="
+    },
+    {
+        nombre: "🎵 TikTok",
+        url: "https://www.tiktok.com/@.insta.army?_r=1&_t=ZS-9BUe94W2gWS"
+    },
+    {
+        nombre: "💬 WhatsApp",
+        url: "https://whatsapp.com/channel/0029Vajbcp8HrDZaqeDwz40B"
+    },
+    {
+        nombre: "🎧 Spotify",
+        url: "https://open.spotify.com/user/31xaeo7phap7drobik6xnzcqku7y?si=uslDZHkaSKGEr3KkowHR7Q&utm_source=copy-link"
+    }
+];
+
+redesEdiciones.forEach((red) => {
+
+    const enlace = document.createElement("a");
+
+    enlace.href = red.url;
+    enlace.textContent = red.nombre;
+    enlace.className = "botonRedEdiciones";
+
+    enlace.target = "_blank";
+    enlace.rel = "noopener noreferrer";
+
+    enlacesBannerRedes.appendChild(enlace);
+
+});
+
+contenedorBannerRedes.appendChild(enlacesBannerRedes);
+
+// ==========================================
+// TOCAR EL VIDEO PARA MOSTRAR LAS REDES
+// ==========================================
+
+videoBannerRedes.style.cursor = "pointer";
+
+videoBannerRedes.setAttribute("role", "button");
+videoBannerRedes.setAttribute("tabindex", "0");
+videoBannerRedes.setAttribute("aria-label", "Mostrar redes sociales");
+videoBannerRedes.setAttribute("aria-expanded", "false");
+
+function alternarRedesEdiciones() {
+
+    const mostrar = enlacesBannerRedes.hidden;
+
+    enlacesBannerRedes.hidden = !mostrar;
+
+    videoBannerRedes.setAttribute(
+        "aria-expanded",
+        String(mostrar)
+    );
+
+}
+
+videoBannerRedes.addEventListener(
+    "click",
+    alternarRedesEdiciones
+);
+
+videoBannerRedes.addEventListener("keydown", (evento) => {
+
+    if (evento.key === "Enter" || evento.key === " ") {
+        evento.preventDefault();
+        alternarRedesEdiciones();
+    }
+
+});
+
     const vistaPrevia = document.getElementById("vista-previa");
     const imagenVistaPrevia = document.getElementById("imagen-vista-previa");
     const btnCerrar = document.getElementById("btnCerrar");
