@@ -543,7 +543,7 @@ if (esEtiquetaCola && btnAvisarEdicion) {
 // MOSTRAR ANUNCIO SOLO EN EDICIONES ESPECIALES
 // ==========================================
 
-const mostrarAnuncioEdicion = !esCalendario;
+const mostrarAnuncioEdicion = true;
 
 anuncioVistaPrevia.hidden = !mostrarAnuncioEdicion;
 
