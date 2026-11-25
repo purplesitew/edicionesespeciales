@@ -104,9 +104,13 @@ const edicionesPendientes = [
 "instaarmy2026.jpg",
 "instaarmycomeback.jpg",
 "instarmymember.jpg",
+
 "instaarmyhoseok.jpg",
 "armyween.jpg",
-"Etiquetacola.jpg"
+"Etiquetacola.jpg",
+"instarmyoreo.jpg",
+"actadenacimiento.jpg"
+
 
 
 ];
