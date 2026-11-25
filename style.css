@@ -1660,3 +1660,37 @@ body {
     }
 
 }
+
+/* ==========================================
+   ADSTERRA - ANUNCIO EN PANTALLA DE INICIO
+========================================== */
+
+#anuncioInicioEdiciones {
+    position: fixed;
+
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 320px;
+    max-width: calc(100vw - 20px);
+    min-height: 50px;
+
+    z-index: 99999;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
+}
+
+/* Ajuste para celulares */
+
+@media (max-width: 600px) {
+
+    #anuncioInicioEdiciones {
+        bottom: 18px;
+    }
+
+}
