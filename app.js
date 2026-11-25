@@ -64,54 +64,47 @@ const reversosCalendarios = {
 
 const instruccionesCalendarios = "instruccionesE.jpg";
 
-// ==========================================
-// EDICIONES AGRUPADAS POR TEMÁTICA
-// ==========================================
 
 const edicionesPendientes = [
 
-    // 🎂 CUMPLEAÑOS Y FELICITACIONES
-    "felicitacionjimininstarmy.jpg",
-    "felicitacionjiminkorean.jpg",
-    "felicitacionVinstaarmy.jpg",
-    "felicitacionsugainstaarmy.jpg",
-    "felicitacionJKinstaarmy.jpg",
+    // ==========================================
+    // ORDEN PRINCIPAL DE EDICIONES ESPECIALES
+    // DESPUÉS DE LOS CALENDARIOS E1 - E8
+    // ==========================================
 
-    // 💳 CREDENCIALES BANCARIAS
     "instaarmybank.jpg",
     "instaarmybankplatinum.jpg",
-    "instaarmygolden.jpg",
     "instaarmybienestar.jpg",
-
-    // 📜 DIPLOMAS Y CERTIFICADOS
     "diplomainstaarmy.jpg",
     "CertificadodebautismoInstaarmy.jpg",
-
-    // 💜 OTRAS EDICIONES
-    "welcomebts.jpg",
+    "instarmymember.jpg",
+    "felicitacionjimininstarmy.jpg",
+    "felicitacionVinstaarmy.jpg",
+    "felicitacionJKinstaarmy.jpg",
     "runjininstaarmy.jpg",
+    "Etiquetacola.jpg",
+    "instaarmy2026.jpg",
+    "actadenacimiento.jpg",
+
+
+    // ==========================================
+    // RESTO DE EDICIONES
+    // CONSERVAR EN EL CATÁLOGO
+    // ==========================================
+
+    "felicitacionjiminkorean.jpg",
+    "felicitacionsugainstaarmy.jpg",
+    "instaarmygolden.jpg",
+    "welcomebts.jpg",
     "Mndiainstaarmy.jpg",
-    
-"instaarmyswim.jpg",
-
-// ==========================================
-// NUEVAS EDICIONES ESPECIALES
-// ==========================================
-
-"instaarmyfelicitacionjin.jpg",
-"mcmorialinstaarmy.jpg",
-"instaarmyfesta2026.jpg",
-"instaarmy2026.jpg",
-"instaarmycomeback.jpg",
-"instarmymember.jpg",
-
-"instaarmyhoseok.jpg",
-"armyween.jpg",
-"Etiquetacola.jpg",
-"instarmyoreo.jpg",
-"actadenacimiento.jpg"
-
-
+    "instaarmyswim.jpg",
+    "instaarmyfelicitacionjin.jpg",
+    "mcmorialinstaarmy.jpg",
+    "instaarmyfesta2026.jpg",
+    "instaarmycomeback.jpg",
+    "instaarmyhoseok.jpg",
+    "armyween.jpg",
+    "instarmyoreo.jpg"
 
 ];
 
