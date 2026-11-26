@@ -660,6 +660,15 @@ const catalogoArmyCompleto = todasLasEdicionesVisitadas();
 
 if (!catalogoArmyCompleto) {
 
+    
+    // ==========================================
+    // OCULTAR DESCARGAR HASTA VER TODO EL CATÁLOGO
+    // ==========================================
+
+    if (btnDescargar) {
+        btnDescargar.style.display = "none";
+    }
+
     // Ocultar botones de personalización
     const botonesPersonalizarArmy = [
         btnPersonalizarBank,
