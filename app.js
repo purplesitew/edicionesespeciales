@@ -301,6 +301,97 @@ function todasLasEdicionesVisitadas() {
 
 }
 
+// ==========================================
+// SEGUNDA OPORTUNIDAD
+// CONTROL DE EDICIONES DISPONIBLES
+// ==========================================
+
+const CLAVE_OPORTUNIDADES_ARMY =
+    "oportunidadesEdicionesArmy";
+
+let oportunidadesArmy = 1;
+
+try {
+
+    const oportunidadesGuardadas =
+        localStorage.getItem(CLAVE_OPORTUNIDADES_ARMY);
+
+    if (oportunidadesGuardadas !== null) {
+
+        const cantidad = Number(oportunidadesGuardadas);
+
+        if (
+            Number.isInteger(cantidad) &&
+            cantidad >= 0
+        ) {
+            oportunidadesArmy = cantidad;
+        }
+
+    }
+
+} catch (error) {
+
+    console.warn(
+        "No se pudieron recuperar las oportunidades:",
+        error
+    );
+
+}
+
+// Comprobar si puede crear una edición
+function puedeCrearEdicionArmy() {
+
+    return (
+        todasLasEdicionesVisitadas() &&
+        oportunidadesArmy > 0
+    );
+
+}
+
+// Consumir una oportunidad al terminar una edición
+function consumirOportunidadArmy() {
+
+    if (!puedeCrearEdicionArmy()) {
+        return false;
+    }
+
+    oportunidadesArmy--;
+
+    try {
+        localStorage.setItem(
+            CLAVE_OPORTUNIDADES_ARMY,
+            String(oportunidadesArmy)
+        );
+    } catch (error) {
+        console.warn(
+            "No se pudo guardar la oportunidad:",
+            error
+        );
+    }
+
+    return true;
+}
+
+// Entregar una nueva oportunidad
+function otorgarOportunidadArmy() {
+
+    oportunidadesArmy++;
+
+    try {
+        localStorage.setItem(
+            CLAVE_OPORTUNIDADES_ARMY,
+            String(oportunidadesArmy)
+        );
+    } catch (error) {
+        console.warn(
+            "No se pudo guardar la oportunidad:",
+            error
+        );
+    }
+
+}
+
+    
 const btnAvisarEdicion = document.getElementById(
     "btnAvisarEdicion"
 );
