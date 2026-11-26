@@ -631,8 +631,16 @@ const mostrarAnuncioEdicion = true;
 
 anuncioVistaPrevia.hidden = !mostrarAnuncioEdicion;
 
-vistaPrevia.querySelector(".contenido-vista-previa")
-    .classList.toggle("con-anuncio", mostrarAnuncioEdicion);
+const contenidoPrevia = vistaPrevia.querySelector(
+    ".contenido-vista-previa"
+);
+
+if (contenidoPrevia) {
+    contenidoPrevia.classList.toggle(
+        "con-anuncio",
+        mostrarAnuncioEdicion
+    );
+}
 
 // Cargar el anuncio cuando se abra una edición especial
 if (
@@ -640,6 +648,54 @@ if (
     !marcoAnuncioPrevia.getAttribute("src")
 ) {
     marcoAnuncioPrevia.src = "./anuncio-previa.html";
+}
+
+        
+// ==========================================
+// SEGUNDA OPORTUNIDAD - DESBLOQUEAR BOTONES
+// SOLO DESPUÉS DE VER TODO EL CATÁLOGO
+// ==========================================
+
+const catalogoArmyCompleto = todasLasEdicionesVisitadas();
+
+if (!catalogoArmyCompleto) {
+
+    // Ocultar botones de personalización
+    const botonesPersonalizarArmy = [
+        btnPersonalizarBank,
+        btnPersonalizarBankPlatinum,
+        btnPersonalizarBienestar,
+        btnPersonalizarCertificadoBautismo,
+        btnPersonalizarDiploma,
+        btnPersonalizarEtiquetaCola,
+        btnPersonalizar2026
+    ];
+
+    botonesPersonalizarArmy.forEach((boton) => {
+
+        if (boton) {
+            boton.style.display = "none";
+        }
+
+    });
+
+    // Ocultar botón AVÍSAME
+    if (btnAvisarEdicion) {
+        btnAvisarEdicion.style.display = "none";
+    }
+
+    console.log(
+        "🔒 Botones bloqueados. Faltan",
+        todosLosDisenos.length - edicionesVisitadasArmy.size,
+        "ediciones por visitar."
+    );
+
+} else {
+
+    console.log(
+        "🔓 Catálogo completo. Botones desbloqueados."
+    );
+
 }
 
         vistaPrevia.classList.remove("oculta");
