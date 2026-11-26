@@ -1750,3 +1750,104 @@ body {
     flex-wrap: wrap;
     padding-bottom: 12px;
 }
+
+/* ==========================================
+   MODAL SEGUNDA OPORTUNIDAD
+   EDICIONES ESPECIALES
+========================================== */
+
+#modalSegundaOportunidadArmy {
+    position: fixed;
+    inset: 0;
+
+    z-index: 20000;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 18px;
+    box-sizing: border-box;
+
+    background: rgba(12, 4, 25, 0.92);
+
+    overflow-y: auto;
+}
+
+#modalSegundaOportunidadArmy.oculta {
+    display: none !important;
+}
+
+.cajaSegundaOportunidadArmy {
+    width: 100%;
+    max-width: 460px;
+    margin: auto;
+    padding: 16px;
+
+    box-sizing: border-box;
+
+    background: linear-gradient(
+        145deg,
+        #34114e,
+        #16091f
+    );
+
+    border: 2px solid #c58aff;
+    border-radius: 22px;
+
+    text-align: center;
+
+    box-shadow: 0 0 35px rgba(180, 92, 255, 0.4);
+}
+
+#imagenSegundaOportunidadArmy {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 65dvh;
+
+    object-fit: contain;
+    border-radius: 14px;
+}
+
+.botonesSegundaOportunidadArmy {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.botonesSegundaOportunidadArmy button {
+    flex: 1;
+    min-height: 50px;
+    padding: 12px;
+
+    border: none;
+    border-radius: 12px;
+
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#btnAceptarSegundaOportunidadArmy {
+    color: #ffffff;
+    background: linear-gradient(135deg, #6a0dad, #b66bea);
+}
+
+#btnCerrarSegundaOportunidadArmy {
+    color: #ffffff;
+    background: #70354b;
+}
+
+@media (max-width: 600px) {
+
+    .cajaSegundaOportunidadArmy {
+        padding: 12px;
+    }
+
+    .botonesSegundaOportunidadArmy button {
+        font-size: 14px;
+    }
+
+}
