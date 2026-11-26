@@ -257,6 +257,50 @@ const todosLosDisenos = [
     ...edicionesPendientes
 ];
 
+    
+ // ==========================================
+ // SISTEMA SEGUNDA OPORTUNIDAD
+ // REGISTRO DE EDICIONES VISITADAS
+ // ==========================================
+
+const CLAVE_VISTAS_ARMY = "edicionesArmyVisitadas";
+
+let edicionesVisitadasArmy = new Set();
+
+try {
+
+    const guardadas = JSON.parse(
+        localStorage.getItem(CLAVE_VISTAS_ARMY) || "[]"
+    );
+
+    if (Array.isArray(guardadas)) {
+
+        edicionesVisitadasArmy = new Set(
+            guardadas.filter(archivo =>
+                todosLosDisenos.includes(archivo)
+            )
+        );
+
+    }
+
+} catch (error) {
+
+    console.warn(
+        "No se pudo recuperar el progreso de visitas:",
+        error
+    );
+
+}
+
+// Saber si ya abrió todas las ediciones
+function todasLasEdicionesVisitadas() {
+
+    return todosLosDisenos.every(archivo =>
+        edicionesVisitadasArmy.has(archivo)
+    );
+
+}
+
 const btnAvisarEdicion = document.getElementById(
     "btnAvisarEdicion"
 );
