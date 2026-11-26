@@ -391,6 +391,51 @@ function otorgarOportunidadArmy() {
 
 }
 
+// ==========================================
+// SEGUNDA OPORTUNIDAD
+// REGISTRAR EDICIÓN TERMINADA
+// ==========================================
+
+function registrarEdicionTerminadaArmy() {
+
+    // Comprobar que tenga una oportunidad disponible
+    if (!puedeCrearEdicionArmy()) {
+
+        console.log(
+            "🔒 La ARMY no tiene oportunidades disponibles."
+        );
+
+        return false;
+    }
+
+    // Descontar una sola oportunidad
+    const consumida = consumirOportunidadArmy();
+
+    if (!consumida) {
+        return false;
+    }
+
+    console.log(
+        "💜 Edición terminada correctamente."
+    );
+
+    console.log(
+        "🎁 Oportunidades restantes:",
+        oportunidadesArmy
+    );
+
+    // Avisar al sistema que terminó una edición
+    window.dispatchEvent(
+        new CustomEvent("edicionArmyTerminada", {
+            detail: {
+                oportunidadesRestantes: oportunidadesArmy
+            }
+        })
+    );
+
+    return true;
+}
+
     
 const btnAvisarEdicion = document.getElementById(
     "btnAvisarEdicion"
