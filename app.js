@@ -472,6 +472,46 @@ todosLosDisenos.forEach((archivo) => {
 
         disenoSeleccionado = archivo;
 
+        
+// ==========================================
+// GUARDAR CADA EDICIÓN QUE LA ARMY VISITA
+// ==========================================
+
+edicionesVisitadasArmy.add(archivo);
+
+try {
+
+    localStorage.setItem(
+        CLAVE_VISTAS_ARMY,
+        JSON.stringify([...edicionesVisitadasArmy])
+    );
+
+} catch (error) {
+
+    console.warn(
+        "No se pudo guardar la visita:",
+        error
+    );
+
+}
+
+// Mostrar progreso en la consola
+console.log(
+    "💜 Ediciones visitadas:",
+    edicionesVisitadasArmy.size,
+    "de",
+    todosLosDisenos.length
+);
+
+if (todasLasEdicionesVisitadas()) {
+
+    console.log(
+        "💜 ¡La ARMY ya exploró todo el catálogo!"
+    );
+
+}
+
+
         imagenVistaPrevia.src = "./" + archivo;
 
         const esCalendario = calendarios.includes(archivo);
