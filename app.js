@@ -3991,7 +3991,7 @@ function mezclarFuncionesBTSArmy(funciones) {
 
         const j = Math.floor(Math.random() * (i + 1));
 
-        [mezcla[i], mezcla[j]] = [mezcla[j], mezcla[i];
+       [mezcla[i], mezcla[j]] = [mezcla[j], mezcla[i]];
 
     }
 
