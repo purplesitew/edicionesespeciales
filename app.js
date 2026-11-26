@@ -4119,6 +4119,64 @@ function avanzarRondaBTSArmy() {
 
 }
 
+// ==========================================
+// SEGUNDA OPORTUNIDAD
+// BOTONES BTS QUE DESBLOQUEAN UNA EDICIÓN
+// ==========================================
+
+IDS_BOTONES_BTS_ARMY.forEach((idBoton, indice) => {
+
+    const boton = document.getElementById(idBoton);
+
+    if (!boton) return;
+
+    boton.addEventListener("click", () => {
+
+        const funcion = funcionesAsignadasBTSArmy[indice];
+
+        const permiteCrear =
+            funcion === "crearEdicion1" ||
+            funcion === "crearEdicion2" ||
+            funcion === "crearEdicion3";
+
+        // Las funciones de Smartlink y Spotify
+        // se conectarán en el siguiente paso.
+        if (!permiteCrear) return;
+
+        // No permitir acumular oportunidades
+        if (oportunidadesArmy > 0) {
+            alert("💜 Ya tienes una oportunidad disponible.");
+            return;
+        }
+
+        // Entregar una sola oportunidad
+        otorgarOportunidadArmy();
+
+        // Ocultar los siete botones
+        contenedorBotonesBTSArmy.classList.add("oculta");
+
+        alert(
+            "💜 ¡FELICIDADES ARMY!\n\n" +
+            "Has ganado otra oportunidad para crear " +
+            "una edición especial.\n\n" +
+            "Elige tu edición favorita."
+        );
+
+        // Regresar al catálogo
+        vistaPrevia.classList.add("oculta");
+
+        document.getElementById("menu-disenos")
+            .classList.remove("oculta");
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    });
+
+});
+
     
 
     // ==========================================
