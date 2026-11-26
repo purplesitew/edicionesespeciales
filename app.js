@@ -3844,6 +3844,48 @@ if (btnDescargarEtiquetaCola) {
     );
 }
 
+    
+// ==========================================
+// SEGUNDA OPORTUNIDAD - ACTIVAR VENTANA
+// ==========================================
+
+const modalSegundaOportunidadArmy =
+    document.getElementById("modalSegundaOportunidadArmy");
+
+const btnAceptarSegundaOportunidadArmy =
+    document.getElementById("btnAceptarSegundaOportunidadArmy");
+
+const btnCerrarSegundaOportunidadArmy =
+    document.getElementById("btnCerrarSegundaOportunidadArmy");
+
+// Mostrar la imagen al terminar una edición
+window.addEventListener("edicionArmyTerminada", (evento) => {
+
+    if (
+        evento.detail.oportunidadesRestantes === 0 &&
+        modalSegundaOportunidadArmy
+    ) {
+
+        modalSegundaOportunidadArmy.classList.remove("oculta");
+
+    }
+
+});
+
+// Cerrar la ventana
+if (btnCerrarSegundaOportunidadArmy) {
+
+    btnCerrarSegundaOportunidadArmy.addEventListener("click", () => {
+
+        modalSegundaOportunidadArmy.classList.add("oculta");
+
+    });
+
+}
+
+// El botón ACEPTAR se conectará a los siete botones BTS
+// en el siguiente paso.
+
     // ==========================================
     // REGISTRAR SERVICE WORKER
     // ==========================================
