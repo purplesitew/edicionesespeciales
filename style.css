@@ -1851,3 +1851,97 @@ body {
     }
 
 }
+
+/* ==========================================
+   SIETE BOTONES BTS - SEGUNDA OPORTUNIDAD
+   EDICIONES ESPECIALES
+========================================== */
+
+#contenedorBotonesBTSArmy {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: min(96%, 850px);
+    box-sizing: border-box;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    padding: 8px;
+
+    z-index: 15000;
+
+    background: rgba(28, 9, 45, 0.88);
+    border: 1px solid rgba(197, 138, 255, 0.5);
+    border-radius: 18px;
+
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* Respetar cuando los botones estén ocultos */
+
+#contenedorBotonesBTSArmy.oculta {
+    display: none !important;
+}
+
+/* Botones transparentes */
+
+#contenedorBotonesBTSArmy button {
+    flex: 0 0 auto;
+    width: 78px;
+    height: 78px;
+
+    padding: 0;
+    margin: 0;
+
+    border: none;
+    background: transparent;
+
+    cursor: pointer;
+    overflow: hidden;
+
+    transition: transform 0.2s;
+}
+
+/* Imágenes originales de BTS */
+
+#contenedorBotonesBTSArmy button img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Efecto al tocar */
+
+#contenedorBotonesBTSArmy button:active {
+    transform: scale(0.92);
+}
+
+/* ==========================================
+   ADAPTACIÓN PARA CELULARES
+========================================== */
+
+@media (max-width: 600px) {
+
+    #contenedorBotonesBTSArmy {
+        top: 6px;
+        width: 98%;
+        gap: 3px;
+        padding: 5px;
+        border-radius: 12px;
+    }
+
+    #contenedorBotonesBTSArmy button {
+        width: calc((100vw - 38px) / 7);
+        height: calc((100vw - 38px) / 7);
+        max-width: 56px;
+        max-height: 56px;
+    }
+
+}
