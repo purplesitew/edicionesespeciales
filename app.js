@@ -3883,8 +3883,243 @@ if (btnCerrarSegundaOportunidadArmy) {
 
 }
 
-// El botón ACEPTAR se conectará a los siete botones BTS
-// en el siguiente paso.
+
+ // ==========================================
+ // SEGUNDA OPORTUNIDAD
+ // ACTIVAR SIETE BOTONES BTS
+ // ==========================================
+
+const contenedorBotonesBTSArmy =
+    document.getElementById("contenedorBotonesBTSArmy");
+
+// Guardar si la ARMY aceptó participar
+const CLAVE_JUEGO_BTS_ARMY = "juegoSegundaOportunidadArmy";
+
+let juegoBTSArmyActivado = false;
+
+try {
+    juegoBTSArmyActivado =
+        localStorage.getItem(CLAVE_JUEGO_BTS_ARMY) === "si";
+} catch (error) {
+    console.warn("No se pudo recuperar el estado del juego:", error);
+}
+
+// Mostrar los siete botones únicamente si aceptó
+function mostrarBotonesBTSArmy() {
+
+    if (!contenedorBotonesBTSArmy) return;
+
+    contenedorBotonesBTSArmy.classList.remove("oculta");
+}
+
+// Botón ACEPTAR de Segunda Oportunidad
+if (btnAceptarSegundaOportunidadArmy) {
+
+    btnAceptarSegundaOportunidadArmy.addEventListener(
+        "click",
+        () => {
+
+            juegoBTSArmyActivado = true;
+
+            try {
+                localStorage.setItem(
+                    CLAVE_JUEGO_BTS_ARMY,
+                    "si"
+                );
+            } catch (error) {
+                console.warn("No se pudo guardar el juego:", error);
+            }
+
+            // Cerrar la imagen Segunda Oportunidad
+            modalSegundaOportunidadArmy.classList.add("oculta");
+
+            // Mostrar los siete botones arriba
+            mostrarBotonesBTSArmy();
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+    );
+}
+
+// Recuperar botones si la ARMY ya aceptó
+if (juegoBTSArmyActivado && oportunidadesArmy === 0) {
+    mostrarBotonesBTSArmy();
+}
+
+// ==========================================
+// SEGUNDA OPORTUNIDAD
+// DISTRIBUCIÓN ALEATORIA DE FUNCIONES BTS
+// ==========================================
+
+const CLAVE_RONDA_BTS_ARMY = "rondaBTSArmy2026";
+const CLAVE_FUNCIONES_BTS_ARMY = "funcionesBTSArmy2026";
+
+// Cada número representa una función diferente
+const FUNCIONES_BTS_ARMY = [
+    "smartlink1",
+    "playlistSpotify",
+    "crearEdicion1",
+    "smartlink2",
+    "crearEdicion2",
+    "perfilSpotify",
+    "crearEdicion3"
+];
+
+// Los siete botones en orden
+const IDS_BOTONES_BTS_ARMY = [
+    "btnJungkookArmy",
+    "btnVArmy",
+    "btnRMArmy",
+    "btnSugaArmy",
+    "btnJhopeArmy",
+    "btnJinArmy",
+    "btnJiminArmy"
+];
+
+let numeroRondaBTSArmy = 1;
+let funcionesAsignadasBTSArmy = [];
+
+// Mezclar las funciones
+function mezclarFuncionesBTSArmy(funciones) {
+
+    const mezcla = [...funciones];
+
+    for (let i = mezcla.length - 1; i > 0; i--) {
+
+        const j = Math.floor(Math.random() * (i + 1));
+
+        [mezcla[i], mezcla[j]] = [mezcla[j], mezcla[i];
+
+    }
+
+    return mezcla;
+}
+
+// Crear nueva distribución sin repetir
+// la misma función en el mismo botón
+function nuevaDistribucionBTSArmy(anterior = []) {
+
+    let nueva;
+
+    do {
+
+        nueva = mezclarFuncionesBTSArmy(
+            FUNCIONES_BTS_ARMY
+        );
+
+    } while (
+
+        anterior.length === 7 &&
+
+        nueva.some((funcion, indice) =>
+            funcion === anterior[indice]
+        )
+
+    );
+
+    return nueva;
+}
+
+// Guardar ronda y distribución
+function guardarRondaBTSArmy() {
+
+    try {
+
+        localStorage.setItem(
+            CLAVE_RONDA_BTS_ARMY,
+            String(numeroRondaBTSArmy)
+        );
+
+        localStorage.setItem(
+            CLAVE_FUNCIONES_BTS_ARMY,
+            JSON.stringify(funcionesAsignadasBTSArmy)
+        );
+
+    } catch (error) {
+
+        console.warn(
+            "No se pudo guardar la ronda BTS:",
+            error
+        );
+
+    }
+}
+
+// Recuperar ronda anterior
+try {
+
+    const rondaGuardada = Number(
+        localStorage.getItem(CLAVE_RONDA_BTS_ARMY)
+    );
+
+    const funcionesGuardadas = JSON.parse(
+        localStorage.getItem(CLAVE_FUNCIONES_BTS_ARMY) || "null"
+    );
+
+    if (
+        Number.isInteger(rondaGuardada) &&
+        rondaGuardada >= 1
+    ) {
+        numeroRondaBTSArmy = rondaGuardada;
+    }
+
+    if (
+        Array.isArray(funcionesGuardadas) &&
+        funcionesGuardadas.length === 7 &&
+        new Set(funcionesGuardadas).size === 7 &&
+        FUNCIONES_BTS_ARMY.every(funcion =>
+            funcionesGuardadas.includes(funcion)
+        )
+    ) {
+
+        funcionesAsignadasBTSArmy = funcionesGuardadas;
+
+    }
+
+} catch (error) {
+
+    console.warn(
+        "No se pudo recuperar la ronda BTS:",
+        error
+    );
+
+}
+
+// Primera distribución
+if (funcionesAsignadasBTSArmy.length !== 7) {
+
+    funcionesAsignadasBTSArmy =
+        nuevaDistribucionBTSArmy();
+
+    guardarRondaBTSArmy();
+
+}
+
+// Avanzar a la siguiente ronda
+function avanzarRondaBTSArmy() {
+
+    const distribucionAnterior = [
+        ...funcionesAsignadasBTSArmy
+    ];
+
+    funcionesAsignadasBTSArmy =
+        nuevaDistribucionBTSArmy(distribucionAnterior);
+
+    numeroRondaBTSArmy++;
+
+    guardarRondaBTSArmy();
+
+    console.log(
+        "💜 Nueva ronda BTS:",
+        numeroRondaBTSArmy
+    );
+
+}
+
+    
 
     // ==========================================
     // REGISTRAR SERVICE WORKER
