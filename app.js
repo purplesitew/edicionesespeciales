@@ -794,7 +794,7 @@ if (
 
 const catalogoArmyCompleto = todasLasEdicionesVisitadas();
 
-if (!catalogoArmyCompleto) {
+if (!catalogoArmyCompleto || oportunidadesArmy === 0) {
 
     
     // ==========================================
