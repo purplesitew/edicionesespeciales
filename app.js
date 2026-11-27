@@ -4427,11 +4427,28 @@ IDS_BOTONES_BTS_ARMY.forEach((idBoton, indice) => {
         // se conectarán en el siguiente paso.
         if (!permiteCrear) return;
 
-        // No permitir acumular oportunidades
-        if (oportunidadesArmy > 0) {
-            alert("💜 Ya tienes una oportunidad disponible.");
+        
+        // ==========================================
+        // SEGUNDA OPORTUNIDAD BTS
+        // EVITAR PREMIOS INDEBIDOS
+        // ==========================================
+
+        if (
+            !juegoBTSArmyActivado ||
+            !todasLasEdicionesVisitadas()
+        ) {
             return;
         }
+
+        if (oportunidadesArmy > 0) {
+
+            alert(
+                "💜 Ya tienes una oportunidad disponible."
+            );
+
+            return;
+        }
+
 
         // Entregar una sola oportunidad
         otorgarOportunidadArmy();
@@ -4493,6 +4510,19 @@ IDS_BOTONES_BTS_ARMY.forEach((idBoton, indice) => {
     if (!boton) return;
 
     boton.addEventListener("click", () => {
+        
+        // ==========================================
+        // PROTEGER ENLACES DEL JUEGO BTS
+        // ==========================================
+
+        if (
+            !juegoBTSArmyActivado ||
+            !todasLasEdicionesVisitadas() ||
+            oportunidadesArmy !== 0
+        ) {
+            return;
+        }
+
 
         // Identificar la función que tiene este botón
         // en la ronda actual
