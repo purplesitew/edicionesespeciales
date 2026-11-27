@@ -2173,11 +2173,33 @@ async function descargarCalendarioSeleccionado() {
         calendarioArchivo &&
         calendarioArchivo.name === disenoSeleccionado) {
 
+                // ==========================================
+        // SEGUNDA OPORTUNIDAD - CALENDARIOS E1-E8
+        // ==========================================
+
+        if (!puedeCrearEdicionArmy()) {
+
+            alert(
+                "💜 Ya utilizaste tu oportunidad.\n\n" +
+                "Consigue otra oportunidad con los botones BTS " +
+                "para descargar otro calendario."
+            );
+
+            return;
+        }
         try {
 
             await descargarCalendarioEnImagenes(
                 disenoSeleccionado
             );
+            
+            // ==========================================
+            // SEGUNDA OPORTUNIDAD
+            // DESCONTAR UNA POR LOS 3 ARCHIVOS
+            // ==========================================
+
+            registrarEdicionTerminadaArmy();
+
 
         } catch (error) {
 
@@ -2451,6 +2473,23 @@ async function crearArchivoParaTikTok() {
 btnCompartirTikTok.addEventListener("click", () => {
 
     if (!calendarioArchivo) return;
+
+    
+    // ==========================================
+    // SEGUNDA OPORTUNIDAD
+    // PROTEGER COMPARTIR EN TIKTOK
+    // ==========================================
+
+    if (!puedeCrearEdicionArmy()) {
+
+        alert(
+            "💜 Ya utilizaste tu oportunidad.\n\n" +
+            "Consigue otra oportunidad con los botones BTS."
+        );
+
+        return;
+    }
+
 
     if (!archivoTikTokPreparado) {
 
