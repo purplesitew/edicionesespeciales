@@ -2296,6 +2296,24 @@ if (
         );
         return;
     }
+   
+    // ==========================================
+    // SEGUNDA OPORTUNIDAD
+    // PROTEGER DESCARGA INSTA ARMY 2026
+    // ==========================================
+
+    if (
+        calendarioArchivo.name === "InstaArmy2026.jpg" &&
+        !puedeCrearEdicionArmy()
+    ) {
+
+        alert(
+            "💜 Ya utilizaste tu oportunidad.\n\n" +
+            "Consigue otra oportunidad con los botones BTS."
+        );
+
+        return;
+    }
 
 
     const enlace = document.createElement("a");
