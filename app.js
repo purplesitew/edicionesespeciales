@@ -4472,12 +4472,14 @@ IDS_BOTONES_BTS_ARMY.forEach((idBoton, indice) => {
         document.getElementById("menu-disenos")
             .classList.remove("oculta");
 
-        window.scrollTo({
+         window.scrollTo({
             top: 0,
             behavior: "smooth"
         });
 
     });
+
+});
 
 // ==========================================
 // SEGUNDA OPORTUNIDAD BTS
@@ -4534,7 +4536,7 @@ IDS_BOTONES_BTS_ARMY.forEach((idBoton, indice) => {
 
 });
 
-});
+
 
     
 
