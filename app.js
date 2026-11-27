@@ -1329,10 +1329,12 @@ function descargarInstruccionesBankPlatinum() {
 }
 
 
-// ==========================================
-// DESCARGAR TARJETA PLATINUM
-// + INSTRUCCIONES
-// ==========================================
+
+ // ==========================================
+ // DESCARGAR TARJETA PLATINUM
+ // + INSTRUCCIONES
+ // + SISTEMA SEGUNDA OPORTUNIDAD
+ // ==========================================
 
 function descargarInstaArmyBankPlatinum() {
 
@@ -1340,6 +1342,25 @@ function descargarInstaArmyBankPlatinum() {
         alert("Primero genera tu tarjeta Platinum 💜");
         return;
     }
+
+    // ==========================================
+    // COMPROBAR OPORTUNIDADES DISPONIBLES
+    // ==========================================
+
+    if (!puedeCrearEdicionArmy()) {
+
+        alert(
+            "💜 Ya utilizaste tu oportunidad.\n\n" +
+            "Consigue otra oportunidad con los botones BTS " +
+            "para crear una nueva edición especial."
+        );
+
+        return;
+    }
+
+    // ==========================================
+    // DESCARGAR TARJETA PERSONALIZADA
+    // ==========================================
 
     const enlace = document.createElement("a");
 
@@ -1354,10 +1375,19 @@ function descargarInstaArmyBankPlatinum() {
     enlace.click();
     enlace.remove();
 
-    // Descargar también instrucciones
+    // ==========================================
+    // DESCARGAR INSTRUCCIONES
+    // ==========================================
+
     setTimeout(() => {
         descargarInstruccionesBankPlatinum();
     }, 500);
+
+    // ==========================================
+    // REGISTRAR OPORTUNIDAD UTILIZADA
+    // ==========================================
+
+    registrarEdicionTerminadaArmy();
 
 }
 
