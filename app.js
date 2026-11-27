@@ -4175,6 +4175,61 @@ IDS_BOTONES_BTS_ARMY.forEach((idBoton, indice) => {
 
     });
 
+// ==========================================
+// SEGUNDA OPORTUNIDAD BTS
+// ENLACES ADSTERRA Y SPOTIFY
+// ==========================================
+
+const ENLACES_BTS_ARMY = {
+
+    smartlink1:
+        "https://arwf.org/4/48f699d1ce8fdb028c5da863cb56ff61",
+
+    smartlink2:
+        "https://arwf.org/4/48f699d1ce8fdb028c5da863cb56ff61",
+
+    playlistSpotify:
+        "https://open.spotify.com/playlist/1KNdecXoqalSDlybpfWrAT?si=7T9NH7NbQ-2bkt7Rb7Cr5A&utm_source=copy-link",
+
+    perfilSpotify:
+        "https://open.spotify.com/artist/0Q5bxZh3iX6G5paIZ8h6ZC?si=Yxo_tjG5RtmbIhBQNHan6Q&utm_source=copy-link"
+
+};
+
+// ==========================================
+// CONECTAR LOS ENLACES A LOS SIETE BOTONES
+// ==========================================
+
+IDS_BOTONES_BTS_ARMY.forEach((idBoton, indice) => {
+
+    const boton = document.getElementById(idBoton);
+
+    if (!boton) return;
+
+    boton.addEventListener("click", () => {
+
+        // Identificar la función que tiene este botón
+        // en la ronda actual
+        const funcion = funcionesAsignadasBTSArmy[indice];
+
+        // Buscar enlace correspondiente
+        const enlace = ENLACES_BTS_ARMY[funcion];
+
+        // Si es un botón para crear una edición,
+        // no hacemos nada aquí: ya tiene su función.
+        if (!enlace) return;
+
+        // Abrir Adsterra o Spotify
+        window.open(
+            enlace,
+            "_blank",
+            "noopener,noreferrer"
+        );
+
+    });
+
+});
+
 });
 
     
