@@ -2157,6 +2157,12 @@ async function descargarCalendarioEnImagenes(archivoFrente) {
 
 
 // ==========================================
+// EVITAR DESCARGAS SIMULTÁNEAS DE CALENDARIOS
+// ==========================================
+
+let descargaCalendarioEnCurso = false;
+
+// ==========================================
 // DESCARGAR DISEÑO SELECCIONADO
 // CALENDARIOS: 3 IMÁGENES
 // INSTA ARMY BANK: 2 IMÁGENES
@@ -2187,6 +2193,14 @@ async function descargarCalendarioSeleccionado() {
 
             return;
         }
+        
+        // Evitar que comience otra descarga
+        if (descargaCalendarioEnCurso) {
+            return;
+        }
+
+        descargaCalendarioEnCurso = true;
+
         try {
 
             await descargarCalendarioEnImagenes(
@@ -2213,6 +2227,9 @@ async function descargarCalendarioSeleccionado() {
             );
 
         }
+       
+        // Permitir otra descarga cuando termine
+        descargaCalendarioEnCurso = false;
 
         return;
     }
