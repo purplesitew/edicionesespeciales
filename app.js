@@ -1802,67 +1802,8 @@ async function prepararInstaArmy2026TikTok() {
         return false;
     }
 }
-    // ==========================================
-// PREPARAR INSTA ARMY 2026 PARA TIKTOK
-// ==========================================
-
-async function prepararInstaArmy2026TikTok() {
-
-    if (!instaArmy2026Generada) {
-        alert("Primero genera tu edición 💜");
-        return false;
-    }
-
-    try {
-
-        const imagenOriginal = canvasInstaArmy2026.toDataURL(
-            "image/jpeg",
-            0.98
-        );
-
-        const respuestaOriginal = await fetch(imagenOriginal);
-        const blobOriginal = await respuestaOriginal.blob();
-
-        calendarioArchivo = new File(
-            [blobOriginal],
-            "InstaArmy2026.jpg",
-            { type: "image/jpeg" }
-        );
-
-        if (calendarioURL) {
-            URL.revokeObjectURL(calendarioURL);
-        }
-
-        calendarioURL = URL.createObjectURL(
-            calendarioArchivo
-        );
-
-        const imagenTikTok = await crearImagenTikTokEdicion(
-            imagenOriginal
-        );
-
-        const respuestaTikTok = await fetch(imagenTikTok);
-        const blobTikTok = await respuestaTikTok.blob();
-
-        archivoTikTokPreparado = new File(
-            [blobTikTok],
-            "InstaArmy2026-TikTok.jpg",
-            { type: "image/jpeg" }
-        );
-
-        return true;
-
-    } catch (error) {
-
-        console.error(
-            "Error preparando Insta Army 2026 para TikTok:",
-            error
-        );
-
-        alert("No se pudo preparar la edición para TikTok.");
-        return false;
-    }
-}
+    
+   
     
  // ==========================================
  // DESCARGAR INSTA ARMY 2026
