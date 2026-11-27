@@ -2294,6 +2294,19 @@ if (
     enlace.click();
     enlace.remove();
 
+     
+    // ==========================================
+    // SEGUNDA OPORTUNIDAD
+    // CERTIFICADO DE BAUTISMO DESCARGADO
+    // ==========================================
+
+    if (
+        calendarioArchivo.name ===
+        "CertificadodebautismoInstaarmy.jpg"
+    ) {
+        registrarEdicionTerminadaArmy();
+    }
+
    
     // ==========================================
     // INSTA ARMY BANK
