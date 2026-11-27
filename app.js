@@ -3756,6 +3756,79 @@ if (btnGenerarDiplomaInstaArmy) {
 }
 
     
+ // ==========================================
+ // DESCARGAR DIPLOMA INSTA ARMY
+ // SISTEMA SEGUNDA OPORTUNIDAD
+ // ==========================================
+
+function descargarDiplomaInstaArmy() {
+
+    // Comprobar que el diploma esté generado
+    if (!diplomaInstaArmyGenerado) {
+        alert("Primero genera tu diploma 💜");
+        return;
+    }
+
+    // Comprobar oportunidades disponibles
+    if (!puedeCrearEdicionArmy()) {
+
+        alert(
+            "💜 Ya utilizaste tu oportunidad.\n\n" +
+            "Consigue otra oportunidad con los botones BTS."
+        );
+
+        return;
+    }
+
+    try {
+
+        // Preparar imagen personalizada
+        const imagenDiploma =
+            canvasDiplomaInstaArmy.toDataURL(
+                "image/jpeg",
+                0.98
+            );
+
+        // Descargar diploma
+        const enlace = document.createElement("a");
+
+        enlace.href = imagenDiploma;
+        enlace.download = "DiplomaInstaArmy.jpg";
+
+        document.body.appendChild(enlace);
+        enlace.click();
+        enlace.remove();
+
+        // Registrar oportunidad utilizada
+        registrarEdicionTerminadaArmy();
+
+    } catch (error) {
+
+        console.error(
+            "Error al descargar el diploma:",
+            error
+        );
+
+        alert("No se pudo preparar el diploma.");
+
+    }
+
+}
+
+
+// ==========================================
+// ACTIVAR BOTÓN DESCARGAR DIPLOMA
+// ==========================================
+
+if (btnDescargarDiplomaInstaArmy) {
+
+    btnDescargarDiplomaInstaArmy.addEventListener(
+        "click",
+        descargarDiplomaInstaArmy
+    );
+
+}
+
 // ==========================================
 // ABRIR EDITOR DE ETIQUETA COLA
 // ==========================================
