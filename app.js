@@ -1086,17 +1086,31 @@ async function generarInstaArmyBienestar() {
 }
 
 
-// ==========================================
-// DESCARGAR TARJETA BIENESTAR
-// ==========================================
+ // ==========================================
+ // DESCARGAR INSTA ARMY BIENESTAR
+ // SISTEMA SEGUNDA OPORTUNIDAD
+ // ==========================================
 
 function descargarInstaArmyBienestar() {
 
     if (!tarjetaBienestarGenerada) {
-        alert("Primero genera tu tarjeta 💜");
+        alert("Primero genera tu tarjeta Bienestar 💜");
         return;
     }
 
+    // Comprobar que tenga una oportunidad
+    if (!puedeCrearEdicionArmy()) {
+
+        alert(
+            "💜 Ya utilizaste tu oportunidad.\n\n" +
+            "Consigue otra oportunidad con los botones BTS " +
+            "para crear una nueva edición especial."
+        );
+
+        return;
+    }
+
+    // Descargar la imagen personalizada
     const enlace = document.createElement("a");
 
     enlace.href = canvasBienestar.toDataURL(
@@ -1107,10 +1121,12 @@ function descargarInstaArmyBienestar() {
     enlace.download = "InstaArmyBienestar.jpg";
 
     document.body.appendChild(enlace);
-
     enlace.click();
-
     enlace.remove();
+
+    // Registrar la oportunidad utilizada
+    registrarEdicionTerminadaArmy();
+
 }
 
 
