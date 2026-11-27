@@ -2210,8 +2210,10 @@ async function descargarCalendarioSeleccionado() {
     enlace.click();
     enlace.remove();
 
+   
     // ==========================================
-    // INSTRUCCIONES EXCLUSIVAS INSTA ARMY BANK
+    // INSTA ARMY BANK
+    // INSTRUCCIONES Y REGISTRO DE OPORTUNIDAD
     // ==========================================
 
     if (calendarioArchivo.name === "InstaArmyBank.jpg") {
@@ -2221,7 +2223,20 @@ async function descargarCalendarioSeleccionado() {
             "instaarmybankinstrucciones.jpg"
         );
 
+        // Registrar que utilizó su oportunidad
+        const registrada = registrarEdicionTerminadaArmy();
+
+        if (registrada) {
+
+            console.log(
+                "💜 Primera edición terminada. " +
+                "Activando Segunda Oportunidad."
+            );
+
+        }
+
     }
+
 
 }
 
