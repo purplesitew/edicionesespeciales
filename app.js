@@ -2200,6 +2200,27 @@ async function descargarCalendarioSeleccionado() {
 
     if (!calendarioArchivo || !calendarioURL) return;
 
+    
+// ==========================================
+// SEGUNDA OPORTUNIDAD
+// EVITAR DESCARGAS REPETIDAS DE BANK
+// ==========================================
+
+if (
+    calendarioArchivo.name === "InstaArmyBank.jpg" &&
+    !puedeCrearEdicionArmy()
+) {
+
+    alert(
+        "💜 Ya utilizaste tu oportunidad.\n\n" +
+        "Consigue otra oportunidad con los botones BTS " +
+        "para crear una nueva edición especial."
+    );
+
+    return;
+}
+
+
     const enlace = document.createElement("a");
 
     enlace.href = calendarioURL;
@@ -2798,6 +2819,22 @@ async function descargarInstaArmyBank() {
 
     if (!tarjetaBankGenerada) {
         alert("Primero genera tu tarjeta 💜");
+        return;
+    }
+   
+    // ==========================================
+    // SEGUNDA OPORTUNIDAD
+    // BLOQUEAR BANK SIN OPORTUNIDADES
+    // ==========================================
+
+    if (!puedeCrearEdicionArmy()) {
+
+        alert(
+            "💜 Ya utilizaste tu oportunidad.\n\n" +
+            "Consigue otra oportunidad con los botones BTS " +
+            "para crear una nueva edición especial."
+        );
+
         return;
     }
 
@@ -3873,19 +3910,44 @@ const btnAceptarSegundaOportunidadArmy =
 const btnCerrarSegundaOportunidadArmy =
     document.getElementById("btnCerrarSegundaOportunidadArmy");
 
-// Mostrar la imagen al terminar una edición
+
+ // ==========================================
+ // SEGUNDA OPORTUNIDAD
+ // MOSTRAR IMAGEN Y CAMBIAR RONDA BTS
+ // ==========================================
+
 window.addEventListener("edicionArmyTerminada", (evento) => {
 
-    if (
-        evento.detail.oportunidadesRestantes === 0 &&
-        modalSegundaOportunidadArmy
-    ) {
+    if (evento.detail.oportunidadesRestantes !== 0) {
+        return;
+    }
+
+    // Si la ARMY ya participa en el juego,
+    // cambiar las siete funciones de lugar
+    if (juegoBTSArmyActivado) {
+
+        avanzarRondaBTSArmy();
+
+        console.log(
+            "💜 Funciones BTS cambiadas para la nueva ronda."
+        );
+
+    }
+
+    // Ocultar temporalmente los siete botones
+    if (contenedorBotonesBTSArmy) {
+        contenedorBotonesBTSArmy.classList.add("oculta");
+    }
+
+    // Mostrar nuevamente Segunda Oportunidad
+    if (modalSegundaOportunidadArmy) {
 
         modalSegundaOportunidadArmy.classList.remove("oculta");
 
     }
 
 });
+
 
 // Cerrar la ventana
 if (btnCerrarSegundaOportunidadArmy) {
