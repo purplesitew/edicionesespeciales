@@ -2266,6 +2266,23 @@ if (
     return;
 }
 
+    
+    // ==========================================
+    // PROTEGER DESCARGA DEL CERTIFICADO
+    // ==========================================
+
+    if (
+        calendarioArchivo.name ===
+        "CertificadodebautismoInstaarmy.jpg" &&
+        !puedeCrearEdicionArmy()
+    ) {
+        alert(
+            "💜 Ya utilizaste tu oportunidad.\n\n" +
+            "Consigue otra oportunidad con los botones BTS."
+        );
+        return;
+    }
+
 
     const enlace = document.createElement("a");
 
