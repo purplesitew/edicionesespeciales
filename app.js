@@ -1874,6 +1874,20 @@ async function descargarInstaArmy2026() {
         alert("Primero genera tu edición 💜");
         return;
     }
+ 
+    // ==========================================
+    // SEGUNDA OPORTUNIDAD - INSTA ARMY 2026
+    // ==========================================
+
+    if (!puedeCrearEdicionArmy()) {
+
+        alert(
+            "💜 Ya utilizaste tu oportunidad.\n\n" +
+            "Consigue otra oportunidad con los botones BTS."
+        );
+
+        return;
+    }
 
     btnDescargarInstaArmy2026.disabled = true;
 
@@ -2308,6 +2322,19 @@ if (
     }
 
    
+    // ==========================================
+    // SEGUNDA OPORTUNIDAD
+    // REGISTRAR DESCARGA INSTA ARMY 2026
+    // ==========================================
+
+    if (
+        calendarioArchivo.name === "InstaArmy2026.jpg"
+    ) {
+
+        registrarEdicionTerminadaArmy();
+
+    }
+
     // ==========================================
     // INSTA ARMY BANK
     // INSTRUCCIONES Y REGISTRO DE OPORTUNIDAD
