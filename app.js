@@ -3355,6 +3355,23 @@ async function descargarCertificadoBautismo() {
         return;
     }
 
+    
+    // ==========================================
+    // SEGUNDA OPORTUNIDAD
+    // PROTEGER CERTIFICADO DE BAUTISMO
+    // ==========================================
+
+    if (!puedeCrearEdicionArmy()) {
+
+        alert(
+            "💜 Ya utilizaste tu oportunidad.\n\n" +
+            "Consigue otra oportunidad con los botones BTS " +
+            "para crear una nueva edición especial."
+        );
+
+        return;
+    }
+
     btnDescargarCertificadoBautismo.disabled = true;
 
     try {
