@@ -3988,9 +3988,11 @@ async function generarEtiquetaCola() {
 }
 
 
-// ==========================================
-// DESCARGAR ETIQUETA COLA
-// ==========================================
+
+ // ==========================================
+ // DESCARGAR ETIQUETA COLA
+ // SISTEMA SEGUNDA OPORTUNIDAD
+ // ==========================================
 
 function descargarEtiquetaCola() {
 
@@ -3999,6 +4001,18 @@ function descargarEtiquetaCola() {
         return;
     }
 
+    // Comprobar oportunidades disponibles
+    if (!puedeCrearEdicionArmy()) {
+
+        alert(
+            "💜 Ya utilizaste tu oportunidad.\n\n" +
+            "Consigue otra oportunidad con los botones BTS."
+        );
+
+        return;
+    }
+
+    // Descargar etiqueta personalizada
     const enlace = document.createElement("a");
 
     enlace.href = canvasEtiquetaCola.toDataURL(
@@ -4009,10 +4023,12 @@ function descargarEtiquetaCola() {
     enlace.download = "Etiquetacola.jpg";
 
     document.body.appendChild(enlace);
-
     enlace.click();
-
     enlace.remove();
+
+    // Registrar oportunidad utilizada
+    registrarEdicionTerminadaArmy();
+
 }
 
 
